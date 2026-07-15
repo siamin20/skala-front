@@ -1,0 +1,17 @@
+# OS / 편집기
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+
+# 참고자료 — 로컬에는 두고 Claude Code가 읽을 수 있으나
+# Public 저장소에는 올리지 않는다 (저작권 + 용량 + 민감정보)
+docs/
+*.pdf
+onboarding*.txt
+onboarding*.md
+
+# 개인 메모 / 작업 지침 (제출 대상 아님)
+NOTES.md
+scratch/
+CLAUDE.md
