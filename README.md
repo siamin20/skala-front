@@ -32,6 +32,14 @@ media/          로고·이미지 등
 - CSS: 디자인 토큰, Flexbox·Grid 카드 배치, 786px 반응형, 다크 모드, 스크롤 등장 애니메이션
 - JS: 테마 토글, 모바일 네비, 맨 위로 버튼 (`script/theme.js`, `script/app.js`)
 
+### html/myProfile.html — 나의 소개 (과제)
+
+좋아하는 것 · 올해 목표 · 나를 설명하는 단어를 목록으로 정리.
+
+- 필수 요소: `<ul>`(음식) `<ol>`(할 일) `<dl>`/`<dt>`/`<dd>`(단어)
+- 제약: **파일 내 CSS 0줄** — 외부 `style.css` + class 만으로 스타일링
+- 추가: `<details>` FAQ 아코디언, CSS Grid 3열 카드, 다크 모드, 반응형
+
 ## 실행
 
 `index.html`을 브라우저에서 열거나 VS Code Live Server로 실행.
