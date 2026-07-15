@@ -1,0 +1,13 @@
+/* =====================================================================
+   style.css — SKALA-FRONT 메인 스타일시트 (진입점)
+   대규모 스타일을 역할별 파일로 쪼개고 @import 로 하나로 합친다.
+   (강의자료: "모듈화(Import) — 스타일시트를 여러 파일로 쪼개어 관리")
+   로드 순서 = 캐스케이드 순서이므로 tokens → base → layout → ... 순서 유지.
+   ===================================================================== */
+@import url("tokens.css");
+@import url("base.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("dashboard.css");
+@import url("animations.css");
+@import url("utilities.css");

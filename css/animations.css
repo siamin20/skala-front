@@ -1,0 +1,60 @@
+/* =====================================================================
+   animations.css — 등장/스크롤/마이크로 인터랙션 (미션6 심화)
+   ===================================================================== */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.85); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes shimmer {
+  100% { background-position: 200% 0; }
+}
+
+/* 페이지 로드 시 헤더 타이틀 페이드인 (미션6 요구) */
+.page-hero .eyebrow { animation: fade-up var(--dur-slow) var(--ease) both; }
+.page-hero h1 { animation: fade-up var(--dur-slow) var(--ease) 0.08s both; }
+.page-hero .section-lead { animation: fade-up var(--dur-slow) var(--ease) 0.16s both; }
+
+/* 스크롤 진입 시 순차 등장 (JS IntersectionObserver 와 연동) */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease); }
+.reveal[data-visible="true"] { opacity: 1; transform: translateY(0); }
+/* 그리드 내부 요소를 계단식으로 */
+.reveal[data-visible="true"] > * { animation: fade-up var(--dur-slow) var(--ease) both; }
+.stagger > * { opacity: 0; }
+.stagger[data-visible="true"] > * { animation: fade-up var(--dur-slow) var(--ease) both; }
+.stagger[data-visible="true"] > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger[data-visible="true"] > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger[data-visible="true"] > *:nth-child(3) { animation-delay: 0.16s; }
+.stagger[data-visible="true"] > *:nth-child(4) { animation-delay: 0.22s; }
+.stagger[data-visible="true"] > *:nth-child(5) { animation-delay: 0.28s; }
+.stagger[data-visible="true"] > *:nth-child(6) { animation-delay: 0.34s; }
+.stagger[data-visible="true"] > *:nth-child(n+7) { animation-delay: 0.40s; }
+
+/* 로딩 스피너 / 스켈레톤 (날씨 로딩용) */
+.spinner {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2.5px solid var(--border-strong); border-top-color: var(--accent);
+  animation: spin 0.7s linear infinite; display: inline-block;
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 37%, var(--surface-2) 63%);
+  background-size: 200% 100%; animation: shimmer 1.3s linear infinite;
+  border-radius: var(--radius-sm);
+}
+
+.float-anim { animation: float 4s var(--ease) infinite; }

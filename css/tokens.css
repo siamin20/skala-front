@@ -1,0 +1,118 @@
+/* =====================================================================
+   tokens.css — 디자인 시스템의 단일 진실 공급원 (Single Source of Truth)
+   색·타이포·간격·모션을 CSS 변수로 정의한다.
+   다크모드는 <html data-theme="dark">에서 변수만 덮어써서 구현한다.
+   ===================================================================== */
+
+:root {
+  /* ---- Brand & accent -------------------------------------------- */
+  --indigo-50:  #eef2ff;
+  --indigo-100: #e0e7ff;
+  --indigo-300: #a5b4fc;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --indigo-700: #4338ca;
+  --teal-500:   #14b8a6;
+  --teal-600:   #0d9488;
+  --amber-500:  #f59e0b;
+  --amber-600:  #d97706;
+  --rose-500:   #f43f5e;
+  --green-500:  #22c55e;
+
+  /* ---- Semantic colors (LIGHT theme) ----------------------------- */
+  --bg:            #f4f5f7;   /* 서늘한 종이 톤 — 흔한 크림(#F4F1EA) 회피 */
+  --bg-grid:       rgba(67, 56, 202, 0.05);
+  --surface:       #ffffff;
+  --surface-2:     #fafbfc;
+  --ink:           #14162b;   /* 잉크 네이비 */
+  --ink-soft:      #3a3d5c;
+  --muted:         #6b6f8a;
+  --border:        #e3e5ec;
+  --border-strong: #c9ccd8;
+
+  --accent:        var(--indigo-700);
+  --accent-hover:  var(--indigo-600);
+  --accent-soft:   var(--indigo-50);
+  --accent-2:      var(--teal-600);
+  --highlight:     var(--amber-500);
+
+  --focus-ring:    #4338ca;
+  --shadow-color:  220 25% 30%;
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.08);
+  --shadow-md: 0 4px 14px -4px hsl(var(--shadow-color) / 0.15);
+  --shadow-lg: 0 18px 40px -12px hsl(var(--shadow-color) / 0.28);
+
+  /* ---- Typography ------------------------------------------------ */
+  --font-display: "Space Grotesk", "Pretendard", system-ui, sans-serif;
+  --font-body:    "Inter", "Pretendard", system-ui, -apple-system, sans-serif;
+  --font-mono:    "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* clamp() 로 뷰포트 반응형 타입 스케일 (미션5 심화) */
+  --step--1: clamp(0.78rem, 0.74rem + 0.2vw, 0.88rem);
+  --step-0:  clamp(0.95rem, 0.90rem + 0.25vw, 1.05rem);
+  --step-1:  clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+  --step-2:  clamp(1.45rem, 1.25rem + 1vw, 2rem);
+  --step-3:  clamp(1.85rem, 1.5rem + 1.8vw, 2.9rem);
+  --step-4:  clamp(2.4rem, 1.9rem + 2.6vw, 4rem);
+
+  /* ---- Spacing scale --------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* ---- Radius & layout ------------------------------------------- */
+  --radius-sm: 6px;
+  --radius:    12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --container: 1120px;
+  --nav-h: 64px;
+
+  /* ---- Motion ---------------------------------------------------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur:      260ms;
+  --dur-slow: 520ms;
+}
+
+/* ---- DARK theme ------------------------------------------------- */
+:root[data-theme="dark"] {
+  --bg:            #0d0f1a;
+  --bg-grid:       rgba(129, 140, 248, 0.07);
+  --surface:       #161a2b;
+  --surface-2:     #1d2136;
+  --ink:           #eef0fb;
+  --ink-soft:      #c3c7de;
+  --muted:         #9297b6;
+  --border:        #2a2f47;
+  --border-strong: #3b4162;
+
+  --accent:        var(--indigo-300);
+  --accent-hover:  #c7d0ff;
+  --accent-soft:   #1c2145;
+  --accent-2:      var(--teal-500);
+  --highlight:     var(--amber-500);
+
+  --focus-ring:    #a5b4fc;
+  --shadow-color:  240 60% 3%;
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.5);
+  --shadow-md: 0 6px 18px -6px hsl(var(--shadow-color) / 0.7);
+  --shadow-lg: 0 22px 48px -14px hsl(var(--shadow-color) / 0.85);
+}
+
+/* 시스템이 다크를 선호하고, 사용자가 아직 선택 안 했을 때 자동 적용 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0d0f1a; --bg-grid: rgba(129,140,248,0.07);
+    --surface: #161a2b; --surface-2: #1d2136;
+    --ink: #eef0fb; --ink-soft: #c3c7de; --muted: #9297b6;
+    --border: #2a2f47; --border-strong: #3b4162;
+    --accent: #a5b4fc; --accent-hover: #c7d0ff; --accent-soft: #1c2145;
+    --accent-2: #14b8a6; --focus-ring: #a5b4fc;
+  }
+}

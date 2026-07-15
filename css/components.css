@@ -1,0 +1,288 @@
+/* =====================================================================
+   components.css — 재사용 UI 컴포넌트
+   ===================================================================== */
+
+/* ---- Buttons ---------------------------------------------------- */
+.btn {
+  --btn-bg: var(--accent);
+  --btn-fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55em;
+  font-family: var(--font-body); font-weight: 600; font-size: var(--step-0);
+  line-height: 1; text-decoration: none; cursor: pointer;
+  padding: 0.75em 1.3em; border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: var(--btn-bg); color: var(--btn-fg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--accent-hover); color: #fff; }
+.btn:active { transform: translateY(0); }
+.btn--ghost {
+  --btn-bg: transparent; --btn-fg: var(--accent);
+  border-color: var(--border-strong); box-shadow: none;
+}
+.btn--ghost:hover { background: var(--accent-soft); color: var(--accent); }
+.btn--teal { --btn-bg: var(--accent-2); }
+.btn--teal:hover { background: color-mix(in srgb, var(--accent-2) 85%, black); }
+.btn--block { width: 100%; }
+.btn--sm { padding: 0.5em 0.9em; font-size: var(--step--1); }
+
+/* ---- Icon button (테마 토글 등) --------------------------------- */
+.icon-btn {
+  display: grid; place-items: center;
+  width: 42px; height: 42px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--surface-2);
+  color: var(--ink); cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn svg { width: 20px; height: 20px; }
+/* 테마에 따라 해/달 아이콘 토글 */
+.icon-btn .icon-sun { display: none; }
+:root[data-theme="dark"] .icon-btn .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-btn .icon-moon { display: none; }
+
+/* ---- Badges / chips --------------------------------------------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  font-family: var(--font-mono); font-size: var(--step--1);
+  padding: 0.25em 0.7em; border-radius: var(--radius-pill);
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.badge--live { background: color-mix(in srgb, var(--green-500) 15%, transparent); color: var(--green-500); border-color: color-mix(in srgb, var(--green-500) 35%, transparent); }
+.badge--live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-500); animation: pulse 1.8s var(--ease) infinite; }
+
+.tag {
+  display: inline-block; font-size: var(--step--1);
+  padding: 0.2em 0.65em; border-radius: var(--radius-pill);
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--ink-soft);
+}
+
+/* ---- Card ------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+/* 링크 카드 (포털 바로가기 그리드) */
+.link-card {
+  position: relative; display: flex; flex-direction: column; gap: var(--space-3);
+  text-decoration: none; color: inherit; overflow: hidden;
+  isolation: isolate;
+}
+.link-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(120% 120% at 100% 0%, var(--accent-soft), transparent 55%);
+  opacity: 0; transition: opacity var(--dur) var(--ease);
+}
+.link-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.link-card:hover::after { opacity: 1; }
+.link-card:focus-within { border-color: var(--accent); }
+.link-card__idx { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent-2); }
+.link-card__title { font-family: var(--font-display); font-size: var(--step-1); font-weight: 600; }
+.link-card__desc { color: var(--muted); font-size: var(--step--1); }
+.link-card__cta {
+  margin-top: auto; font-family: var(--font-mono); font-size: var(--step--1);
+  color: var(--accent); display: inline-flex; align-items: center; gap: 0.4em;
+}
+.link-card:hover .link-card__cta { gap: 0.7em; }
+
+/* 바둑판(bento) 그리드 */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--space-4);
+}
+
+/* ---- Widget (aside 미니앱: 게임 / 날씨) -------------------------- */
+.widget {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.widget + .widget { margin-top: var(--space-4); }
+.widget__head {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.widget__title {
+  font-family: var(--font-mono); font-size: var(--step--1);
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft);
+}
+.widget__body { padding: var(--space-4); }
+
+/* ---- Forms ------------------------------------------------------ */
+.field { display: grid; gap: 0.4em; margin-bottom: var(--space-4); }
+.field > label { font-weight: 600; font-size: var(--step--1); color: var(--ink); }
+.field .hint { font-size: var(--step--1); color: var(--muted); }
+
+.input, .select, .textarea {
+  width: 100%; font: inherit; font-size: var(--step-0);
+  color: var(--ink); background: var(--surface-2);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  padding: 0.7em 0.85em;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.input::placeholder, .textarea::placeholder { color: var(--muted); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft); background: var(--surface);
+}
+.textarea { min-height: 120px; resize: vertical; }
+/* HTML5 검증 실패 시각화 */
+.input:user-invalid, .textarea:user-invalid { border-color: var(--rose-500); }
+.input:user-valid { border-color: color-mix(in srgb, var(--green-500) 60%, var(--border-strong)); }
+
+/* 일반 형제 결합자(~): 입력에 포커스가 가면 뒤따르는 도움말 강조 */
+.input:focus ~ .hint { color: var(--accent); }
+
+/* 필수 입력(:required) — 좌측 액센트 바로 표시 */
+.input:required, .select:required, .textarea:required {
+  border-inline-start: 3px solid color-mix(in srgb, var(--accent) 55%, var(--border-strong));
+}
+/* 입력이 시작된 뒤에만 유효/무효 표시 (:valid / :invalid, placeholder 가드) */
+.input:not(:placeholder-shown):invalid,
+.textarea:not(:placeholder-shown):invalid { border-color: var(--rose-500); }
+.input:not(:placeholder-shown):valid { border-color: color-mix(in srgb, var(--green-500) 60%, var(--border-strong)); }
+
+fieldset {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-5); margin: 0 0 var(--space-5);
+  background: var(--surface);
+}
+legend {
+  font-family: var(--font-display); font-weight: 600; font-size: var(--step-0);
+  padding: 0 0.6em; color: var(--accent);
+}
+.choice-row { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.choice {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  padding: 0.55em 0.9em; border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm); cursor: pointer; background: var(--surface-2);
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.choice:hover { border-color: var(--accent); }
+.choice:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+input[type="range"] { accent-color: var(--accent); width: 100%; }
+input[type="color"] { inline-size: 48px; block-size: 40px; padding: 2px; border-radius: var(--radius-sm); border: 1px solid var(--border-strong); background: var(--surface-2); cursor: pointer; }
+.form-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+/* output / meter / progress (심화 태그) */
+output { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
+/* 비밀번호 강도: meter가 남는 공간을 채우고 라벨은 줄바꿈 방지 */
+.pw-row { display: flex; align-items: center; gap: var(--space-3); }
+.pw-row meter { flex: 1; }
+.pw-row output { white-space: nowrap; }
+meter { inline-size: 100%; block-size: 14px; }
+progress { inline-size: 100%; block-size: 12px; accent-color: var(--accent); border-radius: var(--radius-pill); overflow: hidden; }
+
+/* ---- Tables ----------------------------------------------------- */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+table { border-collapse: collapse; width: 100%; background: var(--surface); }
+caption { text-align: left; padding: var(--space-3) var(--space-4); font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+th, td { padding: 0.75em 1em; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+thead th { background: var(--surface-2); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); position: sticky; top: 0; }
+tbody tr:hover { background: var(--accent-soft); }
+tfoot td { font-weight: 700; background: var(--surface-2); }
+
+/* ---- Trip cards (myTrip 여행 앨범: 미션2 리뷰카드 · 미션4 Grid 3열) --- */
+.trip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+.trip-card {
+  display: flex; flex-direction: column; gap: var(--space-3);
+  margin: 0; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: var(--space-4); box-shadow: var(--shadow-sm);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.trip-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.trip-card > img, .trip-card picture img, .trip-card video {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: var(--radius-sm); background: var(--surface-2);
+}
+.trip-card figcaption { display: flex; flex-direction: column; gap: var(--space-2); }
+.trip-card .trip-meta { display: flex; flex-wrap: wrap; gap: 0.4em; align-items: center; }
+
+/* 미디어 블록 (오디오/영상 섹션) */
+.media-figure {
+  margin: 0; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: var(--space-4); box-shadow: var(--shadow-sm);
+}
+.media-figure video, .media-figure audio { width: 100%; border-radius: var(--radius-sm); }
+.media-figure figcaption { margin-top: var(--space-3); color: var(--muted); font-size: var(--step--1); }
+
+/* 미션5: 786px 이하 여행 카드 1열 */
+@media (max-width: 786px) {
+  .trip-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Details / summary (아코디언) ------------------------------- */
+details {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); overflow: hidden;
+}
+details + details { margin-top: var(--space-3); }
+summary {
+  cursor: pointer; padding: var(--space-4); font-weight: 600;
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-family: var(--font-mono); color: var(--accent); font-size: 1.4em; transition: transform var(--dur) var(--ease); }
+details[open] summary::after { transform: rotate(45deg); }
+details > *:not(summary) { padding: 0 var(--space-4) var(--space-4); color: var(--ink-soft); }
+/* 아코디언 내용이 문단 하나뿐이면 색만 부드럽게 (:only-child) */
+details > div > p:only-child { color: var(--ink-soft); }
+
+/* ID 선택자(#) + 명시도 예시 — 회원가입 결과를 key/value 그리드로 정렬
+   (id는 class보다 명시도가 높아 base의 dl 규칙을 덮어씀) */
+#result dl {
+  display: grid; grid-template-columns: max-content 1fr;
+  gap: 0.5em 1.4em; align-items: baseline; margin-top: var(--space-4);
+}
+#result dt { margin-top: 0; }
+#result dd { margin: 0; }
+
+/* ---- Dialog (모달) ---------------------------------------------- */
+dialog {
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 0; background: var(--surface); color: var(--ink);
+  box-shadow: var(--shadow-lg); max-width: min(440px, 92vw);
+}
+dialog::backdrop { background: hsl(240 40% 5% / 0.55); backdrop-filter: blur(3px); }
+.dialog__body { padding: var(--space-6); text-align: center; }
+.dialog__body h3 { margin-bottom: var(--space-3); }
+
+/* ---- Toast ------------------------------------------------------ */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 120%);
+  z-index: 999; background: var(--ink); color: var(--bg);
+  padding: 0.8em 1.4em; border-radius: var(--radius-pill);
+  font-size: var(--step--1); box-shadow: var(--shadow-lg);
+  transition: transform var(--dur) var(--ease); pointer-events: none;
+}
+.toast[data-show="true"] { transform: translate(-50%, 0); }
+
+/* ---- Back to top ------------------------------------------------ */
+.to-top {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff; border: none; cursor: pointer;
+  box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), visibility var(--dur);
+}
+.to-top[data-show="true"] { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { background: var(--accent-hover); }

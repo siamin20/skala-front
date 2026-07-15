@@ -1,0 +1,130 @@
+/* =====================================================================
+   dashboard.css — 온보딩 대시보드, 점프 내비, :target 하이라이트
+   ===================================================================== */
+
+/* ---- 점프 내비 (섹션 바로가기 칩) ------------------------------- */
+.jump-nav {
+  position: sticky; top: var(--nav-h); z-index: 80;
+  display: flex; flex-wrap: wrap; gap: var(--space-2);
+  padding: var(--space-3) 0;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  margin-bottom: var(--space-4);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 0.45em;
+  font-family: var(--font-mono); font-size: var(--step--1);
+  padding: 0.4em 0.9em; border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong); background: var(--surface);
+  color: var(--ink-soft); text-decoration: none;
+  transition: all var(--dur-fast) var(--ease);
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip[aria-current="true"] {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+}
+.chip .idx { opacity: 0.6; }
+.chip[aria-current="true"] .idx { opacity: 0.85; }
+
+/* ---- :target 하이라이트 (점프 후 반짝) -------------------------- */
+:target { scroll-margin-top: calc(var(--nav-h) + 64px); }
+.spotlight:target { animation: spotlight 1.8s var(--ease); }
+@keyframes spotlight {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
+  15%  { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 55%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* ---- 대시보드 그리드 ------------------------------------------- */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-4);
+}
+.dash-grid > .widget { grid-column: span 4; }
+.dash-grid > .span-6 { grid-column: span 6; }
+.dash-grid > .span-8 { grid-column: span 8; }
+.dash-grid > .span-12 { grid-column: span 12; }
+@media (max-width: 900px) { .dash-grid > * { grid-column: span 6 !important; } }
+@media (max-width: 600px) { .dash-grid > * { grid-column: span 12 !important; } }
+
+/* ---- 상태 위젯 ------------------------------------------------- */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--font-display); font-weight: 600; font-size: var(--step-1);
+  padding: 0.3em 0.8em; border-radius: var(--radius-sm);
+}
+.status-pill[data-tone="live"]  { background: color-mix(in srgb, var(--green-500) 16%, transparent); color: var(--green-500); }
+.status-pill[data-tone="warn"]  { background: color-mix(in srgb, var(--amber-500) 18%, transparent); color: var(--amber-600); }
+.status-pill[data-tone="muted"] { background: var(--surface-2); color: var(--muted); }
+.countdown { font-family: var(--font-mono); color: var(--ink-soft); }
+.countdown b { color: var(--accent); }
+
+/* ---- 출결 체크리스트 ------------------------------------------- */
+.check-item {
+  display: flex; align-items: center; gap: 0.7em;
+  padding: 0.7em 0.9em; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); background: var(--surface-2);
+  cursor: pointer; transition: all var(--dur-fast) var(--ease);
+}
+.check-item:has(input:checked) {
+  border-color: var(--green-500);
+  background: color-mix(in srgb, var(--green-500) 10%, var(--surface-2));
+}
+.check-item input { width: 20px; height: 20px; accent-color: var(--green-500); }
+.check-item .label { font-weight: 600; }
+.check-item .time { margin-left: auto; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.check-item:has(input:checked) .time { color: var(--green-500); }
+.attend-warn {
+  display: none; align-items: center; gap: 0.5em;
+  margin-top: var(--space-3); padding: 0.6em 0.9em;
+  border-radius: var(--radius-sm); font-size: var(--step--1);
+  background: color-mix(in srgb, var(--rose-500) 14%, transparent);
+  color: var(--rose-500); border: 1px solid color-mix(in srgb, var(--rose-500) 30%, transparent);
+}
+.attend-warn[data-show="true"] { display: flex; }
+
+/* ---- 통계/진도 ------------------------------------------------- */
+.stat { display: flex; flex-direction: column; gap: 0.15em; }
+.stat .num { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; color: var(--accent); }
+.stat .lbl { font-size: var(--step--1); color: var(--muted); }
+.progress-row { display: flex; align-items: center; gap: var(--space-3); }
+.progress-row progress { flex: 1; }
+
+/* ---- 빠른 정보 리스트 ------------------------------------------ */
+.info-list { list-style: none; padding: 0; margin: 0; }
+.info-list li {
+  display: flex; align-items: center; gap: var(--space-2);
+  justify-content: space-between; padding: 0.55em 0; margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+.info-list li:last-child { border-bottom: none; }
+.info-list .k { color: var(--muted); font-size: var(--step--1); }
+.info-list .v { font-weight: 600; text-align: right; }
+
+/* ---- 복사 버튼 ------------------------------------------------- */
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  font-family: var(--font-mono); font-size: var(--step--1);
+  padding: 0.25em 0.6em; border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong); background: var(--surface-2);
+  color: var(--ink-soft); cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.copy-btn svg { width: 13px; height: 13px; }
+
+/* ---- 설정 저장값 표시 ------------------------------------------ */
+.secret-row {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+  padding: 0.5em 0; border-bottom: 1px solid var(--border);
+}
+.secret-row:last-child { border-bottom: none; }
+.secret-row .k { color: var(--muted); font-size: var(--step--1); }
+.secret-row .v { font-family: var(--font-mono); }
+.privacy-note {
+  display: flex; gap: 0.5em; align-items: flex-start;
+  font-size: var(--step--1); color: var(--muted);
+  background: var(--accent-soft); border-radius: var(--radius-sm);
+  padding: 0.6em 0.8em; margin-top: var(--space-3);
+}
