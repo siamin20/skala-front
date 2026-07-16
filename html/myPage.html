@@ -88,25 +88,41 @@
             </div>
           </div>
 
-          <h3 class="mp-sub">기본 정보 <span class="tag">고정</span></h3>
-          <dl class="summary-dl">
-            <dt>생년월일</dt><dd data-mp-birth>-</dd>
-            <dt>성별</dt><dd data-mp-gender>-</dd>
-            <dt>관심 분야</dt><dd data-mp-interest>-</dd>
-            <dt>개발 경력</dt><dd data-mp-exp>-</dd>
-            <dt>전화번호</dt><dd data-mp-tel>-</dd>
-          </dl>
-
-          <h3 class="mp-sub">수정 가능</h3>
+          <!-- 회원가입과 같은 필드 순서. 고정 항목은 값만, 수정 항목만 입력칸을 연다. -->
           <form data-mp-edit autocomplete="on" novalidate>
+            <!-- 이메일 (수정) -->
             <div class="field">
               <label for="mpEmail">이메일</label>
               <input class="input" type="email" id="mpEmail" placeholder="you@example.com" autocomplete="email" />
             </div>
+            <!-- 이름 (고정) -->
+            <div class="field"><span class="mp-label">이름</span><p class="mp-ro" data-mp-name2>-</p></div>
+            <!-- 생년월일 (고정) -->
+            <div class="field"><span class="mp-label">생년월일</span><p class="mp-ro" data-mp-birth>-</p></div>
+            <!-- 전화번호 (고정) -->
+            <div class="field"><span class="mp-label">전화번호</span><p class="mp-ro" data-mp-tel>-</p></div>
+            <!-- 희망 직군 (수정, 가입과 동일한 드롭다운) -->
             <div class="field">
-              <label for="mpJob">희망 직군</label>
-              <input class="input" type="text" id="mpJob" placeholder="희망 직군" />
+              <label for="mpJobSelect">희망 직군</label>
+              <select class="select" id="mpJobSelect" data-mp-job-select>
+                <option value="">선택하세요</option>
+                <option>AI/ML 엔지니어</option>
+                <option>백엔드 개발</option>
+                <option>데이터 엔지니어</option>
+                <option>프론트엔드 개발</option>
+                <option>MLOps · 클라우드</option>
+                <option>프로덕트 매니저</option>
+                <option value="__custom__">직접 입력…</option>
+              </select>
+              <input class="input mt-3" type="text" id="mpJobCustom" data-mp-job-custom placeholder="희망 직군을 직접 입력" hidden />
             </div>
+            <!-- 성별 (고정) -->
+            <div class="field"><span class="mp-label">성별</span><p class="mp-ro" data-mp-gender>-</p></div>
+            <!-- 관심 분야 (고정) -->
+            <div class="field"><span class="mp-label">관심 분야</span><p class="mp-ro" data-mp-interest>-</p></div>
+            <!-- 개발 경력 (고정) -->
+            <div class="field"><span class="mp-label">개발 경력</span><p class="mp-ro" data-mp-exp>-</p></div>
+            <!-- 프로필 이미지 (수정) -->
             <div class="field">
               <label for="mpAvatar">프로필 이미지</label>
               <div class="file-picker">
@@ -120,16 +136,36 @@
               </div>
               <small class="hint">JPG · PNG · WEBP · 5MB 이하 · 정사각형 권장</small>
             </div>
+            <!-- 프로필 색상 (수정) — 색을 고르면 등록된 이미지는 제거됨 -->
+            <div class="field">
+              <span class="mp-label" id="mp-theme-label">프로필 색상</span>
+              <div class="swatch-row" role="radiogroup" aria-labelledby="mp-theme-label" data-mp-swatches>
+                <label class="swatch-opt" title="인디고"><input type="radio" name="mpThemeColor" value="#4338ca" /><span class="swatch-opt__dot" style="--sw:#4338ca"></span></label>
+                <label class="swatch-opt" title="틸"><input type="radio" name="mpThemeColor" value="#0d9488" /><span class="swatch-opt__dot" style="--sw:#0d9488"></span></label>
+                <label class="swatch-opt" title="바이올렛"><input type="radio" name="mpThemeColor" value="#7c3aed" /><span class="swatch-opt__dot" style="--sw:#7c3aed"></span></label>
+                <label class="swatch-opt" title="스카이"><input type="radio" name="mpThemeColor" value="#0284c7" /><span class="swatch-opt__dot" style="--sw:#0284c7"></span></label>
+                <label class="swatch-opt" title="앰버"><input type="radio" name="mpThemeColor" value="#d97706" /><span class="swatch-opt__dot" style="--sw:#d97706"></span></label>
+                <label class="swatch-opt" title="로즈"><input type="radio" name="mpThemeColor" value="#e11d48" /><span class="swatch-opt__dot" style="--sw:#e11d48"></span></label>
+                <label class="swatch-opt swatch-opt--custom" title="직접 선택">
+                  <input type="radio" name="mpThemeColor" value="#4338ca" data-mp-swatch-custom />
+                  <span class="swatch-opt__dot swatch-opt__dot--pick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+                  </span>
+                </label>
+              </div>
+              <input type="color" data-mp-color-custom value="#4338ca" hidden aria-label="직접 색 선택" />
+              <small class="hint">색을 선택하면 등록한 프로필 이미지 대신 이 색으로 아바타를 만들어요</small>
+            </div>
+            <!-- 자기소개 (고정) -->
+            <div class="field"><span class="mp-label">자기소개</span><p class="mp-ro" data-mp-intro>-</p></div>
+
             <div class="form-actions">
               <button class="btn" type="submit">변경 사항 저장</button>
             </div>
           </form>
 
-          <hr class="divider" />
-          <div class="form-actions">
-            <button class="btn btn--ghost" type="button" data-mp-logout>로그아웃</button>
-            <button class="btn btn--danger" type="button" data-mp-delete>회원 탈퇴</button>
-          </div>
+          <!-- 회원 탈퇴: 실수로 누르기 어렵게 작고 눈에 안 띄는 링크로 -->
+          <p class="mp-withdraw"><button type="button" class="mp-withdraw__link" data-mp-delete>회원 탈퇴</button></p>
         </div>
       </section>
 
@@ -162,14 +198,19 @@
       var $ = function (s) { return document.querySelector(s); };
       function txt(sel, v) { var e = $(sel); if (e) e.textContent = (v == null || v === "") ? "-" : v; }
 
+      var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+      // 헤더 · 고정 항목
       txt("[data-mp-hello]", (user.name || user.id) + "님");
       txt("[data-mp-name]", user.name || user.id);
       txt("[data-mp-id]", user.id);
+      txt("[data-mp-name2]", user.name);
       txt("[data-mp-birth]", user.birth);
+      txt("[data-mp-tel]", user.tel);
       txt("[data-mp-gender]", user.gender);
       txt("[data-mp-interest]", (user.interest && user.interest.length) ? user.interest.join(", ") : "");
       txt("[data-mp-exp]", user.exp);
-      txt("[data-mp-tel]", user.tel);
+      txt("[data-mp-intro]", user.intro);
 
       var avImg = $("[data-mp-avatar-img]"), avPh = $("[data-mp-avatar-ph]"), avBox = $("[data-mp-avatar]");
       function renderAvatar() {
@@ -184,9 +225,52 @@
       }
       renderAvatar();
 
+      // 이메일
       $("#mpEmail").value = user.email || "";
-      $("#mpJob").value = user.job || "";
 
+      // 희망 직군 드롭다운 (프리필 + 직접 입력)
+      var jobSel = $("[data-mp-job-select]"), jobCustom = $("[data-mp-job-custom]");
+      (function () {
+        var opts = $$("[data-mp-job-select] option").map(function (o) { return o.value || o.textContent; });
+        var v = user.job || "";
+        if (!v) jobSel.value = "";
+        else if (opts.indexOf(v) > -1 && v !== "__custom__") jobSel.value = v;
+        else { jobSel.value = "__custom__"; jobCustom.hidden = false; jobCustom.value = v; }
+      })();
+      jobSel.addEventListener("change", function () {
+        if (jobSel.value === "__custom__") { jobCustom.hidden = false; jobCustom.focus(); }
+        else { jobCustom.hidden = true; jobCustom.value = ""; }
+      });
+      function jobValue() { return jobSel.value === "__custom__" ? jobCustom.value.trim() : jobSel.value; }
+
+      // 프로필 색상 스와치 (프리필 + 선택 시 이미지 제거 플래그)
+      var colorPicker = $("[data-mp-color-custom]"), customRadio = $("[data-mp-swatch-custom]");
+      var customDot = customRadio ? customRadio.nextElementSibling : null;
+      var colorChosen = false;
+      function selectedColor() { var r = document.querySelector('input[name="mpThemeColor"]:checked'); return r ? r.value : (user.themeColor || ""); }
+      (function () {
+        var matched = false;
+        $$('input[name="mpThemeColor"]').forEach(function (r) {
+          if (!r.hasAttribute("data-mp-swatch-custom") && r.value.toLowerCase() === (user.themeColor || "").toLowerCase()) { r.checked = true; matched = true; }
+        });
+        if (!matched && user.themeColor && customRadio) {
+          customRadio.value = user.themeColor; customRadio.checked = true;
+          if (customDot) { customDot.style.setProperty("--sw", user.themeColor); customDot.classList.add("has-color"); }
+        }
+      })();
+      $$('input[name="mpThemeColor"]').forEach(function (r) {
+        r.addEventListener("change", function () {
+          colorChosen = true; // 색을 고르면 저장 시 이미지 제거
+          if (r.hasAttribute("data-mp-swatch-custom")) { colorPicker.hidden = false; try { colorPicker.click(); } catch (e) {} }
+          else if (colorPicker) colorPicker.hidden = true;
+        });
+      });
+      if (colorPicker) colorPicker.addEventListener("input", function () {
+        customRadio.value = colorPicker.value; customRadio.checked = true; colorChosen = true;
+        if (customDot) { customDot.style.setProperty("--sw", colorPicker.value); customDot.classList.add("has-color"); }
+      });
+
+      // 프로필 이미지 업로드 (이미지를 올리면 색상 선택은 무시)
       var pendingAvatar = null;
       var fileInput = $("#mpAvatar"), preview = $("[data-mp-newpreview]"), fname = $("[data-mp-filename]");
       fileInput.addEventListener("change", function () {
@@ -194,21 +278,22 @@
         if (!f) { pendingAvatar = null; preview.hidden = true; fname.textContent = ""; return; }
         if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { window.showToast && showToast("JPG·PNG·WEBP만 가능해요"); fileInput.value = ""; return; }
         if (f.size > 5 * 1024 * 1024) { window.showToast && showToast("5MB 이하만 가능해요"); fileInput.value = ""; return; }
-        downscale(f).then(function (url) { pendingAvatar = url; preview.src = url; preview.hidden = false; fname.textContent = f.name; });
+        downscale(f).then(function (url) { pendingAvatar = url; colorChosen = false; preview.src = url; preview.hidden = false; fname.textContent = f.name; });
       });
 
+      // 저장
       $("[data-mp-edit]").addEventListener("submit", function (e) {
         e.preventDefault();
         user.email = $("#mpEmail").value.trim();
-        user.job = $("#mpJob").value.trim();
-        if (pendingAvatar) user.avatar = pendingAvatar;
+        user.job = jobValue();
+        user.themeColor = selectedColor() || user.themeColor;
+        if (pendingAvatar) user.avatar = pendingAvatar;   // 새 이미지 우선
+        else if (colorChosen) user.avatar = "";           // 색을 골랐으면 등록된 이미지 제거
         SkalaAuth.saveUser(user);
         renderAvatar();
-        pendingAvatar = null; preview.hidden = true; fname.textContent = "";
+        pendingAvatar = null; colorChosen = false; preview.hidden = true; fname.textContent = "";
         window.showToast && showToast("변경 사항을 저장했어요");
       });
-
-      $("[data-mp-logout]").addEventListener("click", function () { SkalaAuth.logout(); location.href = SkalaAuth.paths.home; });
 
       var delDlg = $("[data-delete-dialog]");
       var openDlg = function () { if (delDlg.showModal) delDlg.showModal(); else delDlg.setAttribute("open", ""); };
