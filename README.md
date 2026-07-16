@@ -41,6 +41,18 @@ media/          로고·이미지 등
 - 추가: 프로필 아바타·일상 사진(`media/`), 포트폴리오·GitHub 링크(인라인 SVG 아이콘),
   `<details>` 약력 타임라인·FAQ 아코디언, CSS Grid 카드, 다크 모드, 반응형
 
+### html/myClass.html — 나의 강의 일정 (과제)
+
+SKALA 4반(205호) 주간 강의 시간표. 09:00–18:00 1시간 단위 격자에 실제 커리큘럼·담당 교수를 얹었다.
+
+- 필수 요소: `<table>` `<thead>` `<tbody>` `<td>` + **셀 병합** — 오전 강의 `rowspan="3"`, 점심 `colspan="5"`
+- 제약: **파일 내 CSS 0줄** — 스타일은 외부 `style.css`, 인터랙션은 외부 `script/schedule.js`
+- 추가 요소: `<caption>` `<colgroup>` `<tfoot>` `<th scope>`, 색상 범례
+- 점진적 향상: HTML `<tbody>`는 개강 첫 주(무JS·소스 열람용) 정적 폴백, `schedule.js`가 로드되면 현재 주로 다시 렌더
+- JS(`script/schedule.js`): 진입 시 오늘이 속한 주 자동 표시, 좌우 화살표 주 이동, 오늘 열 현재 시각 가로줄(30초 갱신),
+  과목 카테고리별 색 구분, 과목 마지막 날 오후에 '과제 실습' 블록(비중 큰 과목 2h/가벼운 과목 1h), 점심 클릭 시 그 주 중식 메뉴 `<dialog>` 모달
+- CSS: 카테고리 색·오늘 열 강조(액센트 워시)·현재 시각 줄·주 이동 네비·중식 모달, 다크 모드, 786px 반응형
+
 ## 실행
 
 `index.html`을 브라우저에서 열거나 VS Code Live Server로 실행.
