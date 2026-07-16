@@ -75,13 +75,20 @@
     const byId = {};
     chips.forEach((c) => { byId[c.getAttribute("href").slice(1)] = c; });
     const targets = Object.keys(byId).map((id) => document.getElementById(id)).filter(Boolean);
+    const setActive = (chip) => {
+      chips.forEach((c) => c.setAttribute("aria-current", "false"));
+      if (chip) chip.setAttribute("aria-current", "true");
+    };
+    // 클릭 즉시 활성화 + 스크롤 정착 동안 스파이 억제(섹션이 세로로 겹쳐도 바로 반응)
+    let spyLock = 0;
+    chips.forEach((c) => {
+      c.addEventListener("click", () => { setActive(c); spyLock = Date.now() + 900; });
+    });
     const spy = new IntersectionObserver(
       (entries) => {
+        if (Date.now() < spyLock) return; // 클릭 직후엔 관찰자가 덮어쓰지 않음
         entries.forEach((en) => {
-          if (en.isIntersecting) {
-            chips.forEach((c) => c.setAttribute("aria-current", "false"));
-            byId[en.target.id] && byId[en.target.id].setAttribute("aria-current", "true");
-          }
+          if (en.isIntersecting) setActive(byId[en.target.id]);
         });
       },
       { rootMargin: "-45% 0px -50% 0px" }
