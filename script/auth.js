@@ -73,14 +73,37 @@
     return true;
   }
 
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  // 도트 캐릭터 아바타 SVG (선호 색상으로 tint) — 마이페이지 아바타와 동일 디자인
+  function characterSVG(color) {
+    return '<svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">'
+      + '<g fill="' + color + '">'
+      +   '<rect x="15" y="3" width="2" height="4" rx="1"/><circle cx="16" cy="3" r="1.6"/>'
+      +   '<rect x="6" y="8" width="20" height="17" rx="6"/>'
+      +   '<rect x="9" y="24" width="4" height="3" rx="1.5"/><rect x="19" y="24" width="4" height="3" rx="1.5"/>'
+      + '</g>'
+      + '<circle cx="12.5" cy="16" r="2.7" fill="#fff"/><circle cx="19.5" cy="16" r="2.7" fill="#fff"/>'
+      + '<circle cx="13" cy="16.5" r="1.25" fill="#1c1f36"/><circle cx="20" cy="16.5" r="1.25" fill="#1c1f36"/>'
+      + '<path d="M13 20 Q16 22.5 19 20" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>'
+      + '</svg>';
+  }
+  function avatarPic(user) {
+    if (user.avatar) return '<span class="auth-user__pic"><img src="' + user.avatar + '" alt="" /></span>';
+    var color = user.themeColor || "#4338ca";
+    return '<span class="auth-user__pic" style="background:color-mix(in srgb, ' + color + ' 16%, var(--surface-2))">' + characterSVG(color) + '</span>';
+  }
+
   // 헤더의 로그인 상태 UI 연결 ([data-auth-user] / [data-auth-btn] / [data-mypage-link])
   function initHeader() {
     var id = getSession(), user = id ? getUser(id) : null;
     var userEl = document.querySelector("[data-auth-user]");
     var authBtn = document.querySelector("[data-auth-btn]");
+    var onMyPage = /mypage\.html/i.test(location.pathname); // 마이페이지 헤더엔 아바타 생략(카드에 이미 있음)
     if (userEl) {
-      if (user) { userEl.hidden = false; userEl.textContent = (user.name || user.id) + "님"; }
-      else { userEl.hidden = true; userEl.textContent = ""; }
+      if (user) {
+        userEl.hidden = false;
+        userEl.innerHTML = (onMyPage ? "" : avatarPic(user)) + "<span>" + esc(user.name || user.id) + "님</span>";
+      } else { userEl.hidden = true; userEl.innerHTML = ""; }
     }
     if (authBtn) {
       if (id) {
