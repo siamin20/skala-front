@@ -55,6 +55,19 @@
 /* 위젯(미니게임·날씨 등)은 카드라서 링을 딱 붙게 */
 .widget.spotlight:target { outline-offset: 2px; }
 
+/* 점프 내비 클릭 시 대상 위젯 반짝(스크롤이 없어도 눌린 걸 알림).
+   app.js가 .is-jumped를 붙였다 뗀다 → :target에 의존하지 않음 */
+.spotlight.is-jumped {
+  animation: spotlight 1.4s var(--ease);
+  border-radius: var(--radius);
+  outline: 3px solid transparent;
+  outline-offset: 10px;
+}
+.widget.spotlight.is-jumped { outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .spotlight.is-jumped { animation: none; }
+}
+
 /* ---- 대시보드 그리드 ------------------------------------------- */
 .dash-grid {
   display: grid;

@@ -303,6 +303,25 @@
         <p class="eyebrow">台北 · <time datetime="2025-02">2025.02</time> &amp; <time datetime="2026-02">2026.02</time></p>
         <h2 id="story-title">한 번 가고, 또 간 타이베이</h2>
 
+        <!-- 글과 함께 듣는 배경 피아노 (재생하면 상단 BGM은 잠깐 쉬어감) -->
+        <figure class="nowplaying" data-nowplaying aria-label="글을 읽으며 함께 들을 음악">
+          <span class="nowplaying__disc" aria-hidden="true">
+            <svg class="nowplaying__note" viewBox="0 0 24 24" fill="currentColor"><path d="M9 17.5V7.2l9-1.9v8.9a2.6 2.6 0 1 0 1.6 2.4V3l-12 2.5v11.1A2.6 2.6 0 1 0 9 17.5z"/></svg>
+            <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          </span>
+          <div class="nowplaying__main">
+            <figcaption class="nowplaying__cap">
+              <span class="nowplaying__kicker">읽으면서 같이 들어요</span>
+              <span class="nowplaying__desc">타이베이 밤거리에 어울리는 잔잔한 피아노 — 재생하면 배경음악이 잠깐 멈췄다가, 끝나면 다시 살아나요</span>
+            </figcaption>
+            <audio id="tripAudio" controls preload="none">
+              <source src="../media/taipei-music.mp3" type="audio/mpeg" />
+              이 브라우저는 audio 태그를 지원하지 않아요.
+            </audio>
+            <p class="media-credit">🎵 The Wind Awakening · Days for You — <a href="https://pixabay.com/music/" target="_blank" rel="noopener">Pixabay</a></p>
+          </div>
+        </figure>
+
         <article class="trip-story">
           <p><time datetime="2025-02">2025년 2월</time>, 친구들이랑 처음 타이베이에 갔다. 사실 큰 기대 없이 고른 여행지였는데 가서 완전 반해버렸다. 낮엔 좀 덥고 습한데, 밤 되면 야시장이 살아나서 매일 저녁 스린이며 라오허제며 돌아다니면서 배 터지게 먹었다. 샤오롱바오에 버블티, 이름 모를 꼬치까지 일단 보이면 다 먹어봤던 것 같다.</p>
 
@@ -334,14 +353,6 @@
           <figcaption>스펀 옛거리, 코앞으로 기차가 지나간다</figcaption>
         </figure>
 
-        <figure class="trip-audio">
-          <figcaption>여행 감성으로 깔았던 피아노 — <span class="text-muted">재생하면 배경음악이 잠깐 멈췄다가, 끝나면 다시 살아나요</span></figcaption>
-          <audio id="tripAudio" controls preload="none">
-            <source src="../media/taipei-music.mp3" type="audio/mpeg" />
-            이 브라우저는 audio 태그를 지원하지 않아요.
-          </audio>
-          <p class="media-credit">🎵 The Wind Awakening · Days for You — <a href="https://pixabay.com/music/" target="_blank" rel="noopener">Pixabay</a></p>
-        </figure>
       </section>
 
     </div>
@@ -451,13 +462,16 @@
       });
 
       // 아래 오디오 재생 → BGM 페이드아웃, 멈추거나 끝나면 다시 페이드인
+      var np = document.querySelector("[data-nowplaying]");
       if (trip) {
         trip.addEventListener("play", function () {
           ducked = true;
+          if (np) np.classList.add("is-playing");   // 디스크 이퀄라이저 켜기
           if (started && !userOff) fadeTo(0);
         });
         var back = function () {
           ducked = false;
+          if (np) np.classList.remove("is-playing"); // 이퀄라이저 끄기
           if (started && !userOff) { if (bgm.paused) bgm.play(); fadeTo(VOL); }
         };
         trip.addEventListener("pause", back);

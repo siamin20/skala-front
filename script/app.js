@@ -81,8 +81,31 @@
     };
     // 클릭 즉시 활성화 + 스크롤 정착 동안 스파이 억제(섹션이 세로로 겹쳐도 바로 반응)
     let spyLock = 0;
+    const prefersReducedNav = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-h"), 10) || 64;
+    const jumpNavEl = document.querySelector(".jump-nav");
+    // 점프 내비를 JS로 직접 스크롤 처리:
+    //  · #game/#weather 는 position:sticky 사이드바 '안'에 있어 기본 앵커 점프가
+    //    고정되며 움직이는 대상을 쫓아 '슬금슬금' 밀리고, 페이지 하단에선 아예 못 감.
+    //  · 클릭 순간의 실측 위치(getBoundingClientRect)로 목적지를 한 번에 계산 → 창 스크롤.
+    //  · 더 내려갈 데가 없으면(하단) 대상 위젯을 잠깐 하이라이트해 눌린 걸 알림.
     chips.forEach((c) => {
-      c.addEventListener("click", () => { setActive(c); spyLock = Date.now() + 900; });
+      c.addEventListener("click", (e) => {
+        const id = (c.getAttribute("href") || "").slice(1);
+        const el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        setActive(c); spyLock = Date.now() + 900;
+        const offset = navH + (jumpNavEl ? jumpNavEl.offsetHeight : 0) + 14;
+        const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        const dest = Math.max(0, Math.min(window.scrollY + el.getBoundingClientRect().top - offset, max));
+        window.scrollTo({ top: dest, behavior: prefersReducedNav ? "auto" : "smooth" });
+        history.replaceState(null, "", "#" + id);
+        // 스크롤이 거의 없을 때(이미 그 자리·하단)도 피드백: 위젯 잠깐 강조
+        el.classList.remove("is-jumped");
+        void el.offsetWidth; // 리플로우 강제 → 애니메이션 재시작
+        el.classList.add("is-jumped");
+      });
     });
     const spy = new IntersectionObserver(
       (entries) => {
