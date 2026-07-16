@@ -80,28 +80,50 @@
           <div class="mp-head">
             <span class="mp-avatar" data-mp-avatar>
               <img data-mp-avatar-img alt="프로필 이미지" hidden />
-              <span data-mp-avatar-ph aria-hidden="true"></span>
+              <span class="mp-avatar__char" data-mp-avatar-ph aria-hidden="true"></span>
             </span>
-            <div>
+            <div class="mp-head__meta">
               <p class="mp-name" data-mp-name></p>
-              <p class="mp-id text-muted">@<span data-mp-id></span></p>
+              <p class="mp-id">@<span data-mp-id></span></p>
             </div>
           </div>
 
-          <!-- 회원가입과 같은 필드 순서. 고정 항목은 값만, 수정 항목만 입력칸을 연다. -->
+          <!-- 이름·아이디만 고정, 나머지는 전부 수정 가능 (회원가입과 같은 순서·입력) -->
           <form data-mp-edit autocomplete="on" novalidate>
-            <!-- 이메일 (수정) -->
             <div class="field">
               <label for="mpEmail">이메일</label>
               <input class="input" type="email" id="mpEmail" placeholder="you@example.com" autocomplete="email" />
             </div>
-            <!-- 이름 (고정) -->
-            <div class="field"><span class="mp-label">이름</span><p class="mp-ro" data-mp-name2>-</p></div>
-            <!-- 생년월일 (고정) -->
-            <div class="field"><span class="mp-label">생년월일</span><p class="mp-ro" data-mp-birth>-</p></div>
-            <!-- 전화번호 (고정) -->
-            <div class="field"><span class="mp-label">전화번호</span><p class="mp-ro" data-mp-tel>-</p></div>
-            <!-- 희망 직군 (수정, 가입과 동일한 드롭다운) -->
+
+            <!-- 비밀번호 변경 (선택) -->
+            <div class="field">
+              <label for="mpPw">새 비밀번호</label>
+              <div class="input-wrap">
+                <input class="input" type="password" id="mpPw" autocomplete="new-password"
+                       placeholder="바꾸려면 입력 (8자↑·대소문자·숫자·특수문자)"
+                       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}" />
+                <button type="button" class="pw-toggle" data-pw-toggle="mpPw" aria-label="비밀번호 표시" aria-pressed="false">
+                  <svg class="eye-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7c2 0 3.8.6 5.3 1.5M22 12s-3.5 7-10 7c-2 0-3.8-.6-5.3-1.5"/><path d="M4 4l16 16"/></svg>
+                </button>
+              </div>
+              <small class="hint">비워두면 기존 비밀번호가 유지돼요</small>
+            </div>
+            <div class="field">
+              <label for="mpPw2">새 비밀번호 확인</label>
+              <input class="input" type="password" id="mpPw2" placeholder="새 비밀번호 다시 입력" autocomplete="new-password" />
+              <small class="field-status" data-mp-pw-match role="status" aria-live="polite"></small>
+            </div>
+
+            <div class="field">
+              <label for="mpBirth">생년월일</label>
+              <input class="input" type="date" id="mpBirth" min="1950-01-01" max="2020-12-31" />
+            </div>
+            <div class="field">
+              <label for="mpTel">전화번호</label>
+              <input class="input" type="tel" id="mpTel" placeholder="010-1234-5678" pattern="0\d{1,2}-\d{3,4}-\d{4}" />
+            </div>
+
             <div class="field">
               <label for="mpJobSelect">희망 직군</label>
               <select class="select" id="mpJobSelect" data-mp-job-select>
@@ -116,13 +138,35 @@
               </select>
               <input class="input mt-3" type="text" id="mpJobCustom" data-mp-job-custom placeholder="희망 직군을 직접 입력" hidden />
             </div>
-            <!-- 성별 (고정) -->
-            <div class="field"><span class="mp-label">성별</span><p class="mp-ro" data-mp-gender>-</p></div>
-            <!-- 관심 분야 (고정) -->
-            <div class="field"><span class="mp-label">관심 분야</span><p class="mp-ro" data-mp-interest>-</p></div>
-            <!-- 개발 경력 (고정) -->
-            <div class="field"><span class="mp-label">개발 경력</span><p class="mp-ro" data-mp-exp>-</p></div>
-            <!-- 프로필 이미지 (수정) -->
+
+            <fieldset class="field">
+              <legend>성별</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="mpGender" value="남성" /> 남성</label>
+                <label class="choice"><input type="radio" name="mpGender" value="여성" /> 여성</label>
+                <label class="choice"><input type="radio" name="mpGender" value="선택안함" /> 선택 안 함</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="field">
+              <legend>관심 분야 (중복 가능)</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="checkbox" name="mpInterest" value="AI/ML" /> AI/ML</label>
+                <label class="choice"><input type="checkbox" name="mpInterest" value="백엔드" /> 백엔드</label>
+                <label class="choice"><input type="checkbox" name="mpInterest" value="프론트엔드" /> 프론트엔드</label>
+                <label class="choice"><input type="checkbox" name="mpInterest" value="데이터" /> 데이터</label>
+                <label class="choice"><input type="checkbox" name="mpInterest" value="클라우드/인프라" /> 클라우드/인프라</label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="mpExp">개발 경력</label>
+              <div class="row gap-3">
+                <input type="range" id="mpExp" min="0" max="10" step="1" value="0" />
+                <output id="mpExpOut" for="mpExp" class="exp-out">신입</output>
+              </div>
+            </div>
+
             <div class="field">
               <label for="mpAvatar">프로필 이미지</label>
               <div class="file-picker">
@@ -136,7 +180,7 @@
               </div>
               <small class="hint">JPG · PNG · WEBP · 5MB 이하 · 정사각형 권장</small>
             </div>
-            <!-- 프로필 색상 (수정) — 색을 고르면 등록된 이미지는 제거됨 -->
+
             <div class="field">
               <span class="mp-label" id="mp-theme-label">프로필 색상</span>
               <div class="swatch-row" role="radiogroup" aria-labelledby="mp-theme-label" data-mp-swatches>
@@ -154,10 +198,13 @@
                 </label>
               </div>
               <input type="color" data-mp-color-custom value="#4338ca" hidden aria-label="직접 색 선택" />
-              <small class="hint">색을 선택하면 등록한 프로필 이미지 대신 이 색으로 아바타를 만들어요</small>
+              <small class="hint">이미지를 안 올리면 이 색으로 도트 아바타를 만들어요 (색을 고르면 등록한 이미지는 제거)</small>
             </div>
-            <!-- 자기소개 (고정) -->
-            <div class="field"><span class="mp-label">자기소개</span><p class="mp-ro" data-mp-intro>-</p></div>
+
+            <div class="field">
+              <label for="mpIntro">자기소개</label>
+              <textarea class="textarea" id="mpIntro" rows="4" maxlength="200" placeholder="한 줄 소개나 인사"></textarea>
+            </div>
 
             <div class="form-actions">
               <button class="btn" type="submit">변경 사항 저장</button>
@@ -200,33 +247,52 @@
 
       var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
 
-      // 헤더 · 고정 항목
+      function toast(m) { window.showToast && showToast(m); }
+      function setStatus(el, msg, st) { if (el) { el.textContent = msg; el.dataset.state = st || ""; } }
+
+      // 헤더 (이름·아이디만 고정)
       txt("[data-mp-hello]", (user.name || user.id) + "님");
       txt("[data-mp-name]", user.name || user.id);
       txt("[data-mp-id]", user.id);
-      txt("[data-mp-name2]", user.name);
-      txt("[data-mp-birth]", user.birth);
-      txt("[data-mp-tel]", user.tel);
-      txt("[data-mp-gender]", user.gender);
-      txt("[data-mp-interest]", (user.interest && user.interest.length) ? user.interest.join(", ") : "");
-      txt("[data-mp-exp]", user.exp);
-      txt("[data-mp-intro]", user.intro);
 
-      var avImg = $("[data-mp-avatar-img]"), avPh = $("[data-mp-avatar-ph]"), avBox = $("[data-mp-avatar]");
-      function renderAvatar() {
-        if (user.avatar) {
-          avImg.src = user.avatar; avImg.hidden = false;
-          avPh.hidden = true; avBox.style.background = "";
-        } else {
-          avImg.hidden = true; avPh.hidden = false;
-          avPh.textContent = (user.name || user.id).slice(0, 1).toUpperCase();
-          avBox.style.background = user.themeColor || "var(--accent)";
-        }
+      // ── 도트 캐릭터 아바타 (색상으로 tint) ──
+      function characterSVG(color) {
+        return '<svg viewBox="0 0 32 32" width="100%" height="100%" aria-hidden="true">'
+          + '<g fill="' + color + '">'
+          +   '<rect x="15" y="3" width="2" height="4" rx="1"/><circle cx="16" cy="3" r="1.6"/>'
+          +   '<rect x="6" y="8" width="20" height="17" rx="6"/>'
+          +   '<rect x="9" y="24" width="4" height="3" rx="1.5"/><rect x="19" y="24" width="4" height="3" rx="1.5"/>'
+          + '</g>'
+          + '<circle cx="12.5" cy="16" r="2.7" fill="#fff"/><circle cx="19.5" cy="16" r="2.7" fill="#fff"/>'
+          + '<circle cx="13" cy="16.5" r="1.25" fill="#1c1f36"/><circle cx="20" cy="16.5" r="1.25" fill="#1c1f36"/>'
+          + '<path d="M13 20 Q16 22.5 19 20" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>'
+          + '</svg>';
       }
-      renderAvatar();
+      var avImg = $("[data-mp-avatar-img]"), avPh = $("[data-mp-avatar-ph]"), avBox = $("[data-mp-avatar]");
+      function currentColor() { var r = document.querySelector('input[name="mpThemeColor"]:checked'); return (r && r.value) || user.themeColor || "#4338ca"; }
+      function showChar(color) { avImg.hidden = true; avPh.hidden = false; avPh.innerHTML = characterSVG(color); avBox.style.background = "color-mix(in srgb, " + color + " 16%, var(--surface-2))"; }
+      function showImg(src) { avImg.src = src; avImg.hidden = false; avPh.hidden = true; avBox.style.background = ""; }
+      function renderAvatar() {
+        if (pendingAvatar) showImg(pendingAvatar);
+        else if (colorChosen) showChar(currentColor());
+        else if (user.avatar) showImg(user.avatar);
+        else showChar(user.themeColor || "#4338ca");
+      }
 
-      // 이메일
+      // ── 프리필 ──
       $("#mpEmail").value = user.email || "";
+      $("#mpBirth").value = user.birth || "";
+      $("#mpTel").value = user.tel || "";
+      $("#mpIntro").value = user.intro || "";
+      (function () { var g = document.querySelector('input[name="mpGender"][value="' + (user.gender || "") + '"]'); if (g) g.checked = true; })();
+      (function () { var list = user.interest || []; $$('input[name="mpInterest"]').forEach(function (c) { if (list.indexOf(c.value) > -1) c.checked = true; }); })();
+
+      // 개발 경력 (라벨 ↔ 숫자)
+      function expLabel(v) { v = +v; return v === 0 ? "신입" : v >= 10 ? "10년 이상" : v + "년"; }
+      function expToNum(label) { if (!label || label === "신입") return 0; if (label === "10년 이상") return 10; var n = parseInt(label, 10); return isNaN(n) ? 0 : n; }
+      var expEl = $("#mpExp"), expOut = $("#mpExpOut");
+      expEl.value = expToNum(user.exp); expOut.textContent = expLabel(expEl.value);
+      expEl.addEventListener("input", function () { expOut.textContent = expLabel(expEl.value); });
 
       // 희망 직군 드롭다운 (프리필 + 직접 입력)
       var jobSel = $("[data-mp-job-select]"), jobCustom = $("[data-mp-job-custom]");
@@ -243,11 +309,28 @@
       });
       function jobValue() { return jobSel.value === "__custom__" ? jobCustom.value.trim() : jobSel.value; }
 
-      // 프로필 색상 스와치 (프리필 + 선택 시 이미지 제거 플래그)
+      // 비밀번호 변경 (선택) — 보기 토글 + 일치 확인
+      $$("[data-pw-toggle]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var input = document.getElementById(btn.dataset.pwToggle);
+          var show = input.type === "password"; input.type = show ? "text" : "password";
+          btn.setAttribute("aria-pressed", String(show)); btn.classList.toggle("is-on", show);
+        });
+      });
+      var pwMatchEl = $("[data-mp-pw-match]");
+      function pwMatchCheck() {
+        var a = $("#mpPw").value, b = $("#mpPw2").value;
+        if (!b) { setStatus(pwMatchEl, "", ""); $("#mpPw2").setCustomValidity(""); return; }
+        if (a === b) { setStatus(pwMatchEl, "비밀번호가 일치해요", "good"); $("#mpPw2").setCustomValidity(""); }
+        else { setStatus(pwMatchEl, "비밀번호가 일치하지 않아요", "bad"); $("#mpPw2").setCustomValidity("mismatch"); }
+      }
+      $("#mpPw").addEventListener("input", pwMatchCheck);
+      $("#mpPw2").addEventListener("input", pwMatchCheck);
+
+      // 프로필 색상 스와치 (프리필 + 선택 시 이미지 제거 + 아바타 실시간 미리보기)
       var colorPicker = $("[data-mp-color-custom]"), customRadio = $("[data-mp-swatch-custom]");
       var customDot = customRadio ? customRadio.nextElementSibling : null;
       var colorChosen = false;
-      function selectedColor() { var r = document.querySelector('input[name="mpThemeColor"]:checked'); return r ? r.value : (user.themeColor || ""); }
       (function () {
         var matched = false;
         $$('input[name="mpThemeColor"]').forEach(function (r) {
@@ -260,14 +343,17 @@
       })();
       $$('input[name="mpThemeColor"]').forEach(function (r) {
         r.addEventListener("change", function () {
-          colorChosen = true; // 색을 고르면 저장 시 이미지 제거
+          colorChosen = true; pendingAvatar = null; // 색을 고르면 이미지 대신 도트 아바타
+          preview.hidden = true; fname.textContent = "";
           if (r.hasAttribute("data-mp-swatch-custom")) { colorPicker.hidden = false; try { colorPicker.click(); } catch (e) {} }
           else if (colorPicker) colorPicker.hidden = true;
+          renderAvatar();
         });
       });
       if (colorPicker) colorPicker.addEventListener("input", function () {
         customRadio.value = colorPicker.value; customRadio.checked = true; colorChosen = true;
         if (customDot) { customDot.style.setProperty("--sw", colorPicker.value); customDot.classList.add("has-color"); }
+        renderAvatar();
       });
 
       // 프로필 이미지 업로드 (이미지를 올리면 색상 선택은 무시)
@@ -275,24 +361,45 @@
       var fileInput = $("#mpAvatar"), preview = $("[data-mp-newpreview]"), fname = $("[data-mp-filename]");
       fileInput.addEventListener("change", function () {
         var f = fileInput.files && fileInput.files[0];
-        if (!f) { pendingAvatar = null; preview.hidden = true; fname.textContent = ""; return; }
-        if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { window.showToast && showToast("JPG·PNG·WEBP만 가능해요"); fileInput.value = ""; return; }
-        if (f.size > 5 * 1024 * 1024) { window.showToast && showToast("5MB 이하만 가능해요"); fileInput.value = ""; return; }
-        downscale(f).then(function (url) { pendingAvatar = url; colorChosen = false; preview.src = url; preview.hidden = false; fname.textContent = f.name; });
+        if (!f) { pendingAvatar = null; preview.hidden = true; fname.textContent = ""; renderAvatar(); return; }
+        if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { toast("JPG·PNG·WEBP만 가능해요"); fileInput.value = ""; return; }
+        if (f.size > 5 * 1024 * 1024) { toast("5MB 이하만 가능해요"); fileInput.value = ""; return; }
+        downscale(f).then(function (url) { pendingAvatar = url; colorChosen = false; preview.src = url; preview.hidden = false; fname.textContent = f.name; renderAvatar(); });
       });
 
-      // 저장
+      renderAvatar(); // 초기 아바타
+
+      // ── 저장 (비밀번호 변경은 해시 후) ──
+      function applyFields() {
+        user.email = $("#mpEmail").value.trim();
+        user.birth = $("#mpBirth").value;
+        user.tel = $("#mpTel").value.trim();
+        user.job = jobValue();
+        var g = document.querySelector('input[name="mpGender"]:checked'); user.gender = g ? g.value : "";
+        user.interest = $$('input[name="mpInterest"]:checked').map(function (c) { return c.value; });
+        user.exp = expLabel(expEl.value);
+        user.intro = $("#mpIntro").value.trim();
+        user.themeColor = currentColor();
+        if (pendingAvatar) user.avatar = pendingAvatar;
+        else if (colorChosen) user.avatar = "";
+      }
+      function afterSave() {
+        SkalaAuth.saveUser(user);
+        pendingAvatar = null; colorChosen = false; preview.hidden = true; fname.textContent = "";
+        $("#mpPw").value = ""; $("#mpPw2").value = ""; setStatus(pwMatchEl, "", ""); $("#mpPw2").setCustomValidity("");
+        renderAvatar();
+        toast("변경 사항을 저장했어요");
+      }
       $("[data-mp-edit]").addEventListener("submit", function (e) {
         e.preventDefault();
-        user.email = $("#mpEmail").value.trim();
-        user.job = jobValue();
-        user.themeColor = selectedColor() || user.themeColor;
-        if (pendingAvatar) user.avatar = pendingAvatar;   // 새 이미지 우선
-        else if (colorChosen) user.avatar = "";           // 색을 골랐으면 등록된 이미지 제거
-        SkalaAuth.saveUser(user);
-        renderAvatar();
-        pendingAvatar = null; colorChosen = false; preview.hidden = true; fname.textContent = "";
-        window.showToast && showToast("변경 사항을 저장했어요");
+        var newPw = $("#mpPw").value, newPw2 = $("#mpPw2").value;
+        if (newPw) {
+          if (!$("#mpPw").checkValidity()) { toast("새 비밀번호 규칙을 확인하세요 (8자↑·대소문자·숫자·특수문자)"); $("#mpPw").focus(); return; }
+          if (newPw !== newPw2) { toast("새 비밀번호가 일치하지 않아요"); $("#mpPw2").focus(); return; }
+        }
+        applyFields();
+        if (newPw) { SkalaAuth.hashPw(newPw).then(function (h) { user.pwHash = h; afterSave(); }); }
+        else afterSave();
       });
 
       var delDlg = $("[data-delete-dialog]");

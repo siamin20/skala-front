@@ -300,11 +300,14 @@ meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--
 .btn--danger:hover { background: color-mix(in srgb, var(--rose-500) 85%, black); color: #fff; }
 
 /* 마이페이지 */
-.mp-head { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4); }
-.mp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; overflow: hidden; background: var(--accent); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: var(--step-2); flex: none; }
+.mp-head { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-5); }
+.mp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: var(--surface-2); flex: none; }
 .mp-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.mp-name { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); }
-.mp-id { font-family: var(--font-mono); font-size: var(--step--1); }
+.mp-avatar__char { display: inline-flex; align-items: center; justify-content: center; width: 78%; height: 78%; }
+.mp-avatar__char svg { display: block; width: 100%; height: 100%; }
+.mp-head__meta { display: flex; flex-direction: column; justify-content: center; gap: 0.12em; min-width: 0; }
+.mp-name { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); line-height: 1.1; margin: 0; }
+.mp-id { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); line-height: 1.2; margin: 0; }
 .mp-sub { font-size: var(--step-0); font-weight: 600; margin: var(--space-5) 0 var(--space-3); display: flex; align-items: center; gap: .5em; }
 /* 고정(읽기전용) 항목: 라벨 + 값 텍스트 */
 .mp-label { font-weight: 600; font-size: var(--step--1); color: var(--ink); }
