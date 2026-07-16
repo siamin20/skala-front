@@ -335,16 +335,27 @@
         </figure>
 
         <figure class="trip-audio">
-          <figcaption>여행 내내 들었던 노래</figcaption>
-          <audio controls preload="none">
+          <figcaption>여행 감성으로 깔았던 피아노 — <span class="text-muted">재생하면 배경음악이 잠깐 멈췄다가, 끝나면 다시 살아나요</span></figcaption>
+          <audio id="tripAudio" controls preload="none">
             <source src="../media/taipei-music.mp3" type="audio/mpeg" />
             이 브라우저는 audio 태그를 지원하지 않아요.
           </audio>
+          <p class="media-credit">🎵 The Wind Awakening · Days for You — <a href="https://pixabay.com/music/" target="_blank" rel="noopener">Pixabay</a></p>
         </figure>
       </section>
 
     </div>
   </main>
+
+  <!-- 배경음악: 첫 상호작용 때 시작 · 반복재생 -->
+  <audio id="bgm" loop preload="auto">
+    <source src="../media/bgm.mp3" type="audio/mpeg" />
+  </audio>
+  <!-- 떠다니는 배경음악 음소거 버튼 (스크롤해도 고정) -->
+  <button class="bgm-toggle" type="button" data-bgm-toggle data-on="false" aria-pressed="false" aria-label="배경음악 켜기" title="배경음악">
+    <svg class="ico-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+    <svg class="ico-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M23 9l-6 6M17 9l6 6"/></svg>
+  </button>
 
   <button class="to-top" type="button" data-to-top aria-label="맨 위로 이동">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
@@ -388,6 +399,71 @@
         else hideTip();
       });
       map.addEventListener("mouseleave", hideTip);
+    })();
+  </script>
+
+  <!-- 배경음악: 자동재생(첫 상호작용 시) · 음소거 버튼 · 아래 오디오 재생 시 페이드 덕킹 -->
+  <script>
+    (function () {
+      var bgm = document.getElementById("bgm");
+      var toggle = document.querySelector("[data-bgm-toggle]");
+      var trip = document.getElementById("tripAudio");
+      if (!bgm || !toggle) return;
+      var VOL = 0.4;
+      bgm.volume = VOL;
+      var started = false, userOff = false, ducked = false, fade = null;
+
+      function paint() {
+        var on = started && !userOff && !bgm.paused;
+        toggle.dataset.on = String(on);
+        toggle.setAttribute("aria-pressed", String(on));
+        toggle.setAttribute("aria-label", on ? "배경음악 끄기" : "배경음악 켜기");
+      }
+      function fadeTo(target, after) {
+        clearInterval(fade);
+        fade = setInterval(function () {
+          var v = bgm.volume, step = 0.04;
+          if (Math.abs(v - target) <= step) { bgm.volume = target; clearInterval(fade); if (after) after(); return; }
+          bgm.volume = Math.min(1, Math.max(0, v + (target > v ? step : -step)));
+        }, 45);
+      }
+
+      function start() {
+        var p = bgm.play();
+        if (p && p.then) p.then(function () { started = true; paint(); }).catch(function () {});
+      }
+      start();
+      // 브라우저가 소리 자동재생을 막으면 첫 상호작용 때 시작
+      function onGesture() {
+        if (started) { off(); return; }
+        bgm.play().then(function () { started = true; paint(); off(); }).catch(function () {});
+      }
+      function off() { ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (e) { window.removeEventListener(e, onGesture); }); }
+      ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (e) { window.addEventListener(e, onGesture, { passive: true }); });
+
+      toggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (!started) { userOff = false; start(); paint(); return; }
+        userOff = !userOff;
+        if (userOff) { bgm.pause(); }
+        else { bgm.play(); if (!ducked) fadeTo(VOL); }
+        paint();
+      });
+
+      // 아래 오디오 재생 → BGM 페이드아웃, 멈추거나 끝나면 다시 페이드인
+      if (trip) {
+        trip.addEventListener("play", function () {
+          ducked = true;
+          if (started && !userOff) fadeTo(0);
+        });
+        var back = function () {
+          ducked = false;
+          if (started && !userOff) { if (bgm.paused) bgm.play(); fadeTo(VOL); }
+        };
+        trip.addEventListener("pause", back);
+        trip.addEventListener("ended", back);
+      }
+      paint();
     })();
   </script>
 </body>

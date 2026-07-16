@@ -623,3 +623,22 @@ dialog::backdrop { background: hsl(240 40% 5% / 0.55); backdrop-filter: blur(3px
 }
 .to-top[data-show="true"] { opacity: 1; visibility: visible; transform: translateY(0); }
 .to-top:hover { background: var(--accent-hover); }
+
+/* 떠다니는 배경음악 음소거 버튼 (맨위로 버튼 왼쪽, 항상 표시) */
+.bgm-toggle {
+  position: fixed; right: 80px; bottom: 22px; z-index: 90;
+  width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--surface); color: var(--ink-soft);
+  border: 1px solid var(--border-strong); cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.bgm-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.bgm-toggle[data-on="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.bgm-toggle .ico-on { display: none; }
+.bgm-toggle[data-on="true"] .ico-on { display: block; }
+.bgm-toggle[data-on="true"] .ico-off { display: none; }
+
+.media-credit { margin-top: var(--space-2); font-size: var(--step--2, 0.72rem); color: var(--muted); }
+.media-credit a { color: inherit; text-decoration: underline; }
