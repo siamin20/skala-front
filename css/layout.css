@@ -139,10 +139,13 @@ main { flex: 1; }
 /* =====================================================================
    반응형 (미션5) — 786px 이하에서 세로 1열, 모바일 네비
    ===================================================================== */
-@media (max-width: 786px) {
+/* 사이드바가 대시보드를 좁혀 배지(매일 리셋 등)가 짤리지 않도록, 더 이른 폭에서 1열로 */
+@media (max-width: 1024px) {
   .portal-grid { grid-template-columns: 1fr; }
   .portal-aside { position: static; }
+}
 
+@media (max-width: 786px) {
   .nav-toggle { display: grid; place-items: center; }
   .nav {
     position: fixed; inset: var(--nav-h) 0 auto 0;

@@ -69,6 +69,8 @@
 .dash-grid > .span-12 { grid-column: span 12; }
 @media (max-width: 900px) { .dash-grid > * { grid-column: span 6 !important; } }
 @media (max-width: 600px) { .dash-grid > * { grid-column: span 12 !important; } }
+/* 위젯 헤더의 태그(예: '매일 리셋')가 좁을 때 짤리지 않고 다음 줄로 */
+.dash-grid .widget__head { flex-wrap: wrap; row-gap: 0.15rem; }
 
 /* ---- 상태 위젯 ------------------------------------------------- */
 .status-pill {
