@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="내 계정 정보 확인·수정 마이페이지 — SKALA 신민서 데모." />
+  <meta name="author" content="신민서" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#4338ca" />
+  <title>마이페이지 · SKALA.신민서</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("skala-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <!-- 로그인 가드: 세션 없으면 렌더 전에 로그인 페이지로 -->
+  <script src="../script/auth.js"></script>
+  <script>
+    if (window.SkalaAuth && !SkalaAuth.getSession()) location.replace(SkalaAuth.paths.login + "?next=mypage");
+  </script>
+</head>
+
+<body class="page">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../index.html" aria-label="SKALA 신민서 홈">
+        <span class="brand__logo" aria-hidden="true"><img src="../media/skala-logo.png" alt="" /></span>
+        <span><span class="brand__dot">.</span>신민서</span>
+      </a>
+      <nav class="nav" data-nav aria-label="주요 메뉴">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html"><span class="idx">00</span> 홈</a></li>
+          <li><a class="nav__link" href="myProfile.html"><span class="idx">01</span> 소개</a></li>
+          <li><a class="nav__link" href="myClass.html"><span class="idx">02</span> 일정</a></li>
+          <li><a class="nav__link" href="myHoliday.html"><span class="idx">03</span> 휴일</a></li>
+          <li><a class="nav__link" href="myTrip.html"><span class="idx">04</span> 여행</a></li>
+          <li><a class="nav__link" href="signUp.html"><span class="idx">05</span> 회원가입</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <span class="auth-user" data-auth-user hidden></span>
+        <a class="btn btn--ghost btn--sm" href="myPage.html" data-mypage-link aria-current="page">마이페이지</a>
+        <button class="btn btn--sm" type="button" data-auth-btn>로그인</button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="다크 모드로 전환" title="다크 모드">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container narrow">
+
+      <section class="page-hero" aria-labelledby="mp-title">
+        <p class="eyebrow">// My page</p>
+        <h1 id="mp-title">마이페이지</h1>
+        <p class="section-lead"><b data-mp-hello></b> 반가워요. 내 정보를 확인하고 일부는 수정할 수 있어요.</p>
+      </section>
+
+      <section class="section" aria-labelledby="mp-card">
+        <h2 id="mp-card" class="sr-only">내 계정</h2>
+        <div class="card auth-card">
+
+          <div class="mp-head">
+            <span class="mp-avatar" data-mp-avatar>
+              <img data-mp-avatar-img alt="프로필 이미지" hidden />
+              <span data-mp-avatar-ph aria-hidden="true"></span>
+            </span>
+            <div>
+              <p class="mp-name" data-mp-name></p>
+              <p class="mp-id text-muted">@<span data-mp-id></span></p>
+            </div>
+          </div>
+
+          <h3 class="mp-sub">기본 정보 <span class="tag">고정</span></h3>
+          <dl class="summary-dl">
+            <dt>생년월일</dt><dd data-mp-birth>-</dd>
+            <dt>성별</dt><dd data-mp-gender>-</dd>
+            <dt>관심 분야</dt><dd data-mp-interest>-</dd>
+            <dt>개발 경력</dt><dd data-mp-exp>-</dd>
+            <dt>전화번호</dt><dd data-mp-tel>-</dd>
+          </dl>
+
+          <h3 class="mp-sub">수정 가능</h3>
+          <form data-mp-edit autocomplete="on" novalidate>
+            <div class="field">
+              <label for="mpEmail">이메일</label>
+              <input class="input" type="email" id="mpEmail" placeholder="you@example.com" autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="mpJob">희망 직군</label>
+              <input class="input" type="text" id="mpJob" placeholder="희망 직군" />
+            </div>
+            <div class="field">
+              <label for="mpAvatar">프로필 이미지</label>
+              <div class="file-picker">
+                <input class="file-native" type="file" id="mpAvatar" accept="image/png,image/jpeg,image/webp" />
+                <label for="mpAvatar" class="btn btn--ghost btn--sm file-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>
+                  이미지 변경
+                </label>
+                <img class="file-preview" data-mp-newpreview alt="새 프로필 미리보기" hidden />
+                <span class="file-name" data-mp-filename></span>
+              </div>
+              <small class="hint">JPG · PNG · WEBP · 5MB 이하 · 정사각형 권장</small>
+            </div>
+            <div class="form-actions">
+              <button class="btn" type="submit">변경 사항 저장</button>
+            </div>
+          </form>
+
+          <hr class="divider" />
+          <div class="form-actions">
+            <button class="btn btn--ghost" type="button" data-mp-logout>로그아웃</button>
+            <button class="btn btn--danger" type="button" data-mp-delete>회원 탈퇴</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 탈퇴 확인 -->
+  <dialog class="summary-dialog" data-delete-dialog aria-label="회원 탈퇴 확인">
+    <div class="dialog__body">
+      <h3>정말 탈퇴할까요?</h3>
+      <p class="text-muted">계정 정보가 이 브라우저에서 삭제되고 로그아웃돼요. 되돌릴 수 없어요.</p>
+      <div class="form-actions mt-4">
+        <button class="btn btn--danger" type="button" data-delete-confirm>네, 탈퇴할게요</button>
+        <button class="btn btn--ghost" type="button" data-delete-cancel>취소</button>
+      </div>
+    </div>
+  </dialog>
+
+  <button class="to-top" type="button" data-to-top aria-label="맨 위로 이동">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="../script/theme.js"></script>
+  <script src="../script/app.js"></script>
+  <script>
+    (function () {
+      if (!window.SkalaAuth) return;
+      var user = SkalaAuth.currentUser();
+      if (!user) { location.replace(SkalaAuth.paths.login); return; }
+      var $ = function (s) { return document.querySelector(s); };
+      function txt(sel, v) { var e = $(sel); if (e) e.textContent = (v == null || v === "") ? "-" : v; }
+
+      txt("[data-mp-hello]", (user.name || user.id) + "님");
+      txt("[data-mp-name]", user.name || user.id);
+      txt("[data-mp-id]", user.id);
+      txt("[data-mp-birth]", user.birth);
+      txt("[data-mp-gender]", user.gender);
+      txt("[data-mp-interest]", (user.interest && user.interest.length) ? user.interest.join(", ") : "");
+      txt("[data-mp-exp]", user.exp);
+      txt("[data-mp-tel]", user.tel);
+
+      var avImg = $("[data-mp-avatar-img]"), avPh = $("[data-mp-avatar-ph]"), avBox = $("[data-mp-avatar]");
+      function renderAvatar() {
+        if (user.avatar) {
+          avImg.src = user.avatar; avImg.hidden = false;
+          avPh.hidden = true; avBox.style.background = "";
+        } else {
+          avImg.hidden = true; avPh.hidden = false;
+          avPh.textContent = (user.name || user.id).slice(0, 1).toUpperCase();
+          avBox.style.background = user.themeColor || "var(--accent)";
+        }
+      }
+      renderAvatar();
+
+      $("#mpEmail").value = user.email || "";
+      $("#mpJob").value = user.job || "";
+
+      var pendingAvatar = null;
+      var fileInput = $("#mpAvatar"), preview = $("[data-mp-newpreview]"), fname = $("[data-mp-filename]");
+      fileInput.addEventListener("change", function () {
+        var f = fileInput.files && fileInput.files[0];
+        if (!f) { pendingAvatar = null; preview.hidden = true; fname.textContent = ""; return; }
+        if (!/^image\/(png|jpeg|webp)$/.test(f.type)) { window.showToast && showToast("JPG·PNG·WEBP만 가능해요"); fileInput.value = ""; return; }
+        if (f.size > 5 * 1024 * 1024) { window.showToast && showToast("5MB 이하만 가능해요"); fileInput.value = ""; return; }
+        downscale(f).then(function (url) { pendingAvatar = url; preview.src = url; preview.hidden = false; fname.textContent = f.name; });
+      });
+
+      $("[data-mp-edit]").addEventListener("submit", function (e) {
+        e.preventDefault();
+        user.email = $("#mpEmail").value.trim();
+        user.job = $("#mpJob").value.trim();
+        if (pendingAvatar) user.avatar = pendingAvatar;
+        SkalaAuth.saveUser(user);
+        renderAvatar();
+        pendingAvatar = null; preview.hidden = true; fname.textContent = "";
+        window.showToast && showToast("변경 사항을 저장했어요");
+      });
+
+      $("[data-mp-logout]").addEventListener("click", function () { SkalaAuth.logout(); location.href = SkalaAuth.paths.home; });
+
+      var delDlg = $("[data-delete-dialog]");
+      var openDlg = function () { if (delDlg.showModal) delDlg.showModal(); else delDlg.setAttribute("open", ""); };
+      var closeDlg = function () { if (delDlg.close) delDlg.close(); else delDlg.removeAttribute("open"); };
+      $("[data-mp-delete]").addEventListener("click", openDlg);
+      $("[data-delete-cancel]").addEventListener("click", closeDlg);
+      delDlg.addEventListener("click", function (e) { if (e.target === delDlg) closeDlg(); });
+      $("[data-delete-confirm]").addEventListener("click", function () {
+        SkalaAuth.deleteUser(user.id); SkalaAuth.rememberId(null); SkalaAuth.logout();
+        location.href = SkalaAuth.paths.home;
+      });
+
+      function downscale(f) {
+        return new Promise(function (res) {
+          var img = new Image(), url = URL.createObjectURL(f);
+          img.onload = function () {
+            var size = 256, c = document.createElement("canvas"); c.width = c.height = size;
+            var ctx = c.getContext("2d"), s = Math.min(img.width, img.height);
+            ctx.drawImage(img, (img.width - s) / 2, (img.height - s) / 2, s, s, 0, 0, size, size);
+            URL.revokeObjectURL(url);
+            try { res(c.toDataURL("image/jpeg", 0.85)); } catch (e) { res(""); }
+          };
+          img.onerror = function () { res(""); };
+          img.src = url;
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
