@@ -4,6 +4,10 @@ Thumbs.db
 .vscode/
 *.log
 
+# 원본 영상 (용량 큼) — 웹용 mp4로 변환해 커밋, 원본은 제외
+media/sf.MOV
+*.MOV
+
 # 참고자료 — 로컬에는 두고 Claude Code가 읽을 수 있으나
 # Public 저장소에는 올리지 않는다 (저작권 + 용량 + 민감정보)
 docs/
