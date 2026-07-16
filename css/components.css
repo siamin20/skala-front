@@ -254,6 +254,72 @@ details > div > p:only-child { color: var(--ink-soft); }
 #result dt { margin-top: 0; }
 #result dd { margin: 0; }
 
+/* ---- 약력 타임라인 (myProfile: 원형 마커 + details 클릭 펼침) ---- */
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline > li { position: relative; padding-left: 2.2rem; padding-bottom: var(--space-6); }
+.timeline > li:last-child { padding-bottom: 0; }
+/* 세로 연결선 */
+.timeline > li::before {
+  content: ""; position: absolute; left: 6px; top: 0.4em; bottom: 0;
+  width: 2px; background: var(--border);
+}
+.timeline > li:last-child::before { display: none; }
+/* 타임라인용 details: 공통 박스 스타일 해제 */
+.timeline details { border: none; background: none; border-radius: 0; overflow: visible; }
+.timeline details + details { margin-top: 0; }
+/* summary: 공통 flex(space-between) 해제하고 좌측 정렬 블록으로 */
+.timeline summary {
+  display: block; position: relative; padding: 0 1.6rem 0 0;
+  cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-weight: 600; font-size: var(--step-0); color: var(--ink);
+}
+.timeline summary::-webkit-details-marker { display: none; }
+/* 날짜: 제목 위 작은 모노 라벨 */
+.timeline .tl-when {
+  display: block; margin-bottom: 0.2em;
+  font-family: var(--font-mono); font-size: var(--step--1);
+  font-weight: 500; letter-spacing: 0.02em; color: var(--accent-2);
+}
+/* 펼침 표시(+ → ×) 우측 세로 중앙 */
+.timeline summary::after {
+  content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-mono); font-size: 1.3em; line-height: 1; color: var(--muted);
+  transition: transform var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.timeline details[open] summary::after { transform: translateY(-50%) rotate(45deg); color: var(--accent); }
+/* 원형 마커 (날짜 줄에 정렬) */
+.timeline summary::before {
+  content: ""; position: absolute; left: -2.2rem; top: 0.15em;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--accent);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.timeline summary:hover::before,
+.timeline details[open] summary::before {
+  background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
+}
+/* 펼쳐진 내용 */
+.timeline details > *:not(summary) {
+  margin-top: 0.55em; padding: 0; max-width: 68ch;
+  color: var(--ink-soft); font-size: var(--step--1); line-height: 1.65;
+}
+
+/* ---- 프로필 사진 · 스냅 (myProfile) ---- */
+.profile-avatar {
+  width: 128px; height: 128px; border-radius: 50%;
+  object-fit: cover; margin-bottom: var(--space-4);
+  border: 3px solid var(--surface); box-shadow: var(--shadow-md);
+  background: var(--surface-2);
+}
+.snap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+.snap { margin: 0; }
+.snap img {
+  width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: var(--radius); box-shadow: var(--shadow-sm); background: var(--surface-2);
+}
+.snap figcaption { margin-top: var(--space-2); color: var(--muted); font-size: var(--step--1); }
+@media (max-width: 640px) { .snap-grid { grid-template-columns: 1fr; } }
+
 /* ---- Dialog (모달) ---------------------------------------------- */
 dialog {
   border: 1px solid var(--border); border-radius: var(--radius-lg);

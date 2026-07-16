@@ -27,6 +27,9 @@ body {
   min-height: 100vh;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  /* 한글은 단어(어절) 단위로 줄바꿈 — "기획" 같은 게 "기/획"으로 잘리는 것 방지 */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
