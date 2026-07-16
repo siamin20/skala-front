@@ -718,6 +718,110 @@ dialog::backdrop { background: hsl(240 40% 5% / 0.55); backdrop-filter: blur(3px
 .dialog__body { padding: var(--space-6); text-align: center; }
 .dialog__body h3 { margin-bottom: var(--space-3); }
 
+/* =====================================================================
+   미니앱 (upDown · grade · bag · weather)
+   ===================================================================== */
+.game-dialog, .grade-dialog, .bag-dialog { max-width: min(420px, 94vw); }
+.ud-close { margin-top: var(--space-4); }
+.ud-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); margin-top: var(--space-4);
+}
+
+/* ---- Up & Down ---- */
+.ud-form { display: flex; gap: var(--space-2); margin-top: var(--space-4); }
+.ud-form .input { flex: 1; text-align: center; font-variant-numeric: tabular-nums; }
+.ud-hint {
+  margin-top: var(--space-3); font-size: var(--step--1); font-weight: 600; color: var(--ink-soft);
+  min-height: 1.4em;
+}
+.ud-hint[data-state="up"]   { color: var(--accent); }
+.ud-hint[data-state="down"] { color: var(--accent-2); }
+.ud-hint[data-state="hit"]  { color: var(--green-600, var(--accent-2)); }
+.ud-hint[data-state="warn"] { color: var(--amber-600); }
+.ud-log {
+  list-style: none; margin: var(--space-4) 0 0; padding: 0;
+  max-height: 148px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.3rem;
+}
+.ud-log__item {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: 0.4em 0.7em; border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--border);
+  font-size: var(--step--1);
+}
+.ud-log__num { font-family: var(--font-mono); font-weight: 700; }
+.ud-log__dir { color: var(--ink-soft); }
+.ud-log__item[data-dir="up"]   .ud-log__dir { color: var(--accent); }
+.ud-log__item[data-dir="down"] .ud-log__dir { color: var(--accent-2); }
+.ud-log__item[data-dir="hit"] {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: var(--accent-soft);
+}
+
+/* ---- 성적 계산기 ---- */
+.grade-form { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-4); }
+.grade-row {
+  display: grid; grid-template-columns: 4.5em 1fr; align-items: center;
+  gap: var(--space-2) var(--space-3); text-align: left;
+}
+.grade-row label { font-weight: 600; font-size: var(--step--1); }
+.grade-row .input { text-align: center; }
+.grade-row meter { grid-column: 1 / -1; block-size: 8px; }
+.grade-result {
+  margin-top: var(--space-4); padding: var(--space-4);
+  border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface-2);
+  text-align: left;
+}
+.grade-result[data-state="warn"] { text-align: center; color: var(--amber-600); }
+.grade-scores { list-style: none; margin: 0 0 var(--space-3); padding: 0; display: grid; gap: 0.3rem; }
+.grade-scores li { display: flex; justify-content: space-between; font-size: var(--step--1); }
+.grade-scores b { font-family: var(--font-mono); }
+.grade-avg { display: flex; align-items: center; gap: var(--space-3); }
+.grade-avg__label { font-size: var(--step--1); color: var(--muted); }
+.grade-avg__num { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; }
+.grade-badge {
+  margin-left: auto; width: 2em; height: 2em; display: grid; place-items: center;
+  border-radius: 50%; font-family: var(--font-display); font-weight: 700; color: #fff;
+  background: var(--accent);
+}
+.grade-badge[data-grade="A"] { background: var(--accent); }
+.grade-badge[data-grade="B"] { background: var(--accent-2); }
+.grade-badge[data-grade="C"] { background: var(--amber-500); }
+.grade-badge[data-grade="D"] { background: var(--amber-600); }
+.grade-badge[data-grade="F"] { background: var(--rose-500); }
+.grade-avg__meter { width: 100%; block-size: 10px; margin-top: var(--space-3); }
+.grade-verdict { margin-top: var(--space-3); font-weight: 600; font-size: var(--step--1); text-align: center; }
+.grade-result[data-state="pass"] .grade-verdict { color: var(--accent); }
+.grade-result[data-state="fail"] .grade-verdict { color: var(--rose-500); }
+
+/* ---- 내 가방 ---- */
+.bag-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
+.bag-item {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: 0.55em 0.8em; border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.bag-item__icon { font-size: 1.2em; }
+.bag-item__name { flex: 1; text-align: left; font-weight: 500; }
+.bag-item__count { font-family: var(--font-mono); color: var(--accent); font-weight: 700; }
+.bag-total { margin-top: var(--space-3); color: var(--muted); font-size: var(--step--1); }
+
+/* ---- 실시간 날씨 위젯 ---- */
+.wx-box[data-state] { color: var(--ink); }
+.wx-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-2); }
+.wx-city { font-weight: 700; font-size: var(--step-0); }
+.wx-coord { font-size: var(--step--2, 0.72rem); color: var(--muted); }
+.wx-loading { margin-top: var(--space-2); color: var(--muted); }
+.wx-error { margin-top: var(--space-2); color: var(--rose-500); }
+.wx-metrics { display: flex; gap: var(--space-3); margin-top: var(--space-3); }
+.wx-metric {
+  flex: 1; display: flex; flex-direction: column; gap: 0.1em;
+  padding: var(--space-3); border-radius: var(--radius-sm);
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.wx-metric__k { font-size: var(--step--2, 0.72rem); color: var(--muted); }
+.wx-metric__v { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); color: var(--accent); }
+
 /* ---- Toast ------------------------------------------------------ */
 .toast {
   position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 120%);

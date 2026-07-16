@@ -266,7 +266,7 @@
             </div>
           </div>
 
-          <!-- 게임 위젯 (JS 과제 때 upDown.js 연결 예정) -->
+          <!-- 게임 위젯 (upDown.js) -->
           <div class="widget reveal spotlight" id="game">
             <div class="widget__head">
               <span class="widget__title">// mini-game</span>
@@ -274,7 +274,23 @@
             </div>
             <div class="widget__body stack stack-3">
               <p class="text-muted" style="font-size:var(--step--1)">1~50 사이 비밀 숫자를 맞혀보세요.</p>
-              <button class="btn btn--block" type="button" data-game-start disabled>곧 연결됩니다</button>
+              <button class="btn btn--block" type="button" data-game-start>숫자 맞히기 시작</button>
+            </div>
+          </div>
+
+          <!-- 미니 도구 위젯 (grade.js · bag.js) -->
+          <div class="widget reveal spotlight" id="tools">
+            <div class="widget__head">
+              <span class="widget__title">// 미니 도구</span>
+              <span class="tag">JS</span>
+            </div>
+            <div class="widget__body stack stack-2">
+              <button class="btn btn--ghost btn--block" type="button" data-grade-open>
+                <span aria-hidden="true">📊</span> 성적 계산기
+              </button>
+              <button class="btn btn--ghost btn--block" type="button" data-bag-open>
+                <span aria-hidden="true">🎒</span> 내 가방 보기
+              </button>
             </div>
           </div>
 
@@ -286,19 +302,20 @@
             <div class="widget__body stack stack-3">
               <div class="field mb-0">
                 <label for="city-select">도시 선택</label>
-                <select class="select" id="city-select" disabled>
+                <select class="select" id="city-select">
+                  <option value="" selected disabled>도시를 고르세요</option>
                   <optgroup label="국내">
-                    <option>서울</option>
-                    <option>광주</option>
-                    <option>부산</option>
+                    <option value="서울">서울</option>
+                    <option value="광주">광주</option>
+                    <option value="부산">부산</option>
                   </optgroup>
                   <optgroup label="해외">
-                    <option>도쿄</option>
-                    <option>파리</option>
+                    <option value="도쿄">도쿄</option>
+                    <option value="파리">파리</option>
                   </optgroup>
                 </select>
               </div>
-              <div id="weather-box" class="text-muted" style="font-size:var(--step--1)">
+              <div id="weather-box" class="wx-box text-muted" style="font-size:var(--step--1)" aria-live="polite">
                 도시를 고르면 실시간 날씨가 표시돼요.
               </div>
             </div>
@@ -312,6 +329,53 @@
   <button class="to-top" type="button" data-to-top aria-label="맨 위로 이동">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
   </button>
+
+  <!-- ===== 미니게임: Up & Down (upDown.js) ===== -->
+  <dialog class="game-dialog" id="upDownDialog" aria-labelledby="udTitle">
+    <div class="dialog__body">
+      <h3 id="udTitle">🎯 Up &amp; Down</h3>
+      <p class="text-muted" style="font-size:var(--step--1)">1부터 50까지, 숨겨진 숫자를 맞혀보세요.</p>
+      <form class="ud-form" data-ud-form>
+        <input class="input" type="number" min="1" max="50" inputmode="numeric" placeholder="1 ~ 50" data-ud-input aria-label="추측할 숫자" required />
+        <button class="btn" type="submit">확인</button>
+      </form>
+      <p class="ud-hint" data-ud-hint aria-live="polite">숫자를 입력하고 확인을 눌러요.</p>
+      <ul class="ud-log" data-ud-log aria-label="시도 기록"></ul>
+      <div class="ud-foot">
+        <span class="mono" data-ud-count>시도 0회</span>
+        <button class="btn btn--ghost btn--sm" type="button" data-ud-reset>새 게임</button>
+      </div>
+      <button class="btn btn--ghost btn--sm ud-close" type="button" data-ud-close>닫기</button>
+    </div>
+  </dialog>
+
+  <!-- ===== 성적 계산기 (grade.js) ===== -->
+  <dialog class="grade-dialog" id="gradeDialog" aria-labelledby="gradeTitle">
+    <div class="dialog__body">
+      <h3 id="gradeTitle">📊 성적 계산기</h3>
+      <p class="text-muted" style="font-size:var(--step--1)">과목별 점수(0~100)를 넣으면 평균·합격·등급을 계산해요.</p>
+      <form class="grade-form" data-grade-form>
+        <!-- 과목 입력 행은 grade.js가 subjects 배열로 생성 -->
+      </form>
+      <div class="grade-result" data-grade-result hidden></div>
+      <div class="ud-foot">
+        <button class="btn btn--sm" type="button" data-grade-calc>계산하기</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-grade-reset>초기화</button>
+      </div>
+      <button class="btn btn--ghost btn--sm ud-close" type="button" data-grade-close>닫기</button>
+    </div>
+  </dialog>
+
+  <!-- ===== 내 가방 (bag.js) ===== -->
+  <dialog class="bag-dialog" id="bagDialog" aria-labelledby="bagTitle">
+    <div class="dialog__body">
+      <h3 id="bagTitle">🎒 내 가방</h3>
+      <p class="text-muted" style="font-size:var(--step--1)">오늘 학원 갈 때 챙긴 것들.</p>
+      <ul class="bag-list" data-bag-list></ul>
+      <p class="mono bag-total" data-bag-total></p>
+      <button class="btn btn--ghost btn--sm ud-close" type="button" data-bag-close>닫기</button>
+    </div>
+  </dialog>
 
   <!-- 라이브 시계 (사이드바 status 위젯) -->
   <script>
@@ -339,5 +403,11 @@
   <script src="script/app.js"></script>
   <script src="script/auth.js"></script>
   <script src="script/dashboard.js"></script>
+  <!-- 미니앱 (일반 스크립트) -->
+  <script src="script/upDown.js"></script>
+  <script src="script/grade.js"></script>
+  <script src="script/bag.js"></script>
+  <!-- 실시간 날씨 (ES 모듈: realtimeInfo.js 가 weatherAPI.js 를 import) -->
+  <script type="module" src="script/realtimeInfo.js"></script>
 </body>
 </html>
