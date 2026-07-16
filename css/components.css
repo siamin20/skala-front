@@ -352,18 +352,19 @@ meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--
 .visit-list p { color: var(--ink-soft); font-size: var(--step--1); line-height: 1.7; }
 
 /* 여행 상세 미디어 */
-.trip-figure { margin: var(--space-4) 0; }
-.trip-figure img { width: 100%; max-height: 420px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface-2); }
+.trip-figure { margin: var(--space-4) 0; text-align: center; }
+.trip-figure img { display: block; max-height: 380px; width: auto; max-width: 100%; margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface-2); }
 .trip-figure figcaption, .trip-audio figcaption, .trip-video-wrap figcaption { margin-top: var(--space-2); font-size: var(--step--1); color: var(--muted); }
 /* 직접 짠 일정표 (세로 스크린샷) */
 .trip-itinerary { margin: var(--space-5) 0; }
-.trip-itinerary img { display: block; max-width: min(540px, 100%); margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.trip-itinerary img { display: block; max-width: min(420px, 100%); max-height: 74vh; width: auto; margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .trip-itinerary figcaption { margin-top: var(--space-2); font-size: var(--step--1); color: var(--muted); text-align: center; }
 .trip-video-wrap { margin: var(--space-4) 0; }
 .trip-story { max-width: 64ch; margin-top: var(--space-4); }
 .trip-story p { margin-bottom: var(--space-4); line-height: 1.85; color: var(--ink-soft); }
 .trip-story mark { background: var(--highlight-soft, color-mix(in srgb, var(--highlight) 40%, transparent)); padding: 0 .15em; border-radius: 3px; }
-.trip-video { width: 100%; border-radius: var(--radius); margin: var(--space-4) 0; background: #000; }
+.trip-video { display: block; max-height: 440px; width: auto; max-width: 100%; margin: var(--space-4) auto; border-radius: var(--radius); background: #000; }
+.trip-video-wrap { text-align: center; }
 .trip-audio { margin: var(--space-4) 0; }
 .trip-audio audio { width: 100%; margin-top: var(--space-2); }
 
