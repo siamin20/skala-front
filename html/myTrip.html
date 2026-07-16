@@ -298,31 +298,44 @@
         </div>
       </section>
 
-      <!-- ===== 여행 한 곳 자세히 (미디어는 추후 추가) ===== -->
+      <!-- ===== 여행 한 곳 자세히: 타이베이 (미디어는 추후 추가) ===== -->
       <section class="section" aria-labelledby="story-title">
-        <h2 id="story-title">여행 한 곳, 자세히</h2>
-        <p class="section-lead">사진·영상·소리로 담을 여행 한 곳 — 내용과 미디어는 곧 채울 예정이에요.</p>
+        <p class="eyebrow">台北 · <time datetime="2025-02">2025.02</time> &amp; <time datetime="2026-02">2026.02</time></p>
+        <h2 id="story-title">한 번 가고, 또 간 타이베이</h2>
+
+        <article class="trip-story">
+          <p><time datetime="2025-02">2025년 2월</time>, 친구들이랑 처음 타이베이에 갔다. 사실 큰 기대 없이 고른 여행지였는데 가서 완전 반해버렸다. 낮엔 좀 덥고 습한데, 밤 되면 야시장이 살아나서 매일 저녁 스린이며 라오허제며 돌아다니면서 배 터지게 먹었다. 샤오롱바오에 버블티, 이름 모를 꼬치까지 일단 보이면 다 먹어봤던 것 같다.</p>
+
+          <p>제일 좋았던 건 <mark>지우펀</mark>이었다. 하필 비 오는 날 갔는데, 홍등 켜진 골목이 그렇게 예쁠 수가 없었다. 돌아오는 비행기에서 "여기 진짜 또 와야지" 했는데 — 보통 그런 말은 그냥 하는 말이잖아. 근데 이번엔 좀 진심이었나 보다.</p>
+
+          <p>그래서 딱 1년 뒤, <time datetime="2026-02">2026년 2월</time>에 이번엔 친척들을 모시고 다시 갔다. 친구들이랑 왔을 땐 우리끼리 아무 데나 막 쏘다녔는데, 어른들이랑 오니까 여행 결이 완전 달랐다. 나는 이미 다 가본 데라 은근슬쩍 가이드가 돼서 "여기 이거 꼭 드셔보세요" 하면서 앞장서 다녔다. 내가 좋아했던 곳을 다들 좋아해 주시니까 그게 또 이상하게 뿌듯했다.</p>
+
+          <p>두 번째면 시시할 줄 알았는데, 같이 간 사람이 다르니까 아예 다른 여행이 됐다. 아마 세 번째도 가지 않을까 싶다.</p>
+        </article>
 
         <figure class="trip-figure">
           <picture>
-            <!-- source/img: media/ 에 파일 추가 예정 -->
-            <img src="../media/trip-photo.jpg" alt="여행 사진 (준비 중)" loading="lazy" />
+            <!-- source/img: media/ 에 타이베이 사진 추가 예정 -->
+            <img src="../media/taipei-jiufen.jpg" alt="비 오는 밤, 홍등이 켜진 지우펀 골목" loading="lazy" />
           </picture>
-          <figcaption>여행지 사진 한 장 <span class="text-muted">(캡션 예정)</span></figcaption>
+          <figcaption>비 오던 날의 지우펀 <span class="text-muted">(사진 추가 예정)</span></figcaption>
         </figure>
 
-        <video class="trip-video" controls preload="none" poster="../media/trip-poster.jpg">
-          <source src="../media/trip-clip.mp4" type="video/mp4" />
-          <source src="../media/trip-clip.webm" type="video/webm" />
-          <track kind="captions" src="../media/trip.ko.vtt" srclang="ko" label="한국어" default />
-          이 브라우저는 video 태그를 지원하지 않아요.
-        </video>
+        <figure class="trip-video-wrap">
+          <video class="trip-video" controls preload="none" poster="../media/taipei-poster.jpg">
+            <source src="../media/taipei-nightmarket.mp4" type="video/mp4" />
+            <source src="../media/taipei-nightmarket.webm" type="video/webm" />
+            <track kind="captions" src="../media/taipei.ko.vtt" srclang="ko" label="한국어" default />
+            이 브라우저는 video 태그를 지원하지 않아요.
+          </video>
+          <figcaption>사람 미어터지던 스린 야시장 <span class="text-muted">(영상 추가 예정)</span></figcaption>
+        </figure>
 
         <figure class="trip-audio">
-          <figcaption>현지에서 담은 소리</figcaption>
+          <figcaption>야시장 한복판에서 담은 소리</figcaption>
           <audio controls preload="none">
-            <source src="../media/trip-ambience.mp3" type="audio/mpeg" />
-            <source src="../media/trip-ambience.ogg" type="audio/ogg" />
+            <source src="../media/taipei-nightmarket.mp3" type="audio/mpeg" />
+            <source src="../media/taipei-nightmarket.ogg" type="audio/ogg" />
             이 브라우저는 audio 태그를 지원하지 않아요.
           </audio>
         </figure>
