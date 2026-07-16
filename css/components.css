@@ -355,6 +355,10 @@ meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--
 .trip-figure { margin: var(--space-4) 0; }
 .trip-figure img { width: 100%; max-height: 420px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface-2); }
 .trip-figure figcaption, .trip-audio figcaption, .trip-video-wrap figcaption { margin-top: var(--space-2); font-size: var(--step--1); color: var(--muted); }
+/* 직접 짠 일정표 (세로 스크린샷) */
+.trip-itinerary { margin: var(--space-5) 0; }
+.trip-itinerary img { display: block; max-width: min(540px, 100%); margin: 0 auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.trip-itinerary figcaption { margin-top: var(--space-2); font-size: var(--step--1); color: var(--muted); text-align: center; }
 .trip-video-wrap { margin: var(--space-4) 0; }
 .trip-story { max-width: 64ch; margin-top: var(--space-4); }
 .trip-story p { margin-bottom: var(--space-4); line-height: 1.85; color: var(--ink-soft); }
