@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="검증이 살아있는 접근성 좋은 회원가입 폼 — SKALA 신민서." />
+  <meta name="author" content="신민서" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#4338ca" />
+  <title>회원가입 · SKALA.신민서</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- 다크모드 FOUC 방지 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("skala-theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+
+<body class="page">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="../index.html" aria-label="SKALA 신민서 홈">
+        <span class="brand__logo" aria-hidden="true"><img src="../media/skala-logo.png" alt="" /></span>
+        <span><span class="brand__dot">.</span>신민서</span>
+      </a>
+      <nav class="nav" data-nav aria-label="주요 메뉴">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="../index.html"><span class="idx">00</span> 홈</a></li>
+          <li><a class="nav__link" href="myProfile.html"><span class="idx">01</span> 소개</a></li>
+          <li><a class="nav__link" href="myClass.html"><span class="idx">02</span> 일정</a></li>
+          <li><a class="nav__link" href="myHoliday.html"><span class="idx">03</span> 휴일</a></li>
+          <li><a class="nav__link" href="myTrip.html"><span class="idx">04</span> 여행</a></li>
+          <li><a class="nav__link" href="signUp.html" aria-current="page"><span class="idx">05</span> 회원가입</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <span class="auth-user" data-auth-user hidden></span>
+        <a class="btn btn--ghost btn--sm" href="myPage.html" data-mypage-link>마이페이지</a>
+        <button class="btn btn--sm" type="button" data-auth-btn>로그인</button>
+        <button class="icon-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="다크 모드로 전환" title="다크 모드">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+
+      <section class="page-hero" aria-labelledby="s-title">
+        <p class="eyebrow">// 05 · Sign up</p>
+        <h1 id="s-title">회원가입</h1>
+        <p class="section-lead">SKALA에서 쓸 계정을 만들어요. <span class="text-accent">*</span> 표시된 항목만 채우면 가입할 수 있어요.</p>
+      </section>
+
+      <section class="section" aria-labelledby="form-title">
+        <h2 id="form-title" class="sr-only">회원가입 폼</h2>
+
+        <!-- 가입 진행률 바 (필수 항목을 채울수록 차오름) -->
+        <div class="signup-progress">
+          <div class="signup-progress__track">
+            <div class="signup-progress__bar" data-progress-bar></div>
+          </div>
+          <span class="signup-progress__label"><b data-progress-pct>0</b>% 완성</span>
+        </div>
+
+        <!-- action=signUpResult.html, method=get → 제출 시 쿼리스트링으로 결과 페이지 이동 -->
+        <form action="signUpResult.html" method="get" autocomplete="on" data-signup-form novalidate>
+
+          <!-- ── 그룹 1: 계정 정보 ─────────────────────────── -->
+          <fieldset>
+            <legend>계정 정보</legend>
+
+            <div class="field">
+              <label for="userId">아이디 <span class="text-accent">*</span></label>
+              <input class="input" type="text" id="userId" name="userId" data-req
+                     placeholder="4~15자 영문/숫자" pattern="[A-Za-z0-9]{4,15}"
+                     minlength="4" maxlength="15" required autocomplete="username" />
+              <small class="hint">영문·숫자 조합 4~15자 · 이미 가입한 아이디는 사용할 수 없어요</small>
+              <small class="field-status" data-id-status role="status" aria-live="polite"></small>
+            </div>
+
+            <div class="field">
+              <label for="userPw">비밀번호 <span class="text-accent">*</span></label>
+              <div class="input-wrap">
+                <input class="input" type="password" id="userPw" name="userPw" data-req
+                       placeholder="8자 이상, 영문 대소문자·숫자·특수문자"
+                       minlength="8" required autocomplete="new-password"
+                       pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}" />
+                <button type="button" class="pw-toggle" data-pw-toggle="userPw" aria-label="비밀번호 표시" aria-pressed="false">
+                  <svg class="eye-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7c2 0 3.8.6 5.3 1.5M22 12s-3.5 7-10 7c-2 0-3.8-.6-5.3-1.5"/><path d="M4 4l16 16"/></svg>
+                </button>
+              </div>
+              <!-- 심화: meter + output 으로 비밀번호 강도 시각화 -->
+              <div class="pw-row">
+                <meter id="pw-meter" min="0" max="4" low="2" high="3" optimum="4" value="0"></meter>
+                <output id="pw-out" for="userPw"></output>
+              </div>
+              <!-- 실시간 규칙 체크리스트 -->
+              <ul class="pw-rules" data-pw-rules aria-label="비밀번호 규칙 충족 현황">
+                <li data-rule="len">8자 이상</li>
+                <li data-rule="case">영문 대·소문자</li>
+                <li data-rule="num">숫자</li>
+                <li data-rule="special">특수문자(!@#$…)</li>
+              </ul>
+              <p class="caps-warn" data-caps-warn hidden><span aria-hidden="true">⇪</span> Caps Lock이 켜져 있어요</p>
+            </div>
+
+            <div class="field">
+              <label for="userPw2">비밀번호 확인 <span class="text-accent">*</span></label>
+              <div class="input-wrap">
+                <input class="input" type="password" id="userPw2" name="userPw2" data-req
+                       placeholder="비밀번호를 한 번 더 입력" required autocomplete="new-password" />
+                <button type="button" class="pw-toggle" data-pw-toggle="userPw2" aria-label="비밀번호 표시" aria-pressed="false">
+                  <svg class="eye-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-off" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7c2 0 3.8.6 5.3 1.5M22 12s-3.5 7-10 7c-2 0-3.8-.6-5.3-1.5"/><path d="M4 4l16 16"/></svg>
+                </button>
+              </div>
+              <small class="field-status" data-pw-match role="status" aria-live="polite"></small>
+            </div>
+
+            <div class="field">
+              <label for="userEmail">이메일</label>
+              <div class="row gap-2">
+                <input class="input" type="text" id="userEmail" name="userEmail" placeholder="example" autocomplete="email" />
+                <span aria-hidden="true">@</span>
+                <!-- select + optgroup + option -->
+                <select class="select" id="emailDomain" name="emailDomain">
+                  <option value="">직접 입력</option>
+                  <optgroup label="국내">
+                    <option value="naver.com">naver.com</option>
+                    <option value="daum.net">daum.net</option>
+                    <option value="kakao.com">kakao.com</option>
+                  </optgroup>
+                  <optgroup label="해외">
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="outlook.com">outlook.com</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- ── 그룹 2: 개인 정보 ─────────────────────────── -->
+          <fieldset>
+            <legend>개인 정보</legend>
+
+            <div class="field">
+              <label for="userName">이름 <span class="text-accent">*</span></label>
+              <input class="input" type="text" id="userName" name="userName" data-req placeholder="홍길동" required autocomplete="name" />
+            </div>
+
+            <div class="field">
+              <label for="userBirth">생년월일</label>
+              <input class="input" type="date" id="userBirth" name="userBirth" min="1950-01-01" max="2020-12-31" />
+            </div>
+
+            <div class="field">
+              <label for="userTel">전화번호</label>
+              <input class="input" type="tel" id="userTel" name="userTel"
+                     placeholder="010-1234-5678" pattern="0\d{1,2}-\d{3,4}-\d{4}" autocomplete="tel" />
+              <small class="hint">숫자와 하이픈(-) 형식</small>
+            </div>
+
+            <!-- 커스텀 드롭다운: '직접 입력' 선택 시 아래 칸 노출 -->
+            <div class="field">
+              <label for="jobSelect">희망 직군</label>
+              <select class="select" id="jobSelect" data-job-select>
+                <option value="">선택하세요</option>
+                <option>AI/ML 엔지니어</option>
+                <option>백엔드 개발</option>
+                <option>데이터 엔지니어</option>
+                <option>프론트엔드 개발</option>
+                <option>MLOps · 클라우드</option>
+                <option>프로덕트 매니저</option>
+                <option value="__custom__">직접 입력…</option>
+              </select>
+              <input class="input mt-3" type="text" id="jobCustom" data-job-custom placeholder="희망 직군을 직접 입력하세요" hidden />
+              <!-- 실제 제출값(선택 or 직접입력) -->
+              <input type="hidden" name="job" data-job-value />
+            </div>
+
+            <fieldset>
+              <legend>성별</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="gender" value="남성" /> 남성</label>
+                <label class="choice"><input type="radio" name="gender" value="여성" /> 여성</label>
+                <label class="choice"><input type="radio" name="gender" value="선택안함" /> 선택 안 함</label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>관심 분야 (중복 가능)</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="checkbox" name="interest" value="aiml" /> AI/ML</label>
+                <label class="choice"><input type="checkbox" name="interest" value="backend" /> 백엔드</label>
+                <label class="choice"><input type="checkbox" name="interest" value="frontend" /> 프론트엔드</label>
+                <label class="choice"><input type="checkbox" name="interest" value="data" /> 데이터</label>
+                <label class="choice"><input type="checkbox" name="interest" value="cloud" /> 클라우드/인프라</label>
+              </div>
+            </fieldset>
+
+            <!-- range + output (0=신입, 10=10년 이상) -->
+            <div class="field">
+              <label for="exp">개발 경력</label>
+              <div class="row gap-3">
+                <input type="range" id="exp" name="exp" min="0" max="10" step="1" value="0" />
+                <output id="exp-out" for="exp" class="exp-out">신입</output>
+              </div>
+            </div>
+
+            <!-- 커스텀 파일 버튼 + 미리보기 + 표준 제약 -->
+            <div class="field">
+              <label for="avatar">프로필 이미지</label>
+              <div class="file-picker" data-file-picker>
+                <input class="file-native" type="file" id="avatar" name="avatar" accept="image/png,image/jpeg,image/webp" data-file />
+                <label for="avatar" class="btn btn--ghost btn--sm file-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 20h16"/></svg>
+                  이미지 선택
+                </label>
+                <img class="file-preview" data-file-preview alt="선택한 프로필 이미지 미리보기" hidden />
+                <span class="file-name" data-file-name>선택된 파일 없음</span>
+              </div>
+              <small class="hint">JPG · PNG · WEBP · 5MB 이하 · 정사각형 권장(최소 200×200px)</small>
+              <small class="field-status" data-file-status role="status" aria-live="polite"></small>
+            </div>
+
+            <!-- 프로필 색상(아바타 배경): 이미지를 안 올리면 이 색으로 아바타 생성 -->
+            <div class="field">
+              <label id="theme-label">프로필 색상</label>
+              <div class="swatch-row" role="radiogroup" aria-labelledby="theme-label" data-swatches>
+                <label class="swatch-opt" title="인디고"><input type="radio" name="themeColor" value="#4338ca" checked /><span class="swatch-opt__dot" style="--sw:#4338ca"></span></label>
+                <label class="swatch-opt" title="틸"><input type="radio" name="themeColor" value="#0d9488" /><span class="swatch-opt__dot" style="--sw:#0d9488"></span></label>
+                <label class="swatch-opt" title="바이올렛"><input type="radio" name="themeColor" value="#7c3aed" /><span class="swatch-opt__dot" style="--sw:#7c3aed"></span></label>
+                <label class="swatch-opt" title="스카이"><input type="radio" name="themeColor" value="#0284c7" /><span class="swatch-opt__dot" style="--sw:#0284c7"></span></label>
+                <label class="swatch-opt" title="앰버"><input type="radio" name="themeColor" value="#d97706" /><span class="swatch-opt__dot" style="--sw:#d97706"></span></label>
+                <label class="swatch-opt" title="로즈"><input type="radio" name="themeColor" value="#e11d48" /><span class="swatch-opt__dot" style="--sw:#e11d48"></span></label>
+                <label class="swatch-opt swatch-opt--custom" title="직접 선택">
+                  <input type="radio" name="themeColor" value="#4338ca" data-swatch-custom />
+                  <span class="swatch-opt__dot swatch-opt__dot--pick" data-swatch-custom-dot aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
+                  </span>
+                </label>
+              </div>
+              <!-- 스포이드: 직접 선택 스와치를 누르면 노출 -->
+              <input type="color" id="themeCustom" data-color-custom value="#4338ca" hidden aria-label="직접 색 선택" />
+              <small class="hint">이미지를 올리지 않으면 이 색으로 아바타를 만들어요</small>
+            </div>
+          </fieldset>
+
+          <!-- ── 그룹 3: 자기소개 ─────────────────────────── -->
+          <fieldset>
+            <legend>자기소개</legend>
+            <div class="field">
+              <label for="intro">한 줄 소개 또는 가입 인사</label>
+              <textarea class="textarea" id="intro" name="intro" rows="5" maxlength="200"
+                        placeholder="여기에 내용을 입력하세요 (최대 200자)" data-counter></textarea>
+              <small class="hint"><b data-counter-now>0</b> / 200자</small>
+            </div>
+          </fieldset>
+
+          <!-- ── 그룹 4: 약관 동의 (보기 + 끝까지 스크롤해야 체크 가능) ── -->
+          <fieldset>
+            <legend>약관 동의</legend>
+            <label class="choice choice--consent">
+              <input type="checkbox" name="agreeTos" value="agree" required data-consent="tos" disabled />
+              <span>[필수] 이용약관에 동의합니다 <span class="text-accent">*</span></span>
+              <button type="button" class="link-btn" data-terms-open="tos">전문 보기</button>
+            </label>
+            <label class="choice choice--consent">
+              <input type="checkbox" name="agreePrivacy" value="agree" required data-consent="privacy" disabled />
+              <span>[필수] 개인정보 수집·이용에 동의합니다 <span class="text-accent">*</span></span>
+              <button type="button" class="link-btn" data-terms-open="privacy">전문 보기</button>
+            </label>
+            <p class="hint">동의 항목은 <b>전문을 끝까지 확인</b>해야 체크할 수 있어요.</p>
+          </fieldset>
+
+          <!-- submit / reset -->
+          <div class="form-actions">
+            <button class="btn" type="submit">동의하고 회원가입</button>
+            <button class="btn btn--ghost" type="reset">다시 작성</button>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 약관 전문 모달 (이용약관) -->
+  <dialog class="terms-dialog" data-terms-dialog="tos" aria-label="이용약관 전문">
+    <div class="dialog__body">
+      <h3>이용약관</h3>
+      <div class="terms-body" data-terms-scroll tabindex="0">
+        <p><strong>제1조 (목적)</strong><br />본 약관은 SKALA(이하 "회사")가 제공하는 서비스의 이용조건 및 절차, 회원과 회사의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+        <p><strong>제2조 (정의)</strong><br />① "회원"이란 본 약관에 동의하고 회사가 제공하는 서비스에 가입한 자를 말합니다.<br />② "아이디"란 회원 식별과 서비스 이용을 위해 회원이 정하고 회사가 승인하는 문자와 숫자의 조합을 말합니다.</p>
+        <p><strong>제3조 (약관의 효력 및 변경)</strong><br />① 본 약관은 서비스 화면에 게시하거나 기타의 방법으로 회원에게 공지함으로써 효력이 발생합니다.<br />② 회사는 관련 법령을 위배하지 않는 범위에서 약관을 개정할 수 있으며, 개정 시 적용일자 및 개정 사유를 명시하여 사전 공지합니다.</p>
+        <p><strong>제4조 (이용계약의 성립)</strong><br />이용계약은 회원이 되고자 하는 자가 약관에 동의하고 가입을 신청한 후 회사가 이를 승낙함으로써 성립합니다.</p>
+        <p><strong>제5조 (회원의 의무)</strong><br />① 회원은 아이디와 비밀번호를 스스로 관리할 책임이 있으며, 이를 제3자에게 이용하게 해서는 안 됩니다.<br />② 회원은 서비스 이용 시 관계 법령, 본 약관의 규정, 이용안내 및 주의사항 등을 준수하여야 합니다.</p>
+        <p><strong>제6조 (서비스의 제공 및 중단)</strong><br />회사는 천재지변, 시스템 점검 등 부득이한 사유가 있는 경우 서비스의 전부 또는 일부를 제한하거나 중단할 수 있습니다.</p>
+        <p><strong>제7조 (면책조항)</strong><br />회사는 회원의 귀책사유로 인한 서비스 이용 장애에 대하여 책임을 지지 않습니다.</p>
+        <p class="terms-end">— 이용약관 끝 —</p>
+      </div>
+      <div class="form-actions mt-4">
+        <button class="btn btn--sm" type="button" data-terms-agree="tos" disabled>끝까지 읽었어요 · 동의</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-terms-close>닫기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 약관 전문 모달 (개인정보 수집·이용) -->
+  <dialog class="terms-dialog" data-terms-dialog="privacy" aria-label="개인정보 수집·이용 동의 전문">
+    <div class="dialog__body">
+      <h3>개인정보 수집·이용 동의</h3>
+      <div class="terms-body" data-terms-scroll tabindex="0">
+        <p>회사는 회원가입 및 서비스 제공을 위해 아래와 같이 개인정보를 수집·이용합니다.</p>
+        <p><strong>1. 수집 항목</strong><br />(필수) 아이디, 비밀번호, 이름<br />(선택) 이메일, 생년월일, 전화번호, 희망 직군, 성별, 관심 분야, 개발 경력, 프로필 이미지, 자기소개</p>
+        <p><strong>2. 수집·이용 목적</strong><br />회원 식별 및 본인 확인, 서비스 제공 및 운영, 문의 응대, 통계 분석을 통한 서비스 개선.</p>
+        <p><strong>3. 보유 및 이용 기간</strong><br />회원 탈퇴 시까지 보유하며, 관계 법령에 따라 일정 기간 보관이 필요한 경우 해당 기간 동안 보관 후 파기합니다.</p>
+        <p><strong>4. 동의 거부 권리 및 불이익</strong><br />회원은 개인정보 수집·이용 동의를 거부할 권리가 있습니다. 다만 필수 항목에 동의하지 않을 경우 회원가입이 제한될 수 있습니다.</p>
+        <p class="terms-end">— 개인정보 수집·이용 동의 끝 —</p>
+      </div>
+      <div class="form-actions mt-4">
+        <button class="btn btn--sm" type="button" data-terms-agree="privacy" disabled>끝까지 읽었어요 · 동의</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-terms-close>닫기</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 제출 전 요약 확인 모달 -->
+  <dialog class="summary-dialog" data-summary-dialog aria-label="가입 정보 확인">
+    <div class="dialog__body">
+      <h3>이대로 가입할까요?</h3>
+      <p class="text-muted" style="font-size:var(--step--1)">입력한 내용을 한 번 더 확인하세요.</p>
+      <div data-summary-body></div>
+      <div class="form-actions mt-4">
+        <button class="btn" type="button" data-summary-confirm>네, 가입할게요</button>
+        <button class="btn btn--ghost" type="button" data-summary-cancel>수정할게요</button>
+      </div>
+    </div>
+  </dialog>
+
+  <button class="to-top" type="button" data-to-top aria-label="맨 위로 이동">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script src="../script/theme.js"></script>
+  <script src="../script/app.js"></script>
+  <script src="../script/auth.js"></script>
+  <!-- 회원가입 폼 로직 (검증·진행률·커스텀 드롭다운·약관·요약 등) -->
+  <script src="../script/signup.js"></script>
+</body>
+</html>

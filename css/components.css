@@ -185,9 +185,127 @@ output { font-family: var(--font-mono); font-weight: 600; color: var(--accent); 
 /* 비밀번호 강도: meter가 남는 공간을 채우고 라벨은 줄바꿈 방지 */
 .pw-row { display: flex; align-items: center; gap: var(--space-3); }
 .pw-row meter { flex: 1; }
-.pw-row output { white-space: nowrap; }
+.pw-row output { white-space: nowrap; min-width: 3.6em; text-align: right; font-size: var(--step--1); }
+/* 강도 라벨 색 = meter 색과 통일 (매우약함 로즈 → 약함 앰버 → 보통 틸 → 강함 인디고) */
+.pw-row output[data-level="1"] { color: var(--rose-500); }
+.pw-row output[data-level="2"] { color: var(--amber-600); }
+.pw-row output[data-level="3"] { color: var(--accent-2); }
+.pw-row output[data-level="4"] { color: var(--accent); }
 meter { inline-size: 100%; block-size: 14px; }
 progress { inline-size: 100%; block-size: 12px; accent-color: var(--accent); border-radius: var(--radius-pill); overflow: hidden; }
+
+/* 비밀번호 강도 meter: 브라우저 기본 연두색 → 팔레트(인디고~틸/앰버/로즈) */
+meter { -webkit-appearance: none; appearance: none; background: var(--surface-2); border: none; border-radius: var(--radius-pill); overflow: hidden; }
+meter::-webkit-meter-bar { background: var(--surface-2); border: none; border-radius: var(--radius-pill); }
+meter::-webkit-meter-optimum-value { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: var(--radius-pill); }
+meter::-webkit-meter-suboptimum-value { background: var(--amber-500); border-radius: var(--radius-pill); }
+meter::-webkit-meter-even-less-good-value { background: var(--rose-500); border-radius: var(--radius-pill); }
+meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: var(--radius-pill); }
+
+/* ==== 회원가입 폼 심화 (signup.js) ============================== */
+/* 가입 진행률 바 — 스크롤 시 헤더 밑에 고정 */
+.signup-progress {
+  position: sticky; top: var(--nav-h); z-index: 70;
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-3) 0; margin-bottom: var(--space-4);
+}
+/* 배경/그림자를 화면 전체폭으로 (컨테이너에서 잘려 보이지 않게) */
+.signup-progress::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 50%;
+  width: 100vw; transform: translateX(-50%);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 var(--border), 0 8px 16px -14px color-mix(in srgb, var(--ink) 45%, transparent);
+  z-index: -1;
+}
+.signup-progress__track { flex: 1; height: 8px; border-radius: var(--radius-pill); background: var(--surface-2); overflow: hidden; }
+.signup-progress__bar { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width var(--dur) var(--ease); }
+.signup-progress__label { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-soft); white-space: nowrap; }
+.signup-progress__label b { color: var(--accent); }
+
+/* 입력 + 우측 아이콘 버튼(비번 보기) */
+.input-wrap { position: relative; }
+.input-wrap .input { padding-right: 2.8em; }
+.pw-toggle { position: absolute; top: 50%; right: .4em; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; width: 2em; height: 2em; border: none; background: none; color: var(--muted); cursor: pointer; border-radius: var(--radius-sm); }
+.pw-toggle:hover { color: var(--accent); background: var(--accent-soft); }
+.pw-toggle .eye-off { display: none; }
+.pw-toggle.is-on .eye-on { display: none; }
+.pw-toggle.is-on .eye-off { display: inline; }
+
+/* 필드 상태 메시지 (사용가능/불일치 등) */
+.field-status { font-size: var(--step--1); font-weight: 600; }
+.field-status[data-state="good"] { color: var(--accent-2); }
+.field-status[data-state="bad"] { color: var(--rose-500); }
+
+/* 비밀번호 규칙 실시간 체크리스트 */
+.pw-rules { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3em .9em; font-size: var(--step--1); line-height: 1.4; }
+.pw-rules li { color: var(--muted); display: inline-flex; align-items: center; gap: .4em; transition: color var(--dur-fast) var(--ease); }
+.pw-rules li::before { content: "○"; display: inline-flex; align-items: center; justify-content: center; width: 1.05em; height: 1.05em; font-size: .95em; line-height: 1; }
+.pw-rules li[data-ok="true"] { color: var(--accent-2); }
+.pw-rules li[data-ok="true"]::before { content: "✓"; font-weight: 700; }
+/* 한 글자라도 입력되면(active) 미충족 규칙은 빨간 테두리 원 + 빨간 글자로 안내 */
+.pw-rules[data-active="true"] li[data-ok="false"] { color: var(--rose-500); }
+
+/* CapsLock 경고 */
+.caps-warn { font-size: var(--step--1); color: var(--amber-600); font-weight: 600; margin-top: var(--space-1); }
+
+/* 테마색 스와치 */
+.swatch-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.swatch-opt { position: relative; cursor: pointer; line-height: 0; }
+.swatch-opt input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.swatch-opt__dot { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--sw, var(--accent)); box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--border); transition: transform var(--dur-fast) var(--ease); color: #fff; }
+.swatch-opt:hover .swatch-opt__dot { transform: scale(1.12); }
+.swatch-opt input:checked + .swatch-opt__dot { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+.swatch-opt input:focus-visible + .swatch-opt__dot { outline: 2px solid var(--accent); outline-offset: 3px; }
+.swatch-opt__dot--pick { background: var(--sw, var(--surface-2)); color: var(--ink-soft); border: 1px dashed var(--border-strong); }
+.swatch-opt__dot--pick.has-color { color: #fff; border: none; }
+
+/* 프로필 이미지 커스텀 파일 */
+.file-picker { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.file-native { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
+.file-btn { cursor: pointer; }
+.file-name { font-size: var(--step--1); color: var(--muted); }
+.file-preview { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); }
+
+/* 약관 보기 링크버튼 / 동의 항목 */
+.link-btn { border: none; background: none; color: var(--accent); font: inherit; font-size: var(--step--1); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; padding: 0; margin-left: auto; white-space: nowrap; }
+.link-btn:hover { color: var(--accent-hover); }
+.choice--consent { display: flex; align-items: center; gap: .6em; width: 100%; }
+.choice--consent + .choice--consent { margin-top: var(--space-2); }
+
+/* 약관 전문 모달 */
+.terms-dialog { max-width: min(560px, 94vw); }
+.terms-dialog .dialog__body, .summary-dialog .dialog__body { text-align: left; }
+.terms-body { max-height: 46vh; overflow-y: auto; margin-top: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); font-size: var(--step--1); line-height: 1.7; color: var(--ink-soft); }
+.terms-body p { margin-bottom: var(--space-3); }
+.terms-body strong { color: var(--ink); }
+.terms-end { text-align: center; color: var(--muted); font-family: var(--font-mono); }
+
+/* 제출 전 요약 모달 */
+.summary-dialog { max-width: min(520px, 94vw); }
+.summary-dl { display: grid; grid-template-columns: max-content 1fr; gap: .55em var(--space-5); align-items: baseline; margin-top: var(--space-4); max-height: 50vh; overflow-y: auto; font-size: var(--step--1); line-height: 1.5; }
+.summary-dl dt { font-weight: 700; color: var(--accent); }
+.summary-dl dd { margin: 0; color: var(--ink-soft); word-break: break-all; }
+.swatch-inline { display: inline-block; width: .9em; height: .9em; border-radius: 3px; vertical-align: -1px; border: 1px solid var(--border); }
+
+/* ==== 인증 (로그인 / 마이페이지) =============================== */
+.container.narrow { max-width: 640px; }
+.auth-user { font-family: var(--font-mono); font-size: var(--step--1); color: var(--ink-soft); font-weight: 600; }
+.auth-card { max-width: 520px; margin-inline: auto; }
+.auth-alt { text-align: center; color: var(--muted); font-size: var(--step--1); margin: var(--space-4) 0 var(--space-3); }
+/* 박스 없는 인라인 체크박스 (아이디 저장 등) */
+.check-line { display: inline-flex; align-items: center; gap: .5em; cursor: pointer; font-size: var(--step--1); color: var(--ink-soft); margin: var(--space-2) 0; }
+.check-line input { accent-color: var(--accent); }
+.btn--danger { --btn-bg: var(--rose-500); --btn-fg: #fff; }
+.btn--danger:hover { background: color-mix(in srgb, var(--rose-500) 85%, black); color: #fff; }
+
+/* 마이페이지 */
+.mp-head { display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4); }
+.mp-avatar { display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; overflow: hidden; background: var(--accent); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: var(--step-2); flex: none; }
+.mp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.mp-name { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); }
+.mp-id { font-family: var(--font-mono); font-size: var(--step--1); }
+.mp-sub { font-size: var(--step-0); font-weight: 600; margin: var(--space-5) 0 var(--space-3); display: flex; align-items: center; gap: .5em; }
 
 /* ---- Tables ----------------------------------------------------- */
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
