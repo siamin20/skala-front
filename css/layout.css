@@ -112,12 +112,13 @@ main { flex: 1; }
 /* 포털 허브: main + aside 가로 배치 (포털 Hub 과제 요구) */
 .portal-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
+  grid-template-columns: minmax(0, 1fr) 280px;
   gap: var(--space-6);
   align-items: start;
   padding-block: var(--space-6);
 }
-.portal-aside { position: sticky; top: calc(var(--nav-h) + var(--space-5)); }
+/* top 오프셋: 헤더 + 점프 내비 바(약 60px)를 지나 그 아래에서 고정 → status 안 가림 */
+.portal-aside { position: sticky; top: calc(var(--nav-h) + 72px); }
 
 /* ---- Footer ----------------------------------------------------- */
 .site-footer {

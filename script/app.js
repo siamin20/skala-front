@@ -88,6 +88,25 @@
     );
     targets.forEach((t) => spy.observe(t));
   }
+
+  /* ---- 6.5) 점프 내비 '고정' 감지 → 고정될 때만 배경 부여 -------- */
+  // 평소(문서 흐름)엔 투명해서 모눈 배경 위에 빈 박스가 안 보이고,
+  // 스크롤로 상단에 sticky 고정되면 .is-stuck 로 프로스티드 배경을 줘
+  // 아래 콘텐츠가 칩 사이로 비쳐 보이지 않게 한다.
+  const jumpNav = document.querySelector(".jump-nav");
+  if (jumpNav && "IntersectionObserver" in window) {
+    const stickyTop = parseInt(getComputedStyle(jumpNav).top, 10) || 0;
+    const stuckIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          jumpNav.classList.toggle("is-stuck", en.intersectionRatio < 1);
+        });
+      },
+      { rootMargin: "-" + (stickyTop + 1) + "px 0px 0px 0px", threshold: [1] }
+    );
+    stuckIO.observe(jumpNav);
+  }
+
   function $$(s, r = document) { return Array.prototype.slice.call(r.querySelectorAll(s)); }
 
   /* ---- 7) 토스트 헬퍼 (전역 노출) ------------------------------- */

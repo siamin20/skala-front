@@ -28,6 +28,9 @@
 .btn--teal:hover { background: color-mix(in srgb, var(--accent-2) 85%, black); }
 .btn--block { width: 100%; }
 .btn--sm { padding: 0.5em 0.9em; font-size: var(--step--1); }
+/* 링크형 버튼: 전역 a:link 색이 버튼 글자색을 덮지 않도록 우선순위 확보 */
+a.btn:link, a.btn:visited { color: var(--btn-fg); }
+a.btn--ghost:link, a.btn--ghost:visited { color: var(--accent); }
 
 /* ---- Icon button (테마 토글 등) --------------------------------- */
 .icon-btn {
@@ -59,7 +62,7 @@
   display: inline-block; font-size: var(--step--1);
   padding: 0.2em 0.65em; border-radius: var(--radius-pill);
   background: var(--surface-2); border: 1px solid var(--border);
-  color: var(--ink-soft);
+  color: var(--ink-soft); white-space: nowrap;
 }
 
 /* ---- Card ------------------------------------------------------- */
@@ -117,6 +120,7 @@
 .widget__title {
   font-family: var(--font-mono); font-size: var(--step--1);
   text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-soft);
+  white-space: nowrap;
 }
 .widget__body { padding: var(--space-4); }
 

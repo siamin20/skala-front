@@ -10,6 +10,9 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 1rem);
+  /* 전체폭(100vw) 요소가 스크롤바 폭만큼 만드는 가로 스크롤 방지.
+     clip은 hidden과 달리 스크롤 컨테이너를 만들지 않아 position:sticky를 깨지 않음 */
+  overflow-x: clip;
 }
 
 body {

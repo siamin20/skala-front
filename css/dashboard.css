@@ -7,9 +7,20 @@
   position: sticky; top: var(--nav-h); z-index: 80;
   display: flex; flex-wrap: wrap; gap: var(--space-2);
   padding: var(--space-3) 0;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
   margin-bottom: var(--space-4);
+  transition: background var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+/* 상단에 고정(stuck)될 때만 배경. 평소엔 투명해 모눈 배경 위 빈 박스가 안 보임.
+   ::before로 화면 전체폭(100vw) 프로스티드 바를 깔아 서브헤더처럼 보이게 한다. */
+.jump-nav.is-stuck::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 100vw; transform: translateX(-50%);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 0 var(--border), 0 10px 22px -18px color-mix(in srgb, var(--ink) 55%, transparent);
+  z-index: -1;
 }
 .chip {
   display: inline-flex; align-items: center; gap: 0.45em;
@@ -28,20 +39,31 @@
 
 /* ---- :target 하이라이트 (점프 후 반짝) -------------------------- */
 :target { scroll-margin-top: calc(var(--nav-h) + 64px); }
-.spotlight:target { animation: spotlight 1.8s var(--ease); }
-@keyframes spotlight {
-  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 70%, transparent); }
-  15%  { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 55%, transparent); }
-  100% { box-shadow: 0 0 0 0 transparent; }
+/* 콘텐츠에서 10px 떨어진, 모서리 둥근 하이라이트 링.
+   box-shadow 스프레드는 가장자리에 딱 붙어서, outline-offset으로 간격을 준다. */
+.spotlight:target {
+  animation: spotlight 1.8s var(--ease);
+  border-radius: var(--radius);
+  outline: 3px solid transparent;
+  outline-offset: 10px;
 }
+@keyframes spotlight {
+  0%   { outline-color: color-mix(in srgb, var(--accent) 75%, transparent); }
+  60%  { outline-color: color-mix(in srgb, var(--accent) 45%, transparent); }
+  100% { outline-color: transparent; }
+}
+/* 위젯(미니게임·날씨 등)은 카드라서 링을 딱 붙게 */
+.widget.spotlight:target { outline-offset: 2px; }
 
 /* ---- 대시보드 그리드 ------------------------------------------- */
 .dash-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: var(--space-4);
+  align-items: stretch;              /* 같은 행 위젯 높이 통일 */
 }
-.dash-grid > .widget { grid-column: span 4; }
+/* margin: .widget + .widget(사이드바용 세로 간격)이 그리드 셀 안에서 높이를 깎는 것 방지 */
+.dash-grid > .widget { grid-column: span 4; margin: 0; }
 .dash-grid > .span-6 { grid-column: span 6; }
 .dash-grid > .span-8 { grid-column: span 8; }
 .dash-grid > .span-12 { grid-column: span 12; }

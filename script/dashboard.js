@@ -53,22 +53,15 @@
     const data = loadAttend();
     $$(".check-item input").forEach((box) => {
       const type = box.dataset.check;
-      if (data[type]) {
-        box.checked = true;
-        const t = box.closest(".check-item").querySelector(".time");
-        if (t) t.textContent = data[type];
-      }
+      if (data[type]) box.checked = true;
       box.addEventListener("change", () => {
         const d = loadAttend();
-        const timeEl = box.closest(".check-item").querySelector(".time");
+        // 실제 출석 시스템이 아닌 개인용 체크 → 시간 스탬프 없이 체크 여부만 저장
         if (box.checked) {
-          const stamp = pad(new Date().getHours()) + ":" + pad(new Date().getMinutes());
-          d[type] = stamp;
-          if (timeEl) timeEl.textContent = stamp;
-          window.showToast && window.showToast((type === "in" ? "입실" : "퇴실") + " 체크 완료 · " + stamp);
+          d[type] = true;
+          window.showToast && window.showToast((type === "in" ? "입실" : "퇴실") + " 체크 완료");
         } else {
           delete d[type];
-          if (timeEl) timeEl.textContent = "";
         }
         saveAttend(d);
         checkWarn();
