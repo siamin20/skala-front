@@ -30,6 +30,26 @@
 <body class="page">
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
 
+  <!-- 인트로 게이트: 흐린 전체화면을 클릭 → 그 클릭이 '사용자 제스처'가 되어
+       배경음악 자동재생 정책을 통과시킨다. JS 없으면(noscript) 숨겨 페이지 정상 노출 -->
+  <div id="enterGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <div class="gate-card">
+      <span class="gate-disc" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 17.5V7.2l9-1.9v8.9a2.6 2.6 0 1 0 1.6 2.4V3l-12 2.5v11.1A2.6 2.6 0 1 0 9 17.5z"/></svg>
+      </span>
+      <p class="gate-title" id="gateTitle">타이베이, 음악과 함께</p>
+      <p class="gate-sub">잔잔한 배경음악을 깔고 둘러보면 조금 더 여행 기분이 나요.<br />화면을 누르면 음악과 함께 시작해요.</p>
+      <div class="gate-actions">
+        <button class="gate-play" type="button" data-gate-play>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          음악과 함께 시작
+        </button>
+        <button class="gate-skip" type="button" data-gate-skip>음악 없이 볼게요</button>
+      </div>
+    </div>
+  </div>
+  <noscript><style>#enterGate{display:none!important}</style></noscript>
+
   <header class="site-header">
     <div class="container">
       <a class="brand" href="../index.html" aria-label="SKALA 신민서 홈">
@@ -443,14 +463,27 @@
         var p = bgm.play();
         if (p && p.then) p.then(function () { started = true; paint(); }).catch(function () {});
       }
-      start();
-      // 브라우저가 소리 자동재생을 막으면 첫 상호작용 때 시작
-      function onGesture() {
-        if (started) { off(); return; }
-        bgm.play().then(function () { started = true; paint(); off(); }).catch(function () {});
+
+      // ── 인트로 게이트 ──────────────────────────────────────────────
+      // 스크롤은 브라우저가 '사용자 제스처'로 안 쳐줘서 자동재생이 막힌다.
+      // 흐린 전체화면을 클릭하게 만들어, 그 클릭을 제스처로 삼아 재생을 통과시킨다.
+      var gate = document.getElementById("enterGate");
+      function dismissGate() {
+        if (!gate) return;
+        gate.classList.add("is-leaving");
+        var g = gate; gate = null;
+        setTimeout(function () { if (g && g.parentNode) g.parentNode.removeChild(g); }, 480);
       }
-      function off() { ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (e) { window.removeEventListener(e, onGesture); }); }
-      ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (e) { window.addEventListener(e, onGesture, { passive: true }); });
+      if (gate) {
+        var playBtn = gate.querySelector("[data-gate-play]");
+        var skipBtn = gate.querySelector("[data-gate-skip]");
+        if (playBtn) {
+          playBtn.focus();
+          playBtn.addEventListener("click", function () { userOff = false; start(); dismissGate(); });
+        }
+        if (skipBtn) skipBtn.addEventListener("click", function () { dismissGate(); }); // 소리 없이 입장(플로팅 버튼으로 언제든 켤 수 있음)
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") dismissGate(); });
+      }
 
       toggle.addEventListener("click", function (e) {
         e.stopPropagation();

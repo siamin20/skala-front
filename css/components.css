@@ -432,6 +432,53 @@ meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--
   .nowplaying .eq i { animation: none; }
 }
 
+/* ---- 인트로 게이트 (myTrip): 흐린 전체화면 → 클릭이 음악 자동재생 제스처 ---- */
+#enterGate {
+  position: fixed; inset: 0; z-index: 9999;
+  display: grid; place-items: center; padding: var(--space-5);
+  background: color-mix(in srgb, var(--surface-2) 62%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  transition: opacity 0.42s var(--ease), visibility 0.42s var(--ease);
+}
+#enterGate.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.gate-card {
+  text-align: center; max-width: 400px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-3);
+  padding: var(--space-7) var(--space-6);
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 6px); box-shadow: var(--shadow-lg);
+  animation: gate-pop 0.5s var(--ease) both;
+}
+@keyframes gate-pop { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: none; } }
+.gate-disc {
+  width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+  margin-bottom: var(--space-2);
+  background: radial-gradient(circle at 50% 35%, var(--accent), var(--accent-2));
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 42%, transparent);
+}
+.gate-disc svg { width: 34px; height: 34px; }
+.gate-title { font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; color: var(--ink); }
+.gate-sub { font-size: var(--step--1); color: var(--ink-soft); line-height: 1.65; }
+.gate-actions { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); width: 100%; margin-top: var(--space-3); }
+.gate-play {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  padding: 0.82em 1.5em; border: none; border-radius: var(--radius-pill); cursor: pointer;
+  background: var(--accent); color: #fff; font: inherit; font-weight: 600;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.gate-play:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.gate-skip {
+  background: none; border: none; cursor: pointer; font: inherit; font-size: var(--step--1);
+  color: var(--muted); text-decoration: underline; text-underline-offset: 3px; padding: 0.4em;
+  transition: color var(--dur-fast) var(--ease);
+}
+.gate-skip:hover { color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) {
+  #enterGate { transition: none; }
+  .gate-card { animation: none; }
+}
+
 /* ---- Tables ----------------------------------------------------- */
 .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
 table { border-collapse: collapse; width: 100%; background: var(--surface); }

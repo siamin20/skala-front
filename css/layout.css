@@ -72,14 +72,29 @@
 }
 .nav__link .idx {
   font-family: var(--font-mono); font-size: 0.72em; color: var(--muted);
+  transition: color var(--dur-fast) var(--ease);
 }
-.nav__link:hover { background: var(--accent-soft); color: var(--accent); }
-.nav__link[aria-current="page"] {
-  color: var(--accent); background: var(--accent-soft);
+/* 가운데서 좌우로 자라나는 밑줄 인디케이터 (호버·활성·키보드 포커스) */
+.nav__link::after {
+  content: ""; position: absolute; left: 0.85em; right: 0.85em; bottom: 0.24em;
+  height: 2px; border-radius: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform var(--dur) var(--ease);
 }
+.nav__link:hover,
+.nav__link:focus-visible { color: var(--accent); }
+.nav__link:hover .idx,
+.nav__link:focus-visible .idx { color: var(--accent); }
+.nav__link:hover::after,
+.nav__link:focus-visible::after,
+.nav__link[aria-current="page"]::after { transform: scaleX(1); }
+.nav__link[aria-current="page"] { color: var(--accent); font-weight: 600; }
 .nav__link[aria-current="page"] .idx { color: var(--accent); }
 /* 첫 메뉴(홈) 살짝 강조 (:first-of-type) */
 .nav__list li:first-of-type .nav__link { font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .nav__link::after { transition: none; }
+}
 
 /* 헤더 우측 액션 (테마 토글 등) */
 .header-actions { display: flex; align-items: center; gap: var(--space-2); }
@@ -159,6 +174,11 @@ main { flex: 1; }
   .nav[data-open="true"] { transform: translateY(0); }
   .nav__list { flex-direction: column; align-items: stretch; gap: 0.2rem; }
   .nav__link { padding: 0.8em 1em; font-size: var(--step-0); }
+  /* 모바일 세로 메뉴에선 밑줄 대신 행 배경 채움이 더 또렷 */
+  .nav__link::after { display: none; }
+  .nav__link:hover,
+  .nav__link:focus-visible,
+  .nav__link[aria-current="page"] { background: var(--accent-soft); }
 }
 
 @media (max-width: 540px) {
