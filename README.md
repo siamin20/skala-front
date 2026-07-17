@@ -1,7 +1,6 @@
 # SKALA-FRONT · 신민서
 
 > SKALA Full-Stack 과정의 HTML · CSS · JavaScript 과제를 **하나의 개인 포털**로 묶은 프로젝트.
-> 프레임워크·라이브러리 없이 순수 웹 표준만으로 만들었습니다.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=fff)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=fff)
@@ -11,16 +10,14 @@
 
 ### 🔗 [**라이브 데모 열기 → siamin20.github.io/skala-front**](https://siamin20.github.io/skala-front/)
 
-> GitHub Pages로 배포되어 로그인·회원가입·날씨·게임까지 **실제로 동작**합니다. (설치 없이 바로 클릭)
+> GitHub Pages로 배포된 페이지입니다. (설치 없이 바로 클릭)
 
 ---
 
 ## ✨ 주요 기능
 
-과제 필수 요건을 모두 채운 위에, 완성도를 높이려고 직접 설계해 얹었습니다. (프레임워크·라이브러리 없이 순수 HTML · CSS · JavaScript)
-
 > ### ✨ 하이라이트
-> **과제 스펙을 넘어** 직접 설계해 넣은 기능들이에요.
+> **과제 명세 이외에** 설계해 넣은 기능들이에요.
 >
 > - 🦖 **공룡 달리기 게임** — `<canvas>`로 점프·충돌 물리까지 직접 구현한 러너 (최고점 저장)
 > - 🔐 **로그인 · 마이페이지 · 아바타** — **SHA-256** 해시 인증 + 테마 색으로 **즉석 생성되는 SVG 캐릭터 아바타**
