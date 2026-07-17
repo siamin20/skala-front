@@ -23,7 +23,7 @@
   var W = canvas.width, H = canvas.height;
   var GROUND = H - 20;          // 지면 y
   var GRAVITY = 0.62, JUMP = -10.2;
-  var BEST_KEY = "skala-dino-best";
+  var BEST_KEY = "skala-dino-best-v2"; // 점수 기준이 '장애물 통과'로 바뀌어 키 갱신
 
   var dino, obs, speed, score, best, spawnIn, tick, over, running, raf, theme;
 
@@ -43,7 +43,7 @@
   }
 
   function reset() {
-    dino = { x: 40, w: 24, h: 26, y: GROUND - 26, vy: 0, onGround: true };
+    dino = { x: 40, w: 26, h: 30, y: GROUND - 30, vy: 0, onGround: true };
     obs = [];
     speed = 4.6;
     score = 0;
@@ -81,26 +81,28 @@
     if (dino.y + dino.h >= GROUND) { dino.y = GROUND - dino.h; dino.vy = 0; dino.onGround = true; }
     // 난이도 점증
     speed += 0.0022;
-    // 장애물 생성 간격 (점수 오를수록 촘촘)
+    // 장애물 생성 간격 (시간이 지날수록 촘촘 — tick 기준)
     if (--spawnIn <= 0) {
       spawnObstacle();
-      spawnIn = Math.max(22, 68 - Math.floor(score / 150) - Math.floor(Math.random() * 18));
+      spawnIn = Math.max(24, 72 - Math.floor(tick / 480) - Math.floor(Math.random() * 18));
     }
-    // 장애물 이동 + 충돌
-    var box = { x: dino.x + 3, y: dino.y + 2, w: dino.w - 6, h: dino.h - 4 };
+    // 장애물 이동 + 충돌 + 통과 점수
+    var box = { x: dino.x + 4, y: dino.y + 4, w: dino.w - 9, h: dino.h - 6 };
     for (var i = obs.length - 1; i >= 0; i--) {
       obs[i].x -= speed;
-      if (obs[i].x + obs[i].w < -6) { obs.splice(i, 1); continue; }
+      if (obs[i].x + obs[i].w < -6) {           // 선인장을 무사히 넘김 → 점수 +1
+        obs.splice(i, 1);
+        score++;
+        scoreEl.textContent = String(score);
+        continue;
+      }
       if (aabb(box, obs[i])) { endGame(); return; }
     }
-    score++;
-    scoreEl.textContent = String(Math.floor(score / 3));
   }
 
   function endGame() {
     over = true;
-    var s = Math.floor(score / 3);
-    if (s > best) { best = s; saveBest(best); bestEl.textContent = "최고 " + best; }
+    if (score > best) { best = score; saveBest(best); bestEl.textContent = "최고 " + best; }
     hintEl.textContent = "게임 오버! 스페이스/클릭으로 다시";
     hintEl.dataset.state = "over";
   }
@@ -111,26 +113,30 @@
     ctx.strokeStyle = theme.line; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(0, GROUND + 1); ctx.lineTo(W, GROUND + 1); ctx.stroke();
 
-    // 공룡은 전부 바운딩 박스(d.y ~ d.y+d.h) 안에서 그려 점프 시 통째로 움직이게 한다
+    // 공룡(T-Rex): 선 자세로 박스 안에서 그려 점프 시 통째로 이동
     var d = dino;
+    var r = function (dx, dy, w, h) { ctx.fillRect(d.x + dx, d.y + dy, w, h); };
     ctx.fillStyle = theme.ink;
-    ctx.fillRect(d.x, d.y + 6, d.w - 5, d.h - 14);    // 몸통
-    ctx.fillRect(d.x + d.w - 9, d.y, 13, 13);         // 머리(우상단)
-    ctx.fillRect(d.x + d.w + 3, d.y + 4, 4, 3);       // 주둥이
-    ctx.fillRect(d.x - 4, d.y + 9, 6, 6);             // 꼬리
-    // 다리 — 박스 하단 기준. 착지 중엔 교차 애니메이션, 점프 중엔 모음
-    var footY = d.y + d.h - 8;
+    r(-6, 16, 8, 4);          // 꼬리 (왼쪽 아래로 뻗음)
+    r(-1, 13, 6, 4);          // 꼬리 뿌리
+    r(3, 9, 13, 13);          // 몸통
+    r(12, 4, 6, 8);           // 등·목 (머리로 올라가는 경사)
+    r(14, 0, 12, 8);          // 머리 (우상단)
+    r(26, 4, 3, 3);           // 주둥이
+    r(15, 15, 6, 3);          // 앞다리(짧은 팔)
+    // 뒷다리 — 박스 하단 기준. 달릴 땐 교차, 점프 중엔 모음
+    var footY = d.h - 8;
     if (d.onGround) {
       var swap = Math.floor(tick / 6) % 2 === 0;
-      ctx.fillRect(d.x + 3, footY, 5, swap ? 8 : 4);
-      ctx.fillRect(d.x + 12, footY, 5, swap ? 4 : 8);
+      r(4, footY, 5, swap ? 8 : 4);
+      r(11, footY, 5, swap ? 4 : 8);
     } else {
-      ctx.fillRect(d.x + 4, footY, 5, 6);
-      ctx.fillRect(d.x + 12, footY, 5, 6);
+      r(5, footY, 5, 6);
+      r(11, footY, 5, 6);
     }
-    // 눈
+    // 눈 (머리에 흰 점)
     ctx.fillStyle = theme.eye;
-    ctx.fillRect(d.x + d.w - 3, d.y + 3, 3, 3);
+    r(21, 2, 2, 2);
 
     // 선인장
     ctx.fillStyle = theme.cactus;
