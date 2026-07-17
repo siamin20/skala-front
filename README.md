@@ -9,6 +9,10 @@
 ![No Framework](https://img.shields.io/badge/No%20Framework-000?logo=)
 ![No Library](https://img.shields.io/badge/No%20Library-555)
 
+### 🔗 [**라이브 데모 열기 → siamin20.github.io/skala-front**](https://siamin20.github.io/skala-front/)
+
+> GitHub Pages로 배포되어 로그인·회원가입·날씨·게임까지 **실제로 동작**합니다. (설치 없이 바로 클릭)
+
 ---
 
 ## 🚀 직접 구현한 주요 기능
