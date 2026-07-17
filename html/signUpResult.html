@@ -118,7 +118,10 @@
       // 필드 키 → 한글 라벨 (표시 순서 = 정의 순서)
       var labels = {
         userId: "아이디", userEmail: "이메일", emailDomain: "이메일 도메인",
-        userName: "이름", userBirth: "생년월일", userTel: "전화번호", job: "희망 직군",
+        userEmail2: "보조 이메일",
+        userName: "이름", userBirth: "생년월일", userTel: "전화번호",
+        userSite: "포트폴리오·블로그", gradYear: "졸업(예정) 연도", city: "거주 지역",
+        job: "희망 직군",
         gender: "성별", interest: "관심 분야", exp: "개발 경력", themeColor: "프로필 색상",
         avatar: "프로필 이미지", intro: "자기소개",
         agreeTos: "이용약관 동의", agreePrivacy: "개인정보 수집·이용 동의"
@@ -167,6 +170,9 @@
           display = hasAvatar
             ? '<img src="' + stored.avatar + '" alt="프로필 이미지" style="width:56px;height:56px;border-radius:var(--radius-sm);object-fit:cover;border:1px solid var(--border);vertical-align:middle">'
             : EMPTY;
+        } else if (key === "interest") {
+          var iMap = { aiml: "AI/ML", backend: "백엔드", frontend: "프론트엔드", data: "데이터", cloud: "클라우드/인프라" };
+          display = values.map(function (v) { return esc(iMap[v] || v); }).join(", ") || EMPTY;
         } else {
           display = values.map(esc).join(", ") || EMPTY;
         }
