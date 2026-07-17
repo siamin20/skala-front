@@ -650,12 +650,11 @@ details > div > p:only-child { color: var(--ink-soft); }
 [data-timetable] colgroup col:first-child { width: 96px; }
 [data-timetable] th,
 [data-timetable] td { text-align: center; vertical-align: middle; padding: 0.7em 0.55em; }
-/* 요일(열) 구분선 — 붙어있는 다른 일정끼리 경계가 보이도록 세로선 추가
-   (가로선은 공통 th/td border-bottom, 세로선은 여기서 → 완전한 격자) */
-[data-timetable] th,
-[data-timetable] td { border-inline-end: 1px solid var(--border); }
-[data-timetable] th:last-child,
-[data-timetable] td:last-child { border-inline-end: none; }
+/* 요일(열) 구분선 — 각 요일 열의 '왼쪽'에 세로선(첫 열 '시간' 제외).
+   셀 오른쪽(border-inline-end)에 주면 rowspan 병합 셀 옆에서 선이 끊겨 보여서,
+   병합 셀도 한 줄로 이어지도록 왼쪽 경계에 준다(완전한 격자). */
+[data-timetable] th:not(:first-child),
+[data-timetable] td:not(:first-child) { border-inline-start: 1px solid var(--border); }
 [data-timetable] tbody td { font-size: var(--step--1); line-height: 1.4; }
 [data-timetable] tbody td small { display: block; margin-top: 0.25em; color: var(--muted); }
 [data-timetable] thead th small { color: var(--muted); font-weight: 500; }
