@@ -74,14 +74,17 @@
   grid-template-columns: repeat(12, 1fr);
   gap: var(--space-4);
   align-items: stretch;              /* 같은 행 위젯 높이 통일 */
+  container-type: inline-size;       /* 뷰포트가 아니라 '실제 대시보드 폭' 기준으로 리플로우 */
 }
 /* margin: .widget + .widget(사이드바용 세로 간격)이 그리드 셀 안에서 높이를 깎는 것 방지 */
 .dash-grid > .widget { grid-column: span 4; margin: 0; }
 .dash-grid > .span-6 { grid-column: span 6; }
 .dash-grid > .span-8 { grid-column: span 8; }
 .dash-grid > .span-12 { grid-column: span 12; }
-@media (max-width: 900px) { .dash-grid > * { grid-column: span 6 !important; } }
-@media (max-width: 600px) { .dash-grid > * { grid-column: span 12 !important; } }
+/* 사이드바에 눌려 대시보드가 좁아지면(786~1024 2열 구간 포함) 위젯을 2열→1열로.
+   뷰포트가 아닌 컨테이너(.dash-grid) 폭 기준이라 사이드바 유무와 무관하게 안 깨짐 */
+@container (max-width: 720px) { .dash-grid > * { grid-column: span 6 !important; } }
+@container (max-width: 460px) { .dash-grid > * { grid-column: span 12 !important; } }
 /* 위젯 헤더의 태그(예: '매일 리셋')가 좁을 때 짤리지 않고 다음 줄로 */
 .dash-grid .widget__head { flex-wrap: wrap; row-gap: 0.15rem; }
 

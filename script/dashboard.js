@@ -18,12 +18,29 @@
   const COURSE_START = new Date(2026, 6, 14); // 2026-07-14
   const COURSE_END = new Date(2026, 11, 11);  // 2026-12-11
   const SCHED = { start: 9 * 60, lunchS: 12 * 60, lunchE: 13 * 60 + 10, end: 18 * 60 };
+  // 비수업일(공휴일·휴강) — 시간표(schedule.js)와 동일 기준. 이날은 '수업 중'으로 뜨지 않게.
+  const HOLIDAYS = {
+    "2026-07-17": "제헌절",
+    "2026-08-17": "광복절 대체",
+    "2026-09-23": "자체 휴강",
+    "2026-09-24": "추석 연휴",
+    "2026-09-25": "추석 연휴",
+    "2026-10-05": "개천절 대체",
+    "2026-10-09": "한글날"
+  };
+  const dateKey = (d) => [d.getFullYear(), pad(d.getMonth() + 1), pad(d.getDate())].join("-");
+  const isHoliday = (d) => HOLIDAYS[dateKey(d)];
 
   /* ------- 1) 오늘의 상태 ---------------------------------------- */
   function statusFor(now) {
     const day = now.getDay();
     const m = now.getHours() * 60 + now.getMinutes();
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     if (day === 0 || day === 6) return { label: "주말 · 휴일", tone: "muted", next: null };
+    const holi = isHoliday(now);
+    if (holi) return { label: "휴일 · " + holi, tone: "muted", next: null };
+    if (midnight < COURSE_START) return { label: "과정 시작 전", tone: "muted", next: null };
+    if (midnight > COURSE_END) return { label: "과정 종료 🎓", tone: "muted", next: null };
     if (m < SCHED.start) return { label: "등원 전", tone: "muted", next: { t: SCHED.start, name: "수업 시작" } };
     if (m < SCHED.lunchS) return { label: "오전 수업 중", tone: "live", next: { t: SCHED.lunchS, name: "점심시간" } };
     if (m < SCHED.lunchE) return { label: "점심시간 🍚", tone: "warn", next: { t: SCHED.lunchE, name: "오후 수업" } };
@@ -76,7 +93,7 @@
     const data = loadAttend(), now = new Date();
     const day = now.getDay(), m = now.getHours() * 60 + now.getMinutes();
     let msg = "";
-    if (day >= 1 && day <= 5) {
+    if (day >= 1 && day <= 5 && !isHoliday(now)) {  // 공휴일·휴강엔 출결 독촉 안 함
       if (m >= SCHED.start + 5 && !data.in) msg = "아직 입실 체크가 안 됐어요. 지금 확인하세요!";
       else if (m >= SCHED.end - 15 && data.in && !data.out) msg = "퇴실 체크 잊지 마세요! (하루 1회만 가능)";
     }
