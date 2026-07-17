@@ -531,9 +531,10 @@ tfoot td { font-weight: 700; background: var(--surface-2); }
 .media-figure video, .media-figure audio { width: 100%; border-radius: var(--radius-sm); }
 .media-figure figcaption { margin-top: var(--space-3); color: var(--muted); font-size: var(--step--1); }
 
-/* 미션5: 786px 이하 여행 카드 1열 */
+/* 미션5: 786px 이하 → 여행 카드·바로가기 카드 모두 1열 */
 @media (max-width: 786px) {
   .trip-grid { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
 }
 
 /* ---- Details / summary (아코디언) ------------------------------- */
