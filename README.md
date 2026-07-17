@@ -108,6 +108,29 @@
 
 ---
 
+## 📁 과제 파일 목록
+
+**HTML**
+- `index.html` — 메인 화면 (개인 포털 허브)
+- `html/myProfile.html` — 내 소개
+- `html/myClass.html` — 내 강의 일정
+- `html/myHoliday.html` — 나의 휴일 일과
+- `html/signUp.html` — 회원가입
+- `html/signUpResult.html` — 회원가입 결과
+- `html/myTrip.html` — 내 여행지
+- `html/login.html` · `html/myPage.html` — 로그인 / 마이페이지 *(추가)*
+
+**JavaScript**
+- `script/weatherAPI.js` — 날씨 데이터 처리 (Open-Meteo 호출, `export`)
+- `script/realtimeInfo.js` — 날씨 화면 처리 (`import` 후 DOM 렌더)
+- `script/upDown.js` — Up-Down 숫자 맞히기 게임
+- `script/grade.js` — 성적 계산기
+- `script/bag.js` — 내 가방 보기
+- `script/dino.js` — 공룡 달리기 게임 *(추가)*
+- `script/theme.js` · `app.js` · `auth.js` · `dashboard.js` · `schedule.js` · `signup.js` — 공통(테마·네비·인증·대시보드·시간표·폼)
+
+---
+
 ## 🔒 보안 · 채점 안전성
 
 - **민감 정보 미포함** — WiFi·도어락·Zoom 등은 소스에 두지 않고 권한 필요한 Slack 문서 링크로만 제공 → Public 저장소로 안전
