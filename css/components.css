@@ -485,7 +485,13 @@ meter::-moz-meter-bar { background: linear-gradient(90deg, var(--accent), var(--
 }
 
 /* ---- Tables ----------------------------------------------------- */
-.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); scrollbar-width: thin; scrollbar-color: var(--border-strong) var(--surface-2); }
+/* 좁은 폭에서 표가 넘칠 때 '스크롤 가능'이 보이도록 가로 스크롤바를 항상 표시
+   (macOS 오버레이 스크롤바는 평소 숨겨져 사용자가 못 보던 문제 해결) */
+.table-wrap::-webkit-scrollbar { height: 10px; }
+.table-wrap::-webkit-scrollbar-track { background: var(--surface-2); }
+.table-wrap::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-pill); border: 2px solid var(--surface-2); }
+.table-wrap::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 table { border-collapse: collapse; width: 100%; background: var(--surface); }
 caption { text-align: left; padding: var(--space-3) var(--space-4); font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
 th, td { padding: 0.75em 1em; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }

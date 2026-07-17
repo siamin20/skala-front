@@ -96,6 +96,8 @@
   // 헤더의 로그인 상태 UI 연결 ([data-auth-user] / [data-auth-btn] / [data-mypage-link])
   function initHeader() {
     var id = getSession(), user = id ? getUser(id) : null;
+    // 로그인 상태 플래그 → CSS가 모바일 헤더 버튼을 상태별로 노출(로그인/마이페이지)
+    document.body.dataset.authed = id ? "in" : "out";
     var userEl = document.querySelector("[data-auth-user]");
     var authBtn = document.querySelector("[data-auth-btn]");
     var onMyPage = /mypage\.html/i.test(location.pathname); // 마이페이지 헤더엔 아바타 생략(카드에 이미 있음)
@@ -113,6 +115,28 @@
         authBtn.textContent = "로그인";
         authBtn.onclick = function () { location.href = paths.login; };
       }
+    }
+    syncMenuLogout(id);
+  }
+
+  // 로그인 상태면 햄버거 메뉴(모바일)에 '로그아웃' 항목을 넣는다.
+  // (모바일에선 상태줄에 로그인→마이페이지만 두고, 로그아웃은 메뉴로 — CSS가 데스크톱에선 숨김)
+  function syncMenuLogout(id) {
+    var list = document.querySelector(".nav .nav__list");
+    if (!list) return;
+    var old = list.querySelector("[data-nav-logout]");
+    if (old) old.remove();
+    if (id) {
+      var li = document.createElement("li");
+      li.setAttribute("data-nav-logout", "");
+      li.className = "nav__logout-item";
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "nav__link nav__logout";
+      btn.textContent = "로그아웃";
+      btn.addEventListener("click", function () { logout(); location.href = paths.home; });
+      li.appendChild(btn);
+      list.appendChild(li);
     }
   }
 
