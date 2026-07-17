@@ -170,7 +170,8 @@ main { flex: 1; }
     background: var(--surface); border-bottom: 1px solid var(--border);
     padding: var(--space-3); gap: var(--space-2);
     box-shadow: var(--shadow-lg);
-    transform: translateY(-120%);
+    /* 닫힘: 패널 높이 + 헤더 높이만큼 위로 → 위쪽으로 완전히 숨김(삐져나옴 방지) */
+    transform: translateY(calc(-100% - var(--nav-h) - 12px));
     transition: transform var(--dur) var(--ease);
   }
   .nav[data-open="true"] { transform: translateY(0); }
