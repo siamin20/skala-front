@@ -134,6 +134,29 @@
 
 ---
 
+## 📱 반응형 웹 디자인
+
+> 화면 폭 **786px 이하**에서 본문·사이드바가 세로 1열로 접히고, 상단 네비는 햄버거 메뉴로 전환됩니다.
+
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <b>메인 포털</b> <sub>(모바일)</sub><br/><br/>
+      <img src="screenshots/index-mobile.png" alt="메인 모바일" />
+    </td>
+    <td width="33%" align="center">
+      <b>나의 여행지</b> <sub>(모바일)</sub><br/><br/>
+      <img src="screenshots/myTrip-mobile.png" alt="여행지 모바일" />
+    </td>
+    <td width="33%" align="center">
+      <b>회원가입</b> <sub>(모바일)</sub><br/><br/>
+      <img src="screenshots/signUp-mobile.png" alt="회원가입 모바일" />
+    </td>
+  </tr>
+</table>
+
+---
+
 ## 📁 과제 파일 목록
 
 **HTML**
