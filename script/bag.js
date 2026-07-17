@@ -24,6 +24,16 @@
   var list = dialog.querySelector("[data-bag-list]");
   var totalEl = dialog.querySelector("[data-bag-total]");
   var closeBtn = dialog.querySelector("[data-bag-close]");
+  var classicBtn = dialog.querySelector("[data-bag-classic]");
+
+  // ── 교재 방식(반복문 + alert 출력) — 실제 실행되는 코드 ──
+  function showMyBagClassic() {
+    var text = "[내 가방 속 물품 목록]\n";
+    for (var i = 0; i < myBag.length; i++) {          // 반복문으로 소지품 객체 출력
+      text += "· " + myBag[i].name + " : " + myBag[i].count + "개\n";
+    }
+    alert(text);
+  }
 
   // 반복문으로 가방 내용물 출력 (+ 총 개수 합산)
   function showMyBag() {
@@ -51,5 +61,6 @@
     else dialog.setAttribute("open", "");
   });
   closeBtn.addEventListener("click", function () { dialog.close(); });
+  if (classicBtn) classicBtn.addEventListener("click", showMyBagClassic); // 교재 방식 실행
   dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
 })();

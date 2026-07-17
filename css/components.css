@@ -743,6 +743,15 @@ dialog::backdrop { background: hsl(240 40% 5% / 0.55); backdrop-filter: blur(3px
    ===================================================================== */
 .game-dialog, .grade-dialog, .bag-dialog { max-width: min(420px, 94vw); }
 .ud-close { margin-top: var(--space-4); }
+/* 교재 방식(prompt/alert) 실행 링크 — 모달 안, 은은하게 */
+.classic-link {
+  display: block; margin: var(--space-3) auto 0;
+  background: none; border: none; cursor: pointer; font: inherit;
+  font-size: var(--step--2, 0.72rem); color: var(--muted);
+  text-decoration: underline; text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease);
+}
+.classic-link:hover { color: var(--accent); }
 .ud-foot {
   display: flex; align-items: center; justify-content: space-between;
   gap: var(--space-3); margin-top: var(--space-4);

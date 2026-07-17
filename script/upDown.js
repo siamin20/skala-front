@@ -2,21 +2,9 @@
    upDown.js — Up & Down 숫자 맞히기 게임
    · 1~50 사이 Math.random 으로 정답을 정하고, 입력값과 비교해
      크면 "Down!", 작으면 "Up!", 같으면 정답(시도 횟수) 안내.
-   · 교재 원형은 prompt/while/alert 지만, 완성도를 위해 <dialog> 모달 +
-     DOM 입력폼으로 리메이크했다. 필수 문법(Math.random·비교·반복)은 그대로 사용.
-
-   [교재 원형 — 학습 흔적용 참고 구현]
-   function upDownClassic() {
-     var answer = Math.floor(Math.random() * 50) + 1; // 1~50
-     var tries = 0, guess;
-     while (true) {                     // 정답까지 반복
-       guess = Number(prompt("1~50 숫자를 맞혀보세요"));
-       tries++;
-       if (guess > answer) alert("Down!");
-       else if (guess < answer) alert("Up!");
-       else { alert(tries + "번 만에 정답!"); break; }
-     }
-   }
+   · 완성도를 위해 <dialog> 모달로 리메이크(기본 경로)하고,
+     교재 방식(prompt/while/alert)은 아래 classicUpDown()에 '실제 실행되는 코드'로
+     남겨 '교재 방식으로 하기' 버튼에 연결한다(주석 아님 → 요구 문법 실사용).
    ===================================================================== */
 (function () {
   "use strict";
@@ -32,6 +20,21 @@
   var count = dialog.querySelector("[data-ud-count]");
   var resetBtn = dialog.querySelector("[data-ud-reset]");
   var closeBtn = dialog.querySelector("[data-ud-close]");
+  var classicBtn = dialog.querySelector("[data-ud-classic]");
+
+  // ── 교재 방식(prompt/while/alert) — 실제 실행되는 코드 ──
+  function classicUpDown() {
+    var num = Math.floor(Math.random() * 50) + 1; // 1~50 무작위
+    var count = 0, guess;
+    while (true) {                                 // 맞출 때까지 반복
+      guess = Number(prompt("1~50 사이 숫자를 맞혀보세요"));
+      if (isNaN(guess)) return;                    // 취소 시 종료
+      count++;
+      if (guess > num) alert("Down!");             // 정답보다 크면
+      else if (guess < num) alert("Up!");          // 작으면
+      else { alert("축하합니다! " + count + "번 만에 맞추셨습니다."); break; }
+    }
+  }
 
   var answer, tries, cleared;
 
@@ -103,6 +106,7 @@
 
   resetBtn.addEventListener("click", newGame);
   closeBtn.addEventListener("click", function () { dialog.close(); });
+  if (classicBtn) classicBtn.addEventListener("click", classicUpDown); // 교재 방식 실행
   // 배경(백드롭) 클릭 시 닫기
   dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
 })();
