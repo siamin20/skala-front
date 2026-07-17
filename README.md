@@ -161,6 +161,16 @@
 
 ---
 
+## 🌗 다크 모드
+
+> 헤더의 **◐ 버튼** 한 번으로 라이트 ↔ 다크가 전환됩니다. 선택한 테마는 `localStorage`에 기억되고, 처음 방문 시엔 **OS 설정**을 따라갑니다. (모든 색은 `css/tokens.css`의 CSS 변수로 관리)
+
+<p align="center">
+  <img src="screenshots/darkmode.gif" alt="메인 화면에서 라이트 모드와 다크 모드를 전환하는 데모" width="90%" />
+</p>
+
+---
+
 ## 📁 과제 파일 목록
 
 **HTML**

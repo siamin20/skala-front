@@ -533,6 +533,8 @@
       // 스크롤은 브라우저가 '사용자 제스처'로 안 쳐줘서 자동재생이 막힌다.
       // 흐린 전체화면을 클릭하게 만들어, 그 클릭을 제스처로 삼아 재생을 통과시킨다.
       var gate = document.getElementById("enterGate");
+      // ?nogate 딥링크: 인트로 게이트 없이 바로 콘텐츠로 입장(북마크·공유·미리보기용)
+      if (gate && /[?&]nogate\b/.test(location.search)) { gate.parentNode.removeChild(gate); gate = null; }
       function dismissGate() {
         if (!gate) return;
         gate.classList.add("is-leaving");
