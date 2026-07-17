@@ -21,6 +21,34 @@ export const CITIES = {
   "시드니": { lat: -33.8688, lon: 151.2093 }
 };
 
+// 브라우저 위치 권한으로 현재 좌표 얻기 (Promise 래핑)
+export function getCurrentCoords() {
+  return new Promise(function (resolve, reject) {
+    if (!navigator.geolocation) { reject(new Error("geolocation-unsupported")); return; }
+    navigator.geolocation.getCurrentPosition(
+      function (pos) { resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }); },
+      function (err) { reject(err); },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  });
+}
+
+// 좌표 → 지역명 (역지오코딩, 무료·API키 없음·CORS 허용: BigDataCloud)
+export async function reverseGeocode(lat, lon) {
+  const url =
+    "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + lat +
+    "&longitude=" + lon + "&localityLanguage=ko";
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("역지오코딩 오류: " + res.status);
+  const d = await res.json();
+  const name = d.city || d.locality || d.principalSubdivision || d.countryName || "현재 위치";
+  // 이름과 겹치는 상위 행정구역은 빼서 "서울특별시 (서울특별시…)" 같은 중복 방지
+  const parts = [];
+  if (d.principalSubdivision && d.principalSubdivision !== name) parts.push(d.principalSubdivision);
+  if (d.countryName && d.countryName !== name) parts.push(d.countryName);
+  return { name: name, region: parts.join(" · ") };
+}
+
 // Open-Meteo 실시간 날씨 (현재 기온·습도)
 export async function getWeather(lat, lon) {
   const url =
