@@ -15,7 +15,9 @@
   box-shadow: var(--shadow-sm);
   transition: transform var(--dur-fast) var(--ease),
               box-shadow var(--dur-fast) var(--ease),
-              background var(--dur-fast) var(--ease);
+              background var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
 }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); background: var(--accent-hover); color: #fff; }
 .btn:active { transform: translateY(0); }
