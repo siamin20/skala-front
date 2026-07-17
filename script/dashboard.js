@@ -52,7 +52,8 @@
     const pill = $("#status-pill"), cd = $("#status-countdown");
     if (pill) { pill.textContent = s.label; pill.dataset.tone = s.tone; }
     if (cd) {
-      if (!s.next) { cd.textContent = "오늘 일정 없음 · 편히 쉬세요"; return; }
+      if (!s.next) { cd.hidden = true; cd.textContent = ""; return; }  // 다음 일정 없으면 줄 자체를 숨김
+      cd.hidden = false;
       const left = s.next.t - (now.getHours() * 60 + now.getMinutes());
       const h = Math.floor(left / 60), mm = left % 60;
       cd.innerHTML = `${s.next.name}까지 <b>${h > 0 ? h + "시간 " : ""}${mm}분</b>`;
