@@ -36,9 +36,8 @@
     const day = now.getDay();
     const m = now.getHours() * 60 + now.getMinutes();
     const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    if (day === 0 || day === 6) return { label: "주말 · 휴일", tone: "muted", next: null };
-    const holi = isHoliday(now);
-    if (holi) return { label: "휴일 · " + holi, tone: "muted", next: null };
+    if (day === 0 || day === 6) return { label: "오늘은 수업이 없어요.", tone: "muted", next: null };
+    if (isHoliday(now)) return { label: "오늘은 수업이 없어요.", tone: "muted", next: null };
     if (midnight < COURSE_START) return { label: "과정 시작 전", tone: "muted", next: null };
     if (midnight > COURSE_END) return { label: "과정 종료 🎓", tone: "muted", next: null };
     if (m < SCHED.start) return { label: "등원 전", tone: "muted", next: { t: SCHED.start, name: "수업 시작" } };
