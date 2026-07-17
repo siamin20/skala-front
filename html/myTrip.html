@@ -325,59 +325,61 @@
         <p class="section-lead text-muted">기억에 남는 여행지들. 이모지는 그때 기분이에요.</p>
 
         <div class="trip-grid">
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>타이베이</h3>
+          <!-- 명세대로 각 여행지 = <p class="trip-card"> (배경·테두리·패딩·마진으로 리뷰카드화).
+               p 안에는 블록 요소를 못 넣으므로 내부는 인라인 <span>으로 구성 -->
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">타이베이</strong>
               <span class="trip-mood" role="img" title="완전 반함" aria-label="그때 기분: 완전 반함">😍</span>
-            </div>
-            <p class="trip-meta"><span class="tag">대만</span><span class="mono">2025 · 2026 · 2회</span></p>
-            <p class="trip-card__review">두 번이나 다녀온 유일한 곳. 야시장 냄새가 아직도 생각나요. 더 무슨 말이 필요할까.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">대만</span><span class="mono">2025 · 2026 · 2회</span></span>
+            <span class="trip-card__review">두 번이나 다녀온 유일한 곳. 야시장 냄새가 아직도 생각나요. 더 무슨 말이 필요할까.</span>
+          </p>
 
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>삿포로</h3>
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">삿포로</strong>
               <span class="trip-mood" role="img" title="춥지만 좋았음" aria-label="그때 기분: 춥지만 좋았음">🥶</span>
-            </div>
-            <p class="trip-meta"><span class="tag">일본</span><span class="mono">겨울</span></p>
-            <p class="trip-card__review">손은 시린데 계속 밖에 있고 싶었어요. 추운 날 먹는 라멘 국물은 반칙이에요.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">일본</span><span class="mono">겨울</span></span>
+            <span class="trip-card__review">손은 시린데 계속 밖에 있고 싶었어요. 추운 날 먹는 라멘 국물은 반칙이에요.</span>
+          </p>
 
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>코타키나바루</h3>
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">코타키나바루</strong>
               <span class="trip-mood" role="img" title="노을에 뭉클" aria-label="그때 기분: 노을에 뭉클">🥹</span>
-            </div>
-            <p class="trip-meta"><span class="tag">말레이시아</span><span class="mono">여름</span></p>
-            <p class="trip-card__review">노을이 진짜 미쳤어요. 바다 보면서 아무것도 안 하는 게 제일 좋았어요.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">말레이시아</span><span class="mono">여름</span></span>
+            <span class="trip-card__review">노을이 진짜 미쳤어요. 바다 보면서 아무것도 안 하는 게 제일 좋았어요.</span>
+          </p>
 
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>치앙마이</h3>
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">치앙마이</strong>
               <span class="trip-mood" role="img" title="완전 느긋" aria-label="그때 기분: 완전 느긋">😌</span>
-            </div>
-            <p class="trip-meta"><span class="tag">태국</span><span class="mono">한 달 살기 각</span></p>
-            <p class="trip-card__review">도시 전체가 느긋해요. 카페만 돌아다녀도 하루가 꽉 찼어요.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">태국</span><span class="mono">한 달 살기 각</span></span>
+            <span class="trip-card__review">도시 전체가 느긋해요. 카페만 돌아다녀도 하루가 꽉 찼어요.</span>
+          </p>
 
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>스위스</h3>
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">스위스</strong>
               <span class="trip-mood" role="img" title="실물에 놀람" aria-label="그때 기분: 실물에 놀람">🤩</span>
-            </div>
-            <p class="trip-meta"><span class="tag">유럽</span><span class="mono">인터라켄</span></p>
-            <p class="trip-card__review">산 보려고 간 곳인데, 실제로 보니까 찍어둔 사진이 다 초라해졌어요.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">유럽</span><span class="mono">인터라켄</span></span>
+            <span class="trip-card__review">산 보려고 간 곳인데, 실제로 보니까 찍어둔 사진이 다 초라해졌어요.</span>
+          </p>
 
-          <article class="trip-card">
-            <div class="trip-card__top">
-              <h3>미국 서부</h3>
+          <p class="trip-card">
+            <span class="trip-card__top">
+              <strong class="trip-card__city">미국 서부</strong>
               <span class="trip-mood" role="img" title="탁 트임" aria-label="그때 기분: 탁 트임">😎</span>
-            </div>
-            <p class="trip-meta"><span class="tag">미국</span><span class="mono">로드트립</span></p>
-            <p class="trip-card__review">일단 다 커요. 도로도, 밥 양도. 오래 운전했는데 창밖이 안 질렸어요.</p>
-          </article>
+            </span>
+            <span class="trip-meta"><span class="tag">미국</span><span class="mono">로드트립</span></span>
+            <span class="trip-card__review">일단 다 커요. 도로도, 밥 양도. 오래 운전했는데 창밖이 안 질렸어요.</span>
+          </p>
         </div>
       </section>
 

@@ -508,9 +508,9 @@ tfoot td { font-weight: 700; background: var(--surface-2); }
 }
 .trip-card figcaption { display: flex; flex-direction: column; gap: var(--space-2); }
 .trip-card .trip-meta { display: flex; flex-wrap: wrap; gap: 0.4em; align-items: center; }
-/* 한 줄 리뷰 카드 (텍스트형) */
+/* 한 줄 리뷰 카드 (텍스트형) — 내부는 <p> 안이라 전부 인라인 span, CSS로 블록화 */
 .trip-card__top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
-.trip-card__top h3 { font-size: var(--step-1); }
+.trip-card__city { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); line-height: 1.2; }
 /* 그때 기분 이모지 칩 */
 .trip-mood {
   flex: none; display: inline-grid; place-items: center;
@@ -521,7 +521,7 @@ tfoot td { font-weight: 700; background: var(--surface-2); }
 }
 .trip-card:hover .trip-mood { transform: scale(1.12) rotate(-6deg); }
 .trip-card .trip-meta .mono { color: var(--muted); font-size: var(--step--1); }
-.trip-card__review { color: var(--ink-soft); line-height: 1.7; margin: 0; }
+.trip-card__review { display: block; color: var(--ink-soft); line-height: 1.7; margin: 0; }
 
 /* 미디어 블록 (오디오/영상 섹션) */
 .media-figure {
