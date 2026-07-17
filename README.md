@@ -94,17 +94,43 @@
 
 ---
 
-## 📄 페이지
+## 📸 페이지 미리보기
 
-| 파일 | 페이지 | 핵심 |
-|---|---|---|
-| `index.html` | **개인 포털 허브** | nav/main/aside, 섹션 점프 내비(scrollspy), 온보딩 대시보드, 바로가기 카드, 사이드바 미니앱 |
-| `html/myHoliday.html` | 나의 휴일 일과 | 시간순 일과 + `<time>`·`<figure>`·`<details>` |
-| `html/myProfile.html` | 나의 소개 | `ul`/`ol`/`dl` 목록, 아바타, FAQ 아코디언 (CSS 0줄) |
-| `html/myClass.html` | 강의 일정 | 주간 시간표(셀 병합), 주 이동·현재 시각 줄·중식 메뉴 모달 (CSS 0줄) |
-| `html/signUp.html` · `signUpResult.html` | 회원가입 / 결과 | GET 폼 → `URLSearchParams` 파싱 렌더 |
-| `html/myTrip.html` | 나의 여행지 | 색칠 세계지도(인라인 SVG), 리뷰 카드, 사진·영상·배경음악 |
-| `html/login.html` · `myPage.html` | 로그인 / 마이페이지 | `localStorage` 데모 인증 (SHA-256 해시) |
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <b>메인 포털</b> · <code>index.html</code><br/>
+      <sub>포털 허브 · 온보딩 대시보드 · 미니앱</sub><br/><br/>
+      <img src="screenshots/index.png" alt="메인 포털" />
+    </td>
+    <td width="50%" align="center">
+      <b>나의 소개</b> · <code>myProfile.html</code><br/>
+      <sub>ul/ol/dl 목록 · 아바타 · FAQ 아코디언</sub><br/><br/>
+      <img src="screenshots/myProfile.png" alt="나의 소개" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>강의 일정</b> · <code>myClass.html</code><br/>
+      <sub>주간 시간표 · 셀 병합 · 오늘 강조</sub><br/><br/>
+      <img src="screenshots/myClass.png" alt="강의 일정" />
+    </td>
+    <td width="50%" align="center">
+      <b>회원가입</b> · <code>signUp.html</code><br/>
+      <sub>fieldset · 비밀번호 강도 · GET 폼</sub><br/><br/>
+      <img src="screenshots/signUp.png" alt="회원가입" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <b>나의 여행지</b> · <code>myTrip.html</code><br/>
+      <sub>가본 나라를 색칠한 인라인 SVG 세계지도</sub><br/><br/>
+      <img src="screenshots/myTrip.png" alt="나의 여행지" width="82%" />
+    </td>
+  </tr>
+</table>
+
+> 이 외에 `myHoliday.html`(나의 휴일)·`signUpResult.html`(가입 결과)·`login.html`/`myPage.html`(로그인·마이페이지)이 있습니다.
 
 ---
 
