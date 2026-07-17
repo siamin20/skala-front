@@ -44,16 +44,28 @@ async function showWeather(name, lat, lon) {
   }
 }
 
+// 기본(플레이스홀더) 상태로 되돌리기 — 자동 시도가 조용히 실패했을 때
+const PLACEHOLDER_HTML = "도시를 고르면 실시간 날씨가 표시돼요.";
+function resetToPlaceholder() {
+  if (select) select.value = "";
+  box.dataset.state = "";
+  box.classList.add("text-muted");
+  box.innerHTML = PLACEHOLDER_HTML;
+}
+
 // "📍 현재 위치" 흐름: 위치 권한 → 좌표 → 역지오코딩(지역명) → 날씨
-async function showCurrentLocation() {
+// isAuto=true(초기 자동 진입)면, 권한 미허용/실패 시 에러 없이 조용히 기본 상태로 되돌린다.
+async function showCurrentLocation(isAuto) {
   box.classList.remove("text-muted");
   box.dataset.state = "loading";
-  box.innerHTML = head("현재 위치") + '<p class="wx-loading">위치 확인 중… (권한을 허용해 주세요)</p>';
+  box.innerHTML = head("현재 위치") +
+    '<p class="wx-loading">위치 확인 중…' + (isAuto ? "" : " (권한을 허용해 주세요)") + "</p>";
 
   let coords;
   try {
     coords = await getCurrentCoords();
   } catch (err) {
+    if (isAuto) { resetToPlaceholder(); return; } // 자동 시도 실패는 조용히
     box.dataset.state = "error";
     const denied = err && err.code === 1; // PERMISSION_DENIED
     box.innerHTML =
@@ -79,10 +91,27 @@ async function showCurrentLocation() {
 if (select && box) {
   select.addEventListener("change", async () => {
     const val = select.value;
-    if (val === "__geo__") { await showCurrentLocation(); return; }
+    if (val === "__geo__") { await showCurrentLocation(false); return; }
 
     const coord = CITIES[val];
     if (!coord) return;
     await showWeather(val, coord.lat, coord.lon);
   });
+
+  // 초기 진입: 현재 위치를 기본으로 먼저 보여준다.
+  // · 이미 허용됨 → 팝업 없이 조용히 로드   · 미결정 → 권한 1회 요청
+  // · 이미 차단/미지원 → 자동 요청 생략(도시 선택 유지)
+  function autoLoadCurrent() {
+    select.value = "__geo__";
+    showCurrentLocation(true);
+  }
+  if (navigator.geolocation) {
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: "geolocation" })
+        .then((st) => { if (st.state !== "denied") autoLoadCurrent(); })
+        .catch(() => autoLoadCurrent());
+    } else {
+      autoLoadCurrent();
+    }
+  }
 }
