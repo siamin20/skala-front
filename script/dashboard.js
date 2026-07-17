@@ -51,7 +51,12 @@
     const s = statusFor(now);
     const pill = $("#status-pill"), cd = $("#status-countdown"), live = $("#status-live");
     if (pill) { pill.textContent = s.label; pill.dataset.tone = s.tone; }
-    if (live) live.hidden = s.tone !== "live";  // 실제 수업 중일 때만 'live' 표시
+    if (live) {                                  // 수업 중이면 초록 live, 아니면 회색 OFF
+      const on = s.tone === "live";
+      live.hidden = false;
+      live.className = "badge " + (on ? "badge--live" : "badge--off");
+      live.innerHTML = '<span class="dot" aria-hidden="true"></span> ' + (on ? "live" : "OFF");
+    }
     if (cd) {
       if (!s.next) { cd.hidden = true; cd.textContent = ""; return; }  // 다음 일정 없으면 줄 자체를 숨김
       cd.hidden = false;
