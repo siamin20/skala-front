@@ -37,6 +37,14 @@
 .chip .idx { opacity: 0.6; }
 .chip[aria-current="true"] .idx { opacity: 0.85; }
 
+/* 좁은 화면(SE 등)에선 ▹ 마커를 숨기고 패딩을 줄여 칩 4개가 한 줄에 들어가게
+   (안 그러면 '날씨'만 다음 줄로 떨어져 어색함) */
+@media (max-width: 720px) {
+  .jump-nav { gap: 0.5rem; }
+  .chip { padding: 0.4em 0.75em; }
+  .chip .idx { display: none; }
+}
+
 /* ---- :target 하이라이트 (점프 후 반짝) -------------------------- */
 :target { scroll-margin-top: calc(var(--nav-h) + 64px); }
 /* 콘텐츠에서 10px 떨어진, 모서리 둥근 하이라이트 링.
