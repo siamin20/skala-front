@@ -78,8 +78,11 @@ em, i { font-style: italic; }
 small { font-size: var(--step--1); color: var(--muted); }
 del { color: var(--muted); text-decoration-thickness: 2px; }
 ins { text-decoration: none; background: color-mix(in srgb, var(--green-500) 22%, transparent); border-radius: 3px; padding: 0 0.2em; }
-abbr[title] { text-decoration: underline dotted; cursor: help; }
+abbr[title] { text-decoration: underline dotted; cursor: help; text-underline-offset: 2px; }
 sub, sup { font-size: 0.72em; }
+dfn { font-style: normal; font-weight: 600; color: var(--ink); }
+s { color: var(--muted); }
+q { quotes: "\201C" "\201D" "\2018" "\2019"; }
 
 kbd {
   font-family: var(--font-mono); font-size: 0.82em;
@@ -103,6 +106,11 @@ blockquote {
   font-style: italic;
 }
 cite { font-style: normal; color: var(--muted); font-size: var(--step--1); }
+
+/* 풀 인용구(figure): 본문 중간에 넣는 인용 카드 */
+.pull-quote { margin: var(--space-6) 0; max-width: 60ch; }
+.pull-quote blockquote { margin: 0; font-size: var(--step-1); }
+.pull-quote figcaption { margin-top: var(--space-2); padding-left: var(--space-4); color: var(--muted); font-size: var(--step--1); }
 
 hr {
   border: none; height: 1px;

@@ -88,10 +88,10 @@
         <div class="grid-2 mt-6">
           <article class="card">
             <p>
-              솔직히 휴일에 일찍은 못 일어나요. <time datetime="10:30">10:30</time>쯤 겨우 눈 뜹니다.<br />
-              그래도 러닝은 포기 못 해서, 일어나면 미루기 전에 <mark>바로</mark> 러닝화부터 신어요.
+              솔직히 휴일에 일찍은 못 일어나요. 계획은 <del>07:00 기상</del> <ins>사실상 <time datetime="10:30">10:30</time></ins>쯤 겨우 눈 뜹니다.<br />
+              그래도 러닝은 포기 못 해서, 속으로 <q>딱 오늘까지만 쉬자</q> 하면서도 일어나면 미루기 전에 <mark>바로</mark> 러닝화부터 신어요.
             </p>
-            <p>동네 한 바퀴 5~6km 정도. 뛰고 나면 개운해서 그날 컨디션이 확실히 달라요.</p>
+            <p>동네 한 바퀴 5~6km<sup><a href="#run-note" id="run-ref">1</a></sup> 정도. 뛰고 나면 개운해서 그날 컨디션이 <em>확실히</em> 달라요.</p>
           </article>
           <article class="card">
             <p><time datetime="12:00">12:00</time>쯤 씻고 늦은 아침 겸 점심.</p>
@@ -99,6 +99,14 @@
           </article>
         </div>
       </section>
+
+      <!-- 인용: 러닝 한마디 (blockquote + cite) -->
+      <figure class="pull-quote reveal">
+        <blockquote cite="https://en.wikipedia.org/wiki/Running">
+          <p>일단 신발 끈부터 묶는다. 나머지는 다리가 알아서 한다.</p>
+        </blockquote>
+        <figcaption>— <cite>어느 아침 러너의 말</cite></figcaption>
+      </figure>
 
       <!-- 오후 섹션 -->
       <section class="section reveal" aria-labelledby="afternoon">
@@ -123,10 +131,19 @@
         <p>경기 끝나면 씻고 바로 취침. 일요일이면 자기 전에 다음 주 계획을 대충 짜두는데, 그래야 월요일 아침이 좀 수월해요.</p>
 
         <p class="mt-6"><small>휴일 버전 작성일: <time datetime="2026-07-12">2026년 7월</time></small></p>
+        <p><small id="run-note"><sup>1</sup> 러닝 거리는 러닝 앱 기록 기준이에요. <a href="#run-ref">↩ 돌아가기</a></small></p>
       </section>
 
     </div>
   </main>
+
+  <!-- ============================ 푸터 ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="foot-meta">© <time datetime="2026">2026</time> <abbr title="SK AX AI Leader Academy">SKALA</abbr> · 신민서 — 순수 <code>HTML·CSS·JS</code>로 제작</p>
+      <address>만든 사람 신민서 · <a href="https://github.com/siamin20/skala-front" target="_blank" rel="noopener">GitHub</a></address>
+    </div>
+  </footer>
 
   <button class="to-top" type="button" data-to-top aria-label="맨 위로 이동">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>

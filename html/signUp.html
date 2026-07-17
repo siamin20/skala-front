@@ -179,6 +179,39 @@
               <small class="hint">숫자와 하이픈(-) 형식</small>
             </div>
 
+            <!-- 심화: 추가 입력 타입 (email · url · number) + datalist 자동완성 -->
+            <div class="field">
+              <label for="userEmail2">보조 이메일</label>
+              <input class="input" type="email" id="userEmail2" name="userEmail2" placeholder="backup@example.com" autocomplete="email" multiple />
+              <small class="hint">쉼표로 여러 개 입력할 수 있어요</small>
+            </div>
+
+            <div class="field">
+              <label for="userSite">포트폴리오 · 블로그</label>
+              <input class="input" type="url" id="userSite" name="userSite" placeholder="https://github.com/username" autocomplete="url" />
+            </div>
+
+            <div class="field">
+              <label for="gradYear">졸업(예정) 연도</label>
+              <input class="input" type="number" id="gradYear" name="gradYear" min="1990" max="2030" step="1" placeholder="2026" inputmode="numeric" />
+            </div>
+
+            <div class="field">
+              <label for="city">거주 지역</label>
+              <input class="input" type="text" id="city" name="city" list="cityList" placeholder="도시를 입력하거나 고르세요" autocomplete="address-level2" />
+              <datalist id="cityList">
+                <option value="서울"></option>
+                <option value="부산"></option>
+                <option value="대구"></option>
+                <option value="인천"></option>
+                <option value="광주"></option>
+                <option value="대전"></option>
+                <option value="울산"></option>
+                <option value="세종"></option>
+                <option value="제주"></option>
+              </datalist>
+            </div>
+
             <!-- 커스텀 드롭다운: '직접 입력' 선택 시 아래 칸 노출 -->
             <div class="field">
               <label for="jobSelect">희망 직군</label>
@@ -302,6 +335,14 @@
 
     </div>
   </main>
+
+  <!-- ============================ 푸터 ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="foot-meta">© <time datetime="2026">2026</time> <abbr title="SK AX AI Leader Academy">SKALA</abbr> · 신민서 — 순수 <code>HTML·CSS·JS</code>로 제작</p>
+      <address>만든 사람 신민서 · <a href="https://github.com/siamin20/skala-front" target="_blank" rel="noopener">GitHub</a></address>
+    </div>
+  </footer>
 
   <!-- 약관 전문 모달 (이용약관) -->
   <dialog class="terms-dialog" data-terms-dialog="tos" aria-label="이용약관 전문">
