@@ -25,10 +25,12 @@
   // ── 교재 방식(prompt/while/alert) — 실제 실행되는 코드 ──
   function classicUpDown() {
     var num = Math.floor(Math.random() * 50) + 1; // 1~50 무작위
-    var count = 0, guess;
+    var count = 0;
     while (true) {                                 // 맞출 때까지 반복
-      guess = Number(prompt("1~50 사이 숫자를 맞혀보세요"));
-      if (isNaN(guess)) return;                    // 취소 시 종료
+      var input = prompt("1~50 사이 숫자를 맞혀보세요 (취소하면 종료)");
+      if (input === null) return;                  // '취소' → 게임 종료 (null 먼저 체크!)
+      var guess = Number(input);
+      if (isNaN(guess) || guess < 1 || guess > 50) { alert("1~50 사이 숫자를 입력해 주세요."); continue; }
       count++;
       if (guess > num) alert("Down!");             // 정답보다 크면
       else if (guess < num) alert("Up!");          // 작으면

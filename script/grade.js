@@ -24,9 +24,9 @@
   function classicGrade() {
     var total = 0;                                   // 총점
     for (var i = 0; i < subjects.length; i++) {      // 과목 수만큼 반복 입력
-      var score = Number(prompt(subjects[i] + " 점수를 입력하세요."));
-      if (isNaN(score)) return;                      // 취소 시 종료
-      total += score;                                // 합산
+      var input = prompt(subjects[i] + " 점수를 입력하세요. (취소하면 종료)");
+      if (input === null) return;                    // '취소' → 종료 (null 먼저 체크!)
+      total += Number(input) || 0;                   // 빈값·숫자 아님은 0점 처리 후 합산
     }
     var avg = total / subjects.length;               // 평균
     var avgText = Math.round(avg * 10) / 10;          // 소수 1자리로 깔끔하게
