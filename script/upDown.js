@@ -27,7 +27,7 @@
     var num = Math.floor(Math.random() * 50) + 1; // 1~50 무작위
     var count = 0;
     while (true) {                                 // 맞출 때까지 반복
-      var input = prompt("1~50 사이 숫자를 맞혀보세요 (취소하면 종료)");
+      var input = prompt("1~50 사이 숫자를 맞혀보세요");
       if (input === null) return;                  // '취소' → 게임 종료 (null 먼저 체크!)
       var guess = Number(input);
       if (isNaN(guess) || guess < 1 || guess > 50) { alert("1~50 사이 숫자를 입력해 주세요."); continue; }
