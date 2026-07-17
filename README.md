@@ -138,6 +138,10 @@
 
 > 화면 폭 **786px 이하**에서 본문·사이드바가 세로 1열로 접히고, 상단 네비는 햄버거 메뉴로 전환됩니다.
 
+<p align="center">
+  <img src="screenshots/responsive.gif" alt="전체화면에서 모바일까지 부드럽게 줄어드는 반응형 데모" width="90%" />
+</p>
+
 <table>
   <tr>
     <td width="33%" align="center">
