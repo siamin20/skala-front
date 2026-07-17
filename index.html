@@ -266,15 +266,16 @@
             </div>
           </div>
 
-          <!-- 게임 위젯 (upDown.js) -->
+          <!-- 게임 위젯 (upDown.js · dino.js) -->
           <div class="widget reveal spotlight" id="game">
             <div class="widget__head">
               <span class="widget__title">// mini-game</span>
-              <span class="tag">Up · Down</span>
+              <span class="tag">2 games</span>
             </div>
-            <div class="widget__body stack stack-3">
-              <p class="text-muted" style="font-size:var(--step--1)">1~50 사이 비밀 숫자를 맞혀보세요.</p>
-              <button class="btn btn--block" type="button" data-game-start>숫자 맞히기 시작</button>
+            <div class="widget__body stack stack-2">
+              <p class="text-muted" style="font-size:var(--step--1)">1~50 비밀 숫자 맞히기, 또는 공룡 달리기.</p>
+              <button class="btn btn--block" type="button" data-game-start>🔢 숫자 맞히기</button>
+              <button class="btn btn--ghost btn--block" type="button" data-dino-start>🦖 공룡 게임</button>
             </div>
           </div>
 
@@ -306,12 +307,20 @@
                   <option value="" selected disabled>도시를 고르세요</option>
                   <optgroup label="국내">
                     <option value="서울">서울</option>
+                    <option value="판교">판교</option>
                     <option value="광주">광주</option>
+                    <option value="울산">울산</option>
                     <option value="부산">부산</option>
                   </optgroup>
                   <optgroup label="해외">
                     <option value="도쿄">도쿄</option>
+                    <option value="오사카">오사카</option>
+                    <option value="타이베이">타이베이</option>
+                    <option value="싱가포르">싱가포르</option>
                     <option value="파리">파리</option>
+                    <option value="런던">런던</option>
+                    <option value="뉴욕">뉴욕</option>
+                    <option value="시드니">시드니</option>
                   </optgroup>
                 </select>
               </div>
@@ -347,6 +356,21 @@
       </div>
       <button class="btn btn--ghost btn--sm ud-close" type="button" data-ud-close>닫기</button>
       <button class="classic-link" type="button" data-ud-classic>⌨ 교재 방식(prompt)으로 하기</button>
+    </div>
+  </dialog>
+
+  <!-- ===== 공룡 게임 (dino.js · canvas) ===== -->
+  <dialog class="dino-dialog" id="dinoDialog" aria-labelledby="dinoTitle">
+    <div class="dialog__body">
+      <h3 id="dinoTitle">🦖 공룡 게임</h3>
+      <p class="text-muted" style="font-size:var(--step--1)">스페이스 · 클릭 · 탭으로 점프! 선인장을 피하세요.</p>
+      <canvas id="dinoCanvas" width="600" height="160" tabindex="0" aria-label="공룡 달리기 게임 캔버스"></canvas>
+      <div class="dino-foot">
+        <span class="mono" data-dino-score>0</span>
+        <span class="dino-hint" data-dino-hint>스페이스 · 클릭으로 점프</span>
+        <span class="mono text-muted" data-dino-best>최고 0</span>
+      </div>
+      <button class="btn btn--ghost btn--sm ud-close" type="button" data-dino-close>닫기</button>
     </div>
   </dialog>
 
@@ -408,6 +432,7 @@
   <script src="script/dashboard.js"></script>
   <!-- 미니앱 (일반 스크립트) -->
   <script src="script/upDown.js"></script>
+  <script src="script/dino.js"></script>
   <script src="script/grade.js"></script>
   <script src="script/bag.js"></script>
   <!-- 실시간 날씨 (ES 모듈: realtimeInfo.js 가 weatherAPI.js 를 import) -->

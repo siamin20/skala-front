@@ -742,6 +742,21 @@ dialog::backdrop { background: hsl(240 40% 5% / 0.55); backdrop-filter: blur(3px
    미니앱 (upDown · grade · bag · weather)
    ===================================================================== */
 .game-dialog, .grade-dialog, .bag-dialog { max-width: min(420px, 94vw); }
+/* 공룡 게임 (canvas) */
+.dino-dialog { max-width: min(660px, 96vw); }
+#dinoCanvas {
+  display: block; width: 100%; height: auto; margin-top: var(--space-4);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer; touch-action: manipulation;
+}
+#dinoCanvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dino-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); margin-top: var(--space-3);
+}
+.dino-foot [data-dino-score] { font-size: var(--step-1); font-weight: 700; color: var(--accent); }
+.dino-hint { font-size: var(--step--1); color: var(--muted); }
+.dino-hint[data-state="over"] { color: var(--rose-500); font-weight: 600; }
 .ud-close { margin-top: var(--space-4); }
 /* 교재 방식(prompt/alert) 실행 링크 — 모달 안, 은은하게 */
 .classic-link {
